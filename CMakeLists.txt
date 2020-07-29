@@ -33,7 +33,10 @@ add_executable(TestsExecutable
         tests/model/TaskTest.cpp
         tests/model/TaskIDTest.cpp
         src/model/Date.cpp
-        src/model/TaskID.cpp)
+        src/model/TaskID.cpp
+        tests/logic/IDGeneratorTest.cpp
+        src/logic/IDGenerator.cpp
+        )
 
 target_link_libraries(TestsExecutable GTest::GTest GTest::Main)
 
