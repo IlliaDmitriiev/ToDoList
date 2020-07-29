@@ -19,11 +19,8 @@ public:
     const std::unordered_map<Date, StorageByPrior, DateHasher, DateComparator> &getMp() const;
 
 private:
-
-    std::unordered_map<int, std::shared_ptr<FullTask> > allTasks;
-
-
     std::unordered_map<Date, StorageByPrior , DateHasher, DateComparator> mp;
+
 };
 
 
