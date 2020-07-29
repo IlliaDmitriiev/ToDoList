@@ -28,8 +28,13 @@ include(GoogleTest)
 find_package(GTest REQUIRED)
 enable_testing()
 
-add_executable(TestsExecutable tests/model/DateTest.cpp tests/model/TaskTest.cpp
-      src/model/Date.cpp)
+add_executable(TestsExecutable
+        tests/model/DateTest.cpp
+        tests/model/TaskTest.cpp
+        tests/model/TaskIDTest.cpp
+        src/model/Date.cpp
+        src/model/TaskID.cpp)
+
 target_link_libraries(TestsExecutable GTest::GTest GTest::Main)
 
 gtest_discover_tests(TestsExecutable)
