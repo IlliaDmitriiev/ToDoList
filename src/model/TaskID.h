@@ -10,6 +10,7 @@ class TaskID {
 
 public:
     static TaskID create(int id);
+
 public:
     int getId() const;
 

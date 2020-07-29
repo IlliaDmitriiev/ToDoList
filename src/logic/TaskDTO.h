@@ -13,11 +13,15 @@ public:
     static TaskDTO create(const TaskID &taskId, const Date &date, const std::string &name, const std::string &label,
                           Task::Priority prior);
 
-    Date getDate() ;
+    const TaskID &getTaskId() const;
 
-    const std::string &getName();
+    const Date &getDate() const;
 
-    const std::string &getLabel();
+    const std::string &getName() const;
+
+    const std::string &getLabel() const;
+
+    Task::Priority getPrior() const;
 
 private:
     TaskDTO(const TaskID &taskId, const Date &date, const std::string &name, const std::string &label,
