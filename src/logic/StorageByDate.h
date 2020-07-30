@@ -5,7 +5,6 @@
 #ifndef TODOLIST_STORAGEBYDATE_H
 #define TODOLIST_STORAGEBYDATE_H
 
-#include "DateLogic.h"
 #include "StorageByPrior.h"
 
 
@@ -16,10 +15,10 @@ public:
     void addTask(const FullTask& ft, Task::Priority prior, TaskID id);
     void removeTask(TaskID taskID);
 
-    const std::unordered_map<Date, StorageByPrior, DateHasher, DateComparator> &getMp() const;
+    const std::unordered_map<Date, StorageByPrior, Date::Hasher, Date::Comparator> &getMp() const;
 
 private:
-    std::unordered_map<Date, StorageByPrior , DateHasher, DateComparator> mp;
+    std::unordered_map<Date, StorageByPrior , Date::Hasher, Date::Comparator> mp;
 
 };
 

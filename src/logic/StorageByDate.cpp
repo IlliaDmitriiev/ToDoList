@@ -28,7 +28,7 @@ void StorageByDate::removeTask(TaskID taskID){
     allTasks.erase(taskID.getId());
 }
 
-const std::unordered_map<Date, DataVectorsLogic , DateHasher, DateComparator> &StorageByDate::getMp() const {
+const std::unordered_map<Date, DataVectorsLogic , Date::Hasher, Date::Comparator> &StorageByDate::getMp() const {
     return mp;
 }
 
