@@ -5,28 +5,37 @@
 #include "TaskService.h"
 
 TaskID TaskService::addTask(Date date, const std::string &name, const std::string &label, Task::Priority prior){
-    TaskID taskId = generator.generateId();
+    TaskID id = generator.generateId();
     Task t = Task::create(date, name, label, prior);
     FullTask ft = FullTask::create(generator, t);
-    data.addTask(ft, prior, taskId);
-    return taskId;
+    auto sft = std::make_shared<FullTask>(ft);
+    data.addTask(sft, prior);
+    allTasks.insert({id, std::move(sft)});
+    return id;
 }
 
 TaskID TaskService::addSubtask(TaskID taskID, Date date, const std::string &name, const std::string &label, Task::Priority prior){
     TaskID subtaskID = addTask(date, name, label, prior);
-    data.addSubtask(taskID, subtaskID);
     return subtaskID;
 }
 
+void TaskService::showTasksForToday(){
+    auto v = dv.getTasksForToday(data);
+    for(auto i: v)
+        FullTask::Print(i);
+}
+
+void TaskService::showTasksForWeek(){
+    auto v = dv.getTasksForWeek(data);
+    for(auto i: v)
+        FullTask::Print(i);
+};
+
 void TaskService::removeTask(TaskID taskID){
-    data.removeTask(taskID);
+   // data.removeTask(taskID);
 }
 
 void TaskService::updateDataAfterPeriodOfTime(){
-    auto d = data.getVByPriors();
-    d.updateVectors();
-}
-
-const DataMapsLogic &TaskService::getData() const {
-    return data;
+ //   auto d = data.getVByPriors();
+   // d.updateVectors();
 }

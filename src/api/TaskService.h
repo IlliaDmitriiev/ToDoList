@@ -9,6 +9,7 @@
 #include "FullTask.h"
 #include "StorageByDate.h"
 #include "IDGenerator.h"
+#include "DateView.h"
 
 #include <algorithm>
 
@@ -18,16 +19,19 @@ public:
     TaskID addTask(Date date, const std::string &name, const std::string &label, Task::Priority prior);
     TaskID addSubtask(TaskID id, Date date, const std::string &name,
             const std::string &label, Task::Priority prior);
+    void showTasksForToday();
+    void showTasksForWeek();
+
     void removeTask(TaskID id);
     void updateDataAfterPeriodOfTime();
 
-public:
-    const StorageByDate &getData() const;
+
 
 private:
     IDGenerator generator;
     StorageByDate data;
-    std::unordered_map<int, std::shared_ptr<FullTask> > allTasks;
+    DateView dv;
+    std::unordered_map<TaskID, std::shared_ptr<FullTask>, TaskID::Hasher, TaskID::Comparator > allTasks;
 
 };
 

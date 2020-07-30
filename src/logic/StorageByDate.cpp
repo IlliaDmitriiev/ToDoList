@@ -4,31 +4,22 @@
 
 #include "StorageByDate.h"
 
-void StorageByDate::addTask(const FullTask& ft, Task::Priority prior, TaskID id){
+void StorageByDate::addTask(const std::weak_ptr<FullTask> ft, Task::Priority prior){
 
-    auto cur = std::make_shared<FullTask>(ft);
-    Date date = ft.getTask().getDate();
-    auto founddDate = mp.find(date);
+    Date date = ft.lock()->getTask().getDate();
+    auto foundDate = mp.find(date);
 
-    if (founddDate != mp.end())
-        foundDate->second.putTaskInRightPlace(cur, prior);
+    if (foundDate != mp.end()) {
+        foundDate->second.putTaskInRightPlace(ft, prior);
+    }
     else {
-        StorageByPrior  v;
-        v.putTaskInRightPlace(cur, prior);
+        StorageByPrior v;
+        v.putTaskInRightPlace(ft, prior);
         mp.insert({date, v});
     }
-
-    allTasks.insert({id.getId(), std::move(cur)});
 }
 
-
-void StorageByDate::removeTask(TaskID taskID){
-    allTasks[taskID.getId()]->removeSubtasks(allTasks);
-    allTasks[taskID.getId()].reset();
-    allTasks.erase(taskID.getId());
-}
-
-const std::unordered_map<Date, DataVectorsLogic , Date::Hasher, Date::Comparator> &StorageByDate::getMp() const {
+const std::unordered_map<Date, StorageByPrior, Date::Hasher, Date::Comparator> &StorageByDate::getMp() const {
     return mp;
 }
 

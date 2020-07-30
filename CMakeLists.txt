@@ -3,18 +3,27 @@ project(ToDoList)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(TestP
+add_executable(ToDoList
         src/main.cpp
+        src/model/Date.cpp
         src/model/Date.h
         src/model/Task.h
+        src/logic/StorageByPrior.cpp
         src/logic/StorageByPrior.h
+        src/logic/FullTask.cpp
         src/logic/FullTask.h
-        src/logic/DateLogic.h
+        src/model/TaskID.cpp
         src/model/TaskID.h
+        src/logic/IDGenerator.cpp
         src/logic/IDGenerator.h
+        src/logic/StorageByDate.cpp
         src/logic/StorageByDate.h
+        src/api/TaskService.cpp
         src/api/TaskService.h
+        src/logic/TaskDTO.cpp
         src/logic/TaskDTO.h
+        src/logic/DateView.cpp
+        src/logic/DateView.h
         )
 
 include_directories(src)

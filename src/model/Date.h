@@ -5,10 +5,14 @@
 #ifndef TODOLIST_DATE_H
 #define TODOLIST_DATE_H
 
+#include <iostream>
 
 class Date{
 public:
     static  Date create(int y, int m, int d);
+
+public:
+    static void Print(const Date& date);
 
 public:
     struct Hasher{
@@ -35,14 +39,13 @@ public:
     bool correctInfo();
 
 public:
-    Date(){};
-    const int &getYear() const;
+    int getYear() const;
 
-    const int &getMounth() const;
+    int getMounth()const;
 
-    const int &getDay() const;
+    int getDay() const;
 
-    const int &getWday() const;
+    int getWday() const;
 
 private:
     Date(int year, int mounth, int day);

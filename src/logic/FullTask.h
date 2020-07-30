@@ -14,10 +14,12 @@ class FullTask {
 
 public:
     static FullTask create(IDGenerator &generator, const Task &t);
+public:
+    static void Print(const std::weak_ptr<FullTask> &t);
 
 public:
     void addSubtask(TaskID subtaskID, std::weak_ptr<FullTask> ft);
-    void removeSubtasks( std::unordered_map<TaskID, std::shared_ptr<FullTask> > &allTasks);
+    void removeSubtasks( std::unordered_map<TaskID, std::shared_ptr<FullTask>, TaskID::Hasher, TaskID::Comparator> &allTasks);
 
 public:
     const Task &getTask() const;

@@ -12,8 +12,8 @@ class StorageByDate {
 
 public:
 
-    void addTask(const FullTask& ft, Task::Priority prior, TaskID id);
-    void removeTask(TaskID taskID);
+    void addTask(const std::weak_ptr<FullTask> ft, Task::Priority prior);
+
 
     const std::unordered_map<Date, StorageByPrior, Date::Hasher, Date::Comparator> &getMp() const;
 
