@@ -10,10 +10,10 @@ FullTask FullTask::create(IDGenerator &generator, const Task &t){
 }
 
 void FullTask::addSubtask(TaskID subtaskID, std::weak_ptr<FullTask> ft){
-    subtasks.insert({subtaskID.getId(), ft});
+    subtasks.insert({subtaskID, ft});
 }
 
-void FullTask::removeSubtasks( std::unordered_map<int, std::shared_ptr<FullTask> > &allTasks){
+void FullTask::removeSubtasks( std::unordered_map<TaskID, std::shared_ptr<FullTask> > &allTasks){
 
     for (auto i: subtasks){
         if (!i.second.expired())

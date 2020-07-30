@@ -17,7 +17,7 @@ public:
 
 public:
     void addSubtask(TaskID subtaskID, std::weak_ptr<FullTask> ft);
-    void removeSubtasks( std::unordered_map<int, std::shared_ptr<FullTask> > &allTasks);
+    void removeSubtasks( std::unordered_map<TaskID, std::shared_ptr<FullTask> > &allTasks);
 
 public:
     const Task &getTask() const;
@@ -28,7 +28,7 @@ private:
 private:
     TaskID ID;
     Task t;
-    std::unordered_map<int, std::weak_ptr<FullTask> > subtasks;
+    std::unordered_map<TaskID, std::weak_ptr<FullTask>, TaskID::Hasher, TaskID::Comparator> subtasks;
 };
 
 #endif //TODOLIST_FULLTASK_H
