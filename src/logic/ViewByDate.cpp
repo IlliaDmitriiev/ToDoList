@@ -2,10 +2,10 @@
 // Created by Илля on 30.07.2020.
 //
 
-#include "DateView.h"
+#include "ViewByDate.h"
 
 
-std::vector<std::weak_ptr<FullTask>> DateView::getTasksForToday(StorageByDate data){
+std::vector<std::weak_ptr<FullTask>> ViewByDate::getTasksForToday(const StorageByDate& data){
     time_t now = time(0);
     auto cur = std::make_unique<tm>(*gmtime(&now));
     Date date = Date::create(cur->tm_year+1900, cur->tm_mon + 1, cur->tm_mday);
@@ -36,7 +36,7 @@ std::vector<std::weak_ptr<FullTask>> DateView::getTasksForToday(StorageByDate da
     return v;
 }
 
-std::vector<std::weak_ptr<FullTask>>  DateView::getTasksForWeek(StorageByDate data){
+std::vector<std::weak_ptr<FullTask>>  ViewByDate::getTasksForWeek(const StorageByDate& data){
     time_t now = time(0);
     auto cur = std::make_unique<tm>(*gmtime(&now));
 
