@@ -14,6 +14,10 @@ public:
     std::vector<std::weak_ptr<FullTask>> getTasksForToday(const StorageByDate& data);
     std::vector<std::weak_ptr<FullTask>> getTasksForWeek(const StorageByDate& data);
 
+    StorageByDate &getData();
+
+private:
+    StorageByDate data;
 };
 
 

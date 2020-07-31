@@ -32,9 +32,6 @@ public:
 private:
     IDGenerator generator;
 
-private:
-    StorageByDate data;
-    StorageByPrior sbp;
 
 private:
     ViewByDate vbd;

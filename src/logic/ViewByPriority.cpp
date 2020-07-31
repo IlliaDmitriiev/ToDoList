@@ -24,3 +24,7 @@ std::vector<std::weak_ptr<FullTask>> ViewByPriority::getAllTasks(const StorageBy
             v.push_back(i);
     return v;
 }
+
+StorageByPrior &ViewByPriority::getSbp(){
+    return sbp;
+}

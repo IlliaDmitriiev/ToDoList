@@ -71,3 +71,7 @@ std::vector<std::weak_ptr<FullTask>>  ViewByDate::getTasksForWeek(const StorageB
     }
     return v;
 }
+
+StorageByDate &ViewByDate::getData() {
+    return data;
+}
