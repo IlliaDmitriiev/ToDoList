@@ -4,23 +4,23 @@
 
 #include "StorageByDate.h"
 
-void StorageByDate::addTask(const std::weak_ptr<FullTask> ft, Task::Priority prior){
+void StorageByDate::addTask(const std::weak_ptr<FullTask> ft){
 
     Date date = ft.lock()->getTask().getDate();
-    auto foundDate = mp.find(date);
+    auto foundDate = map_.find(date);
 
-    if (foundDate != mp.end()) {
-        foundDate->second.putTaskInRightPlace(ft, prior);
+    if (foundDate != map_.end()) {
+        foundDate->second.putTaskInRightPlace(ft);
     }
     else {
         StorageByPrior v;
-        v.putTaskInRightPlace(ft, prior);
-        mp.insert({date, v});
+        v.putTaskInRightPlace(ft);
+        map_.insert({date, v});
     }
 }
 
-const std::unordered_map<Date, StorageByPrior, Date::Hasher, Date::Comparator> &StorageByDate::getMp() const {
-    return mp;
+const std::unordered_map<Date, StorageByPrior, Date::Hasher, Date::Comparator> &StorageByDate::getMap() const {
+    return map_;
 }
 
 

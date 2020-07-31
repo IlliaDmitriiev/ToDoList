@@ -24,6 +24,7 @@ public:
 public:
     const Task &getTask() const;
 
+
 private:
     FullTask(TaskID ID, const Task &t) : ID(ID), t(t) {}
 

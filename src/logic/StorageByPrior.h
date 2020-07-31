@@ -19,14 +19,14 @@ public:
 
     const std::vector<std::weak_ptr<FullTask>> &getVNonePrior() const;
 
-    void putTaskInRightPlace(std::weak_ptr<FullTask> cur, Task::Priority prior);
+    void putTaskInRightPlace(std::weak_ptr<FullTask> cur);
     void updateVectors();
 
 private:
-    std::vector<std::weak_ptr<FullTask>> vFirstPrior;
-    std::vector<std::weak_ptr<FullTask>> vSecondPrior;
-    std::vector<std::weak_ptr<FullTask>> vThirdPrior;
-    std::vector<std::weak_ptr<FullTask>> vNonePrior;
+    std::vector<std::weak_ptr<FullTask>> vFirstPrior_;
+    std::vector<std::weak_ptr<FullTask>> vSecondPrior_;
+    std::vector<std::weak_ptr<FullTask>> vThirdPrior_;
+    std::vector<std::weak_ptr<FullTask>> vNonePrior_;
 };
 
 

@@ -12,13 +12,13 @@ class StorageByDate {
 
 public:
 
-    void addTask(const std::weak_ptr<FullTask> ft, Task::Priority prior);
+    void addTask(const std::weak_ptr<FullTask> ft);
 
 
-    const std::unordered_map<Date, StorageByPrior, Date::Hasher, Date::Comparator> &getMp() const;
+    const std::unordered_map<Date, StorageByPrior, Date::Hasher, Date::Comparator> &getMap() const;
 
 private:
-    std::unordered_map<Date, StorageByPrior , Date::Hasher, Date::Comparator> mp;
+    std::unordered_map<Date, StorageByPrior , Date::Hasher, Date::Comparator> map_;
 
 };
 

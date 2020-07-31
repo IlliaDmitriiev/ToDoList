@@ -9,8 +9,8 @@ TaskID TaskService::addTask(Date date, const std::string &name, const std::strin
     Task t = Task::create(date, name, label, prior);
     FullTask ft = FullTask::create(generator, t);
     auto sft = std::make_shared<FullTask>(ft);
-    vbd.getStorage().addTask(sft, prior);
-    vbp.getStorage().putTaskInRightPlace(sft, prior);
+    vbd.getStorage().addTask(sft);
+    vbp.getStorage().putTaskInRightPlace(sft);
     allTasks.insert({id, std::move(sft)});
     return id;
 }
