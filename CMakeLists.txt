@@ -22,8 +22,10 @@ add_executable(ToDoList
         src/api/TaskService.h
         src/logic/TaskDTO.cpp
         src/logic/TaskDTO.h
-        src/logic/DateView.cpp
-        src/logic/DateView.h
+        src/logic/ViewByDate.cpp
+        src/logic/ViewByDate.h
+        src/logic/ViewByPriority.cpp
+        src/logic/ViewByPriority.h
         )
 
 include_directories(src)

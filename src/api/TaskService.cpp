@@ -10,6 +10,7 @@ TaskID TaskService::addTask(Date date, const std::string &name, const std::strin
     FullTask ft = FullTask::create(generator, t);
     auto sft = std::make_shared<FullTask>(ft);
     data.addTask(sft, prior);
+    sbp.putTaskInRightPlace(sft, prior);
     allTasks.insert({id, std::move(sft)});
     return id;
 }
@@ -19,14 +20,20 @@ TaskID TaskService::addSubtask(TaskID taskID, Date date, const std::string &name
     return subtaskID;
 }
 
+void TaskService::showAllTasksByPrior(){
+    auto v = vbp.getAllTasks(sbp);
+    for(auto i: v)
+        FullTask::Print(i);
+}
+
 void TaskService::showTasksForToday(){
-    auto v = dv.getTasksForToday(data);
+    auto v = vbd.getTasksForToday(data);
     for(auto i: v)
         FullTask::Print(i);
 }
 
 void TaskService::showTasksForWeek(){
-    auto v = dv.getTasksForWeek(data);
+    auto v = vbd.getTasksForWeek(data);
     for(auto i: v)
         FullTask::Print(i);
 };
