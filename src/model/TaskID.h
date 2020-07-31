@@ -26,14 +26,14 @@ public:
     };
 
 public:
-    int getId() const;
+    unsigned int getId() const;
 
 private:
-    TaskID(int id);
+    TaskID(unsigned int id);
 
 
 private:
-    int id;
+    unsigned int id_;
 };
 
 

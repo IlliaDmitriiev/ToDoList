@@ -5,12 +5,14 @@
 #include "TaskID.h"
 
 TaskID TaskID::create(int id){
+    if (id<0)
+        throw std::runtime_error("negative id");
     TaskID taskId(id);
     return taskId;
 }
 
-int TaskID::getId() const {
-    return id;
+unsigned int TaskID::getId() const {
+    return id_;
 }
 
-TaskID::TaskID(int id) : id(id) {}
+TaskID::TaskID(unsigned int id) : id_(id) {}
