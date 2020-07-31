@@ -5,13 +5,13 @@
 #include "ViewByDate.h"
 
 
-std::vector<std::weak_ptr<FullTask>> ViewByDate::getTasksForToday(const StorageByDate& data){
+std::vector<std::weak_ptr<FullTask>> ViewByDate::getTasksForToday(){
     time_t now = time(0);
     auto cur = std::make_unique<tm>(*gmtime(&now));
     Date date = Date::create(cur->tm_year+1900, cur->tm_mon + 1, cur->tm_mday);
 
     std::cout<<date.getYear()<<" "<<date.getMounth()<<" "<<date.getDay()<<" -> today\n";
-    auto mp = data.getMp();
+    auto mp = storage_.getMp();
     auto NeedData = mp.find(date);
 
     std::vector<std::weak_ptr<FullTask>> v;
@@ -36,12 +36,12 @@ std::vector<std::weak_ptr<FullTask>> ViewByDate::getTasksForToday(const StorageB
     return v;
 }
 
-std::vector<std::weak_ptr<FullTask>>  ViewByDate::getTasksForWeek(const StorageByDate& data){
+std::vector<std::weak_ptr<FullTask>>  ViewByDate::getTasksForWeek(){
     time_t now = time(0);
     auto cur = std::make_unique<tm>(*gmtime(&now));
 
     Date date = Date::create(cur->tm_year+1900, cur->tm_mon + 1, cur->tm_mday);
-    auto mp = data.getMp();
+    auto mp = storage_.getMp();
     std::vector<std::weak_ptr<FullTask>> v;
 
     for (int i = 1; i<=7; ++i) {
@@ -72,6 +72,6 @@ std::vector<std::weak_ptr<FullTask>>  ViewByDate::getTasksForWeek(const StorageB
     return v;
 }
 
-StorageByDate &ViewByDate::getData() {
-    return data;
+StorageByDate &ViewByDate::getStorage() {
+    return storage_;
 }

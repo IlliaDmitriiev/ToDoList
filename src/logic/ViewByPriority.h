@@ -10,12 +10,12 @@
 class ViewByPriority {
 
 public:
-    StorageByPrior &getSbp();
+    StorageByPrior &getStorage();
 
-    std::vector<std::weak_ptr<FullTask>> getAllTasks(const StorageByPrior& sbp);
+    std::vector<std::weak_ptr<FullTask>> getAllTasks();
 
 private:
-    StorageByPrior sbp;
+    StorageByPrior storage_;
 };
 
 

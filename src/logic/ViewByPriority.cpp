@@ -4,12 +4,12 @@
 
 #include "ViewByPriority.h"
 
-std::vector<std::weak_ptr<FullTask>> ViewByPriority::getAllTasks(const StorageByPrior& sbp){
+std::vector<std::weak_ptr<FullTask>> ViewByPriority::getAllTasks(){
     std::vector<std::weak_ptr<FullTask>> v;
-    auto vFirst = sbp.getVFirstPrior();
-    auto vSecond = sbp.getVSecondPrior();
-    auto vThird = sbp.getVThirdPrior();
-    auto vNone = sbp.getVNonePrior();
+    auto vFirst = storage_.getVFirstPrior();
+    auto vSecond = storage_.getVSecondPrior();
+    auto vThird = storage_.getVThirdPrior();
+    auto vNone = storage_.getVNonePrior();
     for (auto i: vFirst)
         if (!i.expired())
             v.push_back(i);
@@ -25,6 +25,6 @@ std::vector<std::weak_ptr<FullTask>> ViewByPriority::getAllTasks(const StorageBy
     return v;
 }
 
-StorageByPrior &ViewByPriority::getSbp(){
-    return sbp;
+StorageByPrior &ViewByPriority::getStorage(){
+    return storage_;
 }
