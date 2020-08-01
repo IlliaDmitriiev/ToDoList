@@ -57,6 +57,7 @@ add_executable(TestsExecutable
         src/logic/StorageByDate.cpp
         src/logic/StorageByPrior.cpp
         src/logic/FullTask.cpp
+        src/logic/View.cpp
         )
 
 target_link_libraries(TestsExecutable GTest::GTest GTest::Main)
