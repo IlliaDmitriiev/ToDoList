@@ -13,9 +13,9 @@
 class FullTask {
 
 public:
-    static FullTask create(IDGenerator &generator, const Task &t);
+    static FullTask create(IDGenerator &generator, const Task &task);
 public:
-    static void Print(const std::weak_ptr<FullTask> &t);
+    static void Print(const std::weak_ptr<FullTask> &task);
 
 public:
     void addSubtask(TaskID subtaskID, std::weak_ptr<FullTask> ft);
@@ -26,12 +26,12 @@ public:
 
 
 private:
-    FullTask(TaskID ID, const Task &t) : ID(ID), t(t) {}
+    FullTask(TaskID ID, const Task &t);
 
 private:
-    TaskID ID;
-    Task t;
-    std::unordered_map<TaskID, std::weak_ptr<FullTask>, TaskID::Hasher, TaskID::Comparator> subtasks;
+    TaskID id_;
+    Task task_;
+    std::unordered_map<TaskID, std::weak_ptr<FullTask>, TaskID::Hasher, TaskID::Comparator> subtasks_;
 };
 
 #endif //TODOLIST_FULLTASK_H

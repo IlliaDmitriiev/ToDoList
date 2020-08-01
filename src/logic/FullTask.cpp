@@ -4,8 +4,8 @@
 
 #include "FullTask.h"
 
-FullTask FullTask::create(IDGenerator &generator, const Task &t){
-    FullTask ft(generator.generateId(), t);
+FullTask FullTask::create(IDGenerator &generator, const Task &task){
+    FullTask ft(generator.generateId(), task);
     return ft;
 }
 
@@ -27,12 +27,12 @@ void FullTask::Print(const std::weak_ptr<FullTask> &t){
 }
 
 void FullTask::addSubtask(TaskID subtaskID, std::weak_ptr<FullTask> ft){
-    subtasks.insert({subtaskID, ft});
+    subtasks_.insert({subtaskID, ft});
 }
 
 void FullTask::removeSubtasks( std::unordered_map<TaskID, std::shared_ptr<FullTask>, TaskID::Hasher, TaskID::Comparator> &allTasks){
 
-    for (auto i: subtasks){
+    for (auto i: subtasks_){
         if (!i.second.expired())
             i.second.lock()->removeSubtasks(allTasks);
 
@@ -41,10 +41,12 @@ void FullTask::removeSubtasks( std::unordered_map<TaskID, std::shared_ptr<FullTa
         allTasks.erase(i.first);
     }
 
-    subtasks.clear();
+    subtasks_.clear();
 }
 
 const Task &FullTask::getTask() const {
-    return t;
+    return task_;
 }
+
+FullTask::FullTask(TaskID ID, const Task &t) : id_(ID), task_(t) {}
 
