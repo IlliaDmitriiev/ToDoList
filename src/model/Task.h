@@ -22,37 +22,37 @@ public:
     };
 
 public:
-    static Task create(Date date, const std::string &name, const std::string &label, Task::Priority prior){
-        Task t(date, name, label, prior);
-        return t;
+    static Task create(const Date &date, const std::string &name, const std::string &label, Task::Priority prior){
+        Task task(date, name, label, prior);
+        return task;
     }
 
 public:
     Date getDate() const {
-        return date;
+        return date_;
     }
 
     const std::string &getName() const {
-        return name;
+        return name_;
     }
 
     const std::string &getLabel() const {
-        return label;
+        return label_;
     }
 
     Priority getPrior() const {
-        return prior;
+        return prior_;
     }
 
 private:
-    Task(Date date, const std::string &name, const std::string &label, Task::Priority prior)
-            : date(date), name(name), label(label), prior(prior) {}
+    Task(const Date &date, const std::string &name, const std::string &label, Task::Priority prior)
+            : date_(date), name_(name), label_(label), prior_(prior) {}
 
 private:
-    Date date;
-    std::string name;
-    std::string label;
-    Priority prior;
+    Date date_;
+    std::string name_;
+    std::string label_;
+    Priority prior_;
 };
 
 
