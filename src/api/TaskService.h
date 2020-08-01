@@ -9,8 +9,7 @@
 #include "FullTask.h"
 #include "StorageByDate.h"
 #include "IDGenerator.h"
-#include "ViewByDate.h"
-#include "ViewByPriority.h"
+#include "View.h"
 
 #include <algorithm>
 
@@ -30,12 +29,13 @@ public:
 
 
 private:
-    IDGenerator generator;
+    IDGenerator generator_;
 
 
 private:
-    ViewByDate vbd;
-    ViewByPriority vbp;
+    View view_;
+    //ViewByDate vbd;
+    //ViewByPriority vbp;
 
 private:
     std::unordered_map<TaskID, std::shared_ptr<FullTask>, TaskID::Hasher, TaskID::Comparator > allTasks;

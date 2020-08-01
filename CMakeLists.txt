@@ -26,6 +26,8 @@ add_executable(ToDoList
         src/logic/ViewByDate.h
         src/logic/ViewByPriority.cpp
         src/logic/ViewByPriority.h
+        src/logic/View.cpp
+        src/logic/View.h
         )
 
 include_directories(src)
