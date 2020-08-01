@@ -11,24 +11,24 @@ TaskDTO TaskDTO::create(const TaskID &taskId, const Date &date, const std::strin
 }
 
 TaskDTO::TaskDTO(const TaskID &taskId, const Date &date, const std::string &name, const std::string &label,
-        Task::Priority prior) : taskID(taskId), date(date), name(name), label(label), prior(prior) {}
+        Task::Priority prior) : id_(taskId), date_(date), name_(name), label_(label), prior_(prior) {}
 
 const TaskID &TaskDTO::getTaskId() const {
-    return taskID;
+    return id_;
 }
 
 const Date &TaskDTO::getDate() const {
-    return date;
+    return date_;
 }
 
 const std::string &TaskDTO::getName() const {
-    return name;
+    return name_;
 }
 
 const std::string &TaskDTO::getLabel() const {
-    return label;
+    return label_;
 }
 
 Task::Priority TaskDTO::getPrior() const {
-    return prior;
+    return prior_;
 }

@@ -28,11 +28,11 @@ private:
             Task::Priority prior);
 
 private:
-    TaskID taskID;
-    Date date;
-    std::string name;
-    std::string label;
-    Task::Priority prior;
+    TaskID id_;
+    Date date_;
+    std::string name_;
+    std::string label_;
+    Task::Priority prior_;
 };
 
 
