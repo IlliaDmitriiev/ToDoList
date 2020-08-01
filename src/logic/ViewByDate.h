@@ -11,8 +11,8 @@
 
 class ViewByDate {
 public:
-    std::vector<std::weak_ptr<FullTask>> getTasksForToday();
-    std::vector<std::weak_ptr<FullTask>> getTasksForWeek();
+    std::vector<std::weak_ptr<FullTask>> getTasksForToday(Date date);
+    std::vector<std::weak_ptr<FullTask>> getTasksForWeek(Date date);
 
     StorageByDate &getStorage();
 

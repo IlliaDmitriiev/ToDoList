@@ -5,10 +5,7 @@
 #include "ViewByDate.h"
 
 
-std::vector<std::weak_ptr<FullTask>> ViewByDate::getTasksForToday(){
-    time_t now = time(0);
-    auto cur = std::make_unique<tm>(*gmtime(&now));
-    Date date = Date::create(cur->tm_year+1900, cur->tm_mon + 1, cur->tm_mday);
+std::vector<std::weak_ptr<FullTask>> ViewByDate::getTasksForToday(Date date){
 
     auto mp = storage_.getMap();
     auto NeedData = mp.find(date);
@@ -35,11 +32,8 @@ std::vector<std::weak_ptr<FullTask>> ViewByDate::getTasksForToday(){
     return v;
 }
 
-std::vector<std::weak_ptr<FullTask>>  ViewByDate::getTasksForWeek(){
-    time_t now = time(0);
-    auto cur = std::make_unique<tm>(*gmtime(&now));
+std::vector<std::weak_ptr<FullTask>>  ViewByDate::getTasksForWeek(Date date){
 
-    Date date = Date::create(cur->tm_year+1900, cur->tm_mon + 1, cur->tm_mday);
     auto mp = storage_.getMap();
     std::vector<std::weak_ptr<FullTask>> v;
 
