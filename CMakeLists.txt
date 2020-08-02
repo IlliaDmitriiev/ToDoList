@@ -51,6 +51,7 @@ add_executable(TestsExecutable
         tests/logic/TaskDTOTest.cpp
         tests/logic/ViewByDateTest.cpp
         tests/logic/ViewByPriorityTest.cpp
+        tests/logic/StorageByPriorTest.cpp
         src/logic/IDGenerator.cpp
         src/logic/TaskDTO.cpp
         src/logic/ViewByDate.cpp
