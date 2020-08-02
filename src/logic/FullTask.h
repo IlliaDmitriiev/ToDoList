@@ -13,7 +13,8 @@
 class FullTask {
 
 public:
-    static FullTask create(IDGenerator &generator, const Task &task);
+    static FullTask create(const TaskID& id, const Task &task);
+
 public:
     static void Print(const std::weak_ptr<FullTask> &task);
 

@@ -4,8 +4,8 @@
 
 #include "FullTask.h"
 
-FullTask FullTask::create(IDGenerator &generator, const Task &task){
-    FullTask ft(generator.generateId(), task);
+FullTask FullTask::create(const TaskID& id, const Task &task){
+    FullTask ft(id, task);
     return ft;
 }
 
