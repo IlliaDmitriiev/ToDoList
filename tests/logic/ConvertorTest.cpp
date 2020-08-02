@@ -21,7 +21,8 @@ TEST_F(ConvertorTest, shouldConvertFullTaskIntoDTO) {
             "",
             Task::Priority::None);
     FullTask ft = FullTask::create(gen, t);
-    TaskDTO td = con.convert(ft);
+    auto sft = std::make_shared<FullTask>(ft);
+    TaskDTO td = con.convert(sft);
 
     ASSERT_EQ(td.getTaskId().getId(), 0);
     ASSERT_EQ(td.getPrior(), Task::Priority::None);
