@@ -23,7 +23,7 @@ public:
 
 public:
     const Task &getTask() const;
-
+    const TaskID &getId() const;
 
 private:
     FullTask(TaskID ID, const Task &t);

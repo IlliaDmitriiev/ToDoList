@@ -50,3 +50,7 @@ const Task &FullTask::getTask() const {
 
 FullTask::FullTask(TaskID ID, const Task &t) : id_(ID), task_(t) {}
 
+const TaskID &FullTask::getId() const {
+    return id_;
+}
+
