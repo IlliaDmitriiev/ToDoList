@@ -28,6 +28,8 @@ add_executable(ToDoList
         src/logic/ViewByPriority.h
         src/logic/View.cpp
         src/logic/View.h
+        src/logic/Convertor.cpp
+        src/logic/Convertor.h
         )
 
 include_directories(src)
@@ -52,6 +54,7 @@ add_executable(TestsExecutable
         tests/logic/ViewByDateTest.cpp
         tests/logic/ViewByPriorityTest.cpp
         tests/logic/StorageByPriorTest.cpp
+        tests/logic/ConvertorTest.cpp
         src/logic/IDGenerator.cpp
         src/logic/TaskDTO.cpp
         src/logic/ViewByDate.cpp
@@ -60,6 +63,7 @@ add_executable(TestsExecutable
         src/logic/StorageByPrior.cpp
         src/logic/FullTask.cpp
         src/logic/View.cpp
+        src/logic/Convertor.cpp
         )
 
 target_link_libraries(TestsExecutable GTest::GTest GTest::Main)
