@@ -20,22 +20,34 @@ TaskID TaskService::addSubtask(TaskID taskID, Date date, const std::string &name
     return subtaskID;
 }
 
-void TaskService::showAllTasksByPrior(){
+std::vector<TaskDTO> TaskService::getAllTasksByPrior(){
     auto v = view_.getAllTasksByPrior();
-    for(auto i: v)
+    std::vector<TaskDTO> vec;
+    for(auto i: v){
         FullTask::Print(i);
+        vec.push_back(convertor.convert(i));
+    }
+    return vec;
 }
 
-void TaskService::showTasksForToday(){
+std::vector<TaskDTO> TaskService::getTasksForToday(){
     auto v = view_.getTasksForToday();
-    for(auto i: v)
+    std::vector<TaskDTO> vec;
+    for(auto i: v){
         FullTask::Print(i);
+        vec.push_back(convertor.convert(i));
+    }
+    return vec;
 }
 
-void TaskService::showTasksForWeek(){
+std::vector<TaskDTO> TaskService::getTasksForWeek(){
     auto v = view_.getTasksForWeek();
-    for(auto i: v)
+    std::vector<TaskDTO> vec;
+    for(auto i: v) {
         FullTask::Print(i);
+        vec.push_back(convertor.convert(i));
+    }
+    return vec;
 };
 
 void TaskService::removeTask(TaskID taskID){
