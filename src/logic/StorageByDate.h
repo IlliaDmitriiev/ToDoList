@@ -11,10 +11,10 @@
 class StorageByDate {
 
 public:
-
     void addTask(const std::weak_ptr<FullTask> ft);
+    void deleteDanglingPointers();
 
-
+public:
     const std::unordered_map<Date, StorageByPrior, Date::Hasher, Date::Comparator> &getMap() const;
 
 private:

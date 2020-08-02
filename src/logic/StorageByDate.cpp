@@ -19,6 +19,12 @@ void StorageByDate::addTask(const std::weak_ptr<FullTask> ft){
     }
 }
 
+void StorageByDate::deleteDanglingPointers(){
+    for (auto i: map_){
+        i.second.deleteDanglingPointers();
+    }
+}
+
 const std::unordered_map<Date, StorageByPrior, Date::Hasher, Date::Comparator> &StorageByDate::getMap() const {
     return map_;
 }
