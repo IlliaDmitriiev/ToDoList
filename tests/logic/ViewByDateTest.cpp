@@ -43,7 +43,7 @@ const Task t5 = Task::create(
 TEST_F(ViewByDateTest, shouldGetFullTasksForToday) {
     ViewByDate vbd;
     IDGenerator gen;
-    FullTask ft = FullTask::create(gen, t1);
+    FullTask ft = FullTask::create(gen.generateId(), t1);
     auto sft = std::make_shared<FullTask>(ft);
     vbd.getStorage().addTask(sft);
     auto vec = vbd.getTasksForToday(Date::create(2020, 7, 31));
@@ -59,8 +59,8 @@ TEST_F(ViewByDateTest, shouldGetFullTasksForWeek1) {
     ViewByDate vbd;
     IDGenerator gen;
 
-    FullTask ft1 = FullTask::create(gen, t1);
-    FullTask ft2 = FullTask::create(gen, t2);
+    FullTask ft1 = FullTask::create(gen.generateId(), t1);
+    FullTask ft2 = FullTask::create(gen.generateId(), t2);
 
     auto sft1 = std::make_shared<FullTask>(ft1);
     auto sft2 = std::make_shared<FullTask>(ft2);
@@ -88,9 +88,9 @@ TEST_F(ViewByDateTest, shouldGetFullTasksForWeek2) {
     ViewByDate vbd;
     IDGenerator gen;
 
-    FullTask ft3 = FullTask::create(gen, t3);
-    FullTask ft4 = FullTask::create(gen, t4);
-    FullTask ft5 = FullTask::create(gen, t5);
+    FullTask ft3 = FullTask::create(gen.generateId(), t3);
+    FullTask ft4 = FullTask::create(gen.generateId(), t4);
+    FullTask ft5 = FullTask::create(gen.generateId(), t5);
 
     auto sft3 = std::make_shared<FullTask>(ft3);
     auto sft4 = std::make_shared<FullTask>(ft4);

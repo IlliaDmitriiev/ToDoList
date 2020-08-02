@@ -44,11 +44,11 @@ TEST_F(ViewByPriorityTest, shouldGetAllFullTasks) {
     ViewByPriority vbp;
     IDGenerator gen;
 
-    FullTask ft1 = FullTask::create(gen, t1);
-    FullTask ft2 = FullTask::create(gen, t2);
-    FullTask ft3 = FullTask::create(gen, t3);
-    FullTask ft4 = FullTask::create(gen, t4);
-    FullTask ft5 = FullTask::create(gen, t5);
+    FullTask ft1 = FullTask::create(gen.generateId(), t1);
+    FullTask ft2 = FullTask::create(gen.generateId(), t2);
+    FullTask ft3 = FullTask::create(gen.generateId(), t3);
+    FullTask ft4 = FullTask::create(gen.generateId(), t4);
+    FullTask ft5 = FullTask::create(gen.generateId(), t5);
 
     auto sft1 = std::make_shared<FullTask>(ft1);
     auto sft2 = std::make_shared<FullTask>(ft2);
