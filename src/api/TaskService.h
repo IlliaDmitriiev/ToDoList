@@ -28,6 +28,7 @@ public:
 
 public:
     void removeTask(TaskID id);
+    TaskDTO getTask(TaskID id);
     void updateDataAfterPeriodOfTime();
 
 private:

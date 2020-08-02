@@ -7,7 +7,7 @@
 TaskID TaskService::addTask(Date date, const std::string &name, const std::string &label, Task::Priority prior){
     TaskID id = generator_.generateId();
     Task t = Task::create(date, name, label, prior);
-    FullTask ft = FullTask::create(generator_, t);
+    FullTask ft = FullTask::create(id, t);
     auto sft = std::make_shared<FullTask>(ft);
     view_.getViewByD().getStorage().addTask(sft);
     view_.getViewByP().getStorage().putTaskInRightPlace(sft);
@@ -52,6 +52,10 @@ std::vector<TaskDTO> TaskService::getTasksForWeek(){
 
 void TaskService::removeTask(TaskID taskID){
    // data.removeTask(taskID);
+}
+
+TaskDTO TaskService::getTask(TaskID id){
+    return convertor.convert(allTasks[id]);
 }
 
 void TaskService::updateDataAfterPeriodOfTime(){
