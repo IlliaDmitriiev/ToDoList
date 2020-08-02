@@ -28,7 +28,7 @@ void StorageByPrior::putTaskInRightPlace(std::weak_ptr<FullTask> cur){
     else if (prior == Task::Priority::None) vNonePrior_.push_back(cur);
 }
 
-void StorageByPrior::updateVectors(){
+void StorageByPrior::deleteDanglingPointers(){
     std::vector<std::weak_ptr<FullTask>> cur1;
     for (int i =0 ; i<vFirstPrior_.size(); ++i)
         if (!vFirstPrior_[i].expired())
