@@ -30,6 +30,8 @@ add_executable(ToDoList
         src/logic/View.h
         src/logic/Convertor.cpp
         src/logic/Convertor.h
+        src/logic/StorageForSharedPtr.cpp
+        src/logic/StorageForSharedPtr.h
         )
 
 include_directories(src)
