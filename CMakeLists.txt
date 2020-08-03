@@ -59,15 +59,18 @@ add_executable(TestsExecutable
         tests/logic/ViewByPriorityTest.cpp
         tests/logic/StorageByPriorTest.cpp
         tests/logic/ConvertorTest.cpp
+        tests/logic/StorageByDateTest.cpp
         src/logic/IDGenerator.cpp
         src/logic/TaskDTO.cpp
         src/logic/ViewByDate.cpp
         src/logic/ViewByPriority.cpp
+        src/logic/StorageForSharedPtr.cpp
         src/logic/StorageByDate.cpp
         src/logic/StorageByPrior.cpp
         src/logic/FullTask.cpp
         src/logic/View.cpp
         src/logic/Convertor.cpp
+        src/logic/Collector.cpp
         )
 
 target_link_libraries(TestsExecutable GTest::GTest GTest::Main)
