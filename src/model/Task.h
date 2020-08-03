@@ -42,6 +42,16 @@ public:
 
     Priority getPrior() const {
         return prior_;
+}
+public:
+    static bool Compare(const Task &t1, const Task &t2){
+        return
+                t1.getDate().getYear() == t2.getDate().getYear() &&
+                t1.getDate().getMounth() == t2.getDate().getMounth() &&
+                t1.getDate().getDay() == t2.getDate().getDay() &&
+                t1.getName() == t2.getName() &&
+                t1.getLabel() == t2.getLabel() &&
+                t1.getPrior() == t2.getPrior();
     }
 
 private:
