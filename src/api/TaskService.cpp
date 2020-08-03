@@ -50,8 +50,8 @@ std::vector<TaskDTO> TaskService::getTasksForWeek(){
     return vec;
 };
 
-void TaskService::removeTask(TaskID taskID){
-   // data.removeTask(taskID);
+void TaskService::removeTask(TaskID id){
+   collector_.deleteTask(storage_, id);
 }
 
 TaskDTO TaskService::getTask(TaskID id){
@@ -59,7 +59,4 @@ TaskDTO TaskService::getTask(TaskID id){
     return convertor_.convert(storage_.getTask(id));
 }
 
-void TaskService::updateDataAfterPeriodOfTime(){
- //   auto d = data.getVByPriors();
-   // d.updateVectors();
-}
+

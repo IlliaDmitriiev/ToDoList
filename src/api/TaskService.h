@@ -11,6 +11,7 @@
 #include "IDGenerator.h"
 #include "View.h"
 #include "Convertor.h"
+#include "Collector.h"
 #include "StorageForSharedPtr.h"
 
 #include <algorithm>
@@ -30,13 +31,13 @@ public:
 public:
     void removeTask(TaskID id);
     TaskDTO getTask(TaskID id);
-    void updateDataAfterPeriodOfTime();
 
 private:
     IDGenerator generator_;
     View view_;
     Convertor convertor_;
     StorageForSharedPtr storage_;
+    Collector collector_;
 
 };
 
