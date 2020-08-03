@@ -11,6 +11,7 @@
 #include "IDGenerator.h"
 #include "View.h"
 #include "Convertor.h"
+#include "StorageForSharedPtr.h"
 
 #include <algorithm>
 
@@ -34,10 +35,8 @@ public:
 private:
     IDGenerator generator_;
     View view_;
-    Convertor convertor;
-
-private:
-    std::unordered_map<TaskID, std::shared_ptr<FullTask>, TaskID::Hasher, TaskID::Comparator > allTasks;
+    Convertor convertor_;
+    StorageForSharedPtr storage_;
 
 };
 

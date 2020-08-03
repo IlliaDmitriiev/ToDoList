@@ -11,7 +11,7 @@ TaskID TaskService::addTask(Date date, const std::string &name, const std::strin
     auto sft = std::make_shared<FullTask>(ft);
     view_.getViewByD().getStorage().addTask(sft);
     view_.getViewByP().getStorage().putTaskInRightPlace(sft);
-    allTasks.insert({id, std::move(sft)});
+    storage_.addTask(id, std::move(sft));
     return id;
 }
 
@@ -25,7 +25,7 @@ std::vector<TaskDTO> TaskService::getAllTasksByPrior(){
     std::vector<TaskDTO> vec;
     for(auto i: v){
         FullTask::Print(i);
-        vec.push_back(convertor.convert(i));
+        vec.push_back(convertor_.convert(i));
     }
     return vec;
 }
@@ -35,7 +35,7 @@ std::vector<TaskDTO> TaskService::getTasksForToday(){
     std::vector<TaskDTO> vec;
     for(auto i: v){
         FullTask::Print(i);
-        vec.push_back(convertor.convert(i));
+        vec.push_back(convertor_.convert(i));
     }
     return vec;
 }
@@ -45,7 +45,7 @@ std::vector<TaskDTO> TaskService::getTasksForWeek(){
     std::vector<TaskDTO> vec;
     for(auto i: v) {
         FullTask::Print(i);
-        vec.push_back(convertor.convert(i));
+        vec.push_back(convertor_.convert(i));
     }
     return vec;
 };
@@ -55,7 +55,8 @@ void TaskService::removeTask(TaskID taskID){
 }
 
 TaskDTO TaskService::getTask(TaskID id){
-    return convertor.convert(allTasks[id]);
+    FullTask::Print(storage_.getTask(id));
+    return convertor_.convert(storage_.getTask(id));
 }
 
 void TaskService::updateDataAfterPeriodOfTime(){
