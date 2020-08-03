@@ -11,7 +11,7 @@
 #include "IDGenerator.h"
 #include "View.h"
 #include "Convertor.h"
-#include "Collector.h"
+#include "Cleaner.h"
 #include "StorageForSharedPtr.h"
 
 #include <algorithm>
@@ -37,7 +37,7 @@ private:
     View view_;
     Convertor convertor_;
     StorageForSharedPtr storage_;
-    Collector collector_;
+    Cleaner cleaner_;
 
 };
 

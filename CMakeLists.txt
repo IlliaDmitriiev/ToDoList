@@ -32,8 +32,8 @@ add_executable(ToDoList
         src/logic/Convertor.h
         src/logic/StorageForSharedPtr.cpp
         src/logic/StorageForSharedPtr.h
-        src/logic/Collector.cpp
-        src/logic/Collector.h
+        src/logic/Cleaner.cpp
+        src/logic/Cleaner.h
         )
 
 include_directories(src)
@@ -70,7 +70,7 @@ add_executable(TestsExecutable
         src/logic/FullTask.cpp
         src/logic/View.cpp
         src/logic/Convertor.cpp
-        src/logic/Collector.cpp
+        src/logic/Cleaner.cpp
         )
 
 target_link_libraries(TestsExecutable GTest::GTest GTest::Main)

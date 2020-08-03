@@ -51,7 +51,7 @@ std::vector<TaskDTO> TaskService::getTasksForWeek(){
 };
 
 void TaskService::removeTask(TaskID id){
-   collector_.deleteTask(storage_, id);
+   cleaner_.deleteTask(storage_, id);
 }
 
 TaskDTO TaskService::getTask(TaskID id){
