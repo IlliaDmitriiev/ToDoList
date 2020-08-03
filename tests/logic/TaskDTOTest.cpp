@@ -9,7 +9,7 @@ class TaskDTOTest : public ::testing::Test {
 
 };
 
-TEST_F(TaskDTOTest, CorrectConstruction1) {
+TEST_F(TaskDTOTest, shouldCreate) {
     TaskDTO dto = TaskDTO::create(
             TaskID::create(47),
             Date::create(2020, 7, 30),
@@ -25,7 +25,7 @@ TEST_F(TaskDTOTest, CorrectConstruction1) {
     ASSERT_EQ(Task::Priority::None, dto.getPrior());
 }
 
-TEST_F(TaskDTOTest, CorrectConstruction2) {
+TEST_F(TaskDTOTest, shouldThrowExeption_2) {
     ASSERT_ANY_THROW(TaskDTO::create(
             TaskID::create(47),
             Date::create(2020, 7, 32),
@@ -36,7 +36,7 @@ TEST_F(TaskDTOTest, CorrectConstruction2) {
 
 }
 
-TEST_F(TaskDTOTest, CorrectConstruction3) {
+TEST_F(TaskDTOTest, shouldThrowExeption_2) {
     ASSERT_ANY_THROW(TaskDTO::create(
             TaskID::create(47),
             Date::create(2015, 2, 29),
