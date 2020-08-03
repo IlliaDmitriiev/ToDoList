@@ -47,12 +47,8 @@ TEST_F(ViewByDateTest, shouldGetFullTasksForToday) {
     auto sft = std::make_shared<FullTask>(ft);
     vbd.getStorage().addTask(sft);
     auto vec = vbd.getTasksForToday(Date::create(2020, 7, 31));
-    ASSERT_EQ(vec[0].lock()->getTask().getDate().getYear(), 2020);
-    ASSERT_EQ(vec[0].lock()->getTask().getDate().getMounth(), 7);
-    ASSERT_EQ(vec[0].lock()->getTask().getDate().getDay(), 31);
-    ASSERT_EQ(vec[0].lock()->getTask().getName(), "name1");
-    ASSERT_EQ(vec[0].lock()->getTask().getLabel(), "");
-    ASSERT_EQ(vec[0].lock()->getTask().getPrior(), Task::Priority::None);
+    ASSERT_TRUE(Task::Compare(vec[0].lock()->getTask(), ft.getTask()));
+    ASSERT_EQ(vec[0].lock()->getId().getId(), 0);
 }
 
 TEST_F(ViewByDateTest, shouldGetFullTasksForWeek1) {
@@ -69,19 +65,12 @@ TEST_F(ViewByDateTest, shouldGetFullTasksForWeek1) {
     vbd.getStorage().addTask(sft2);
 
     auto vec = vbd.getTasksForWeek(Date::create(2020, 7, 28));
-    ASSERT_EQ(vec[0].lock()->getTask().getDate().getYear(), 2020);
-    ASSERT_EQ(vec[0].lock()->getTask().getDate().getMounth(), 7);
-    ASSERT_EQ(vec[0].lock()->getTask().getDate().getDay(), 31);
-    ASSERT_EQ(vec[0].lock()->getTask().getName(), "name1");
-    ASSERT_EQ(vec[0].lock()->getTask().getLabel(), "");
-    ASSERT_EQ(vec[0].lock()->getTask().getPrior(), Task::Priority::None);
 
-    ASSERT_EQ(vec[1].lock()->getTask().getDate().getYear(), 2020);
-    ASSERT_EQ(vec[1].lock()->getTask().getDate().getMounth(), 8);
-    ASSERT_EQ(vec[1].lock()->getTask().getDate().getDay(), 2);
-    ASSERT_EQ(vec[1].lock()->getTask().getName(), "name2");
-    ASSERT_EQ(vec[1].lock()->getTask().getLabel(), "456578y&#&@)(#$?><</*-+fdg");
-    ASSERT_EQ(vec[1].lock()->getTask().getPrior(), Task::Priority::Second);
+    ASSERT_TRUE(Task::Compare(vec[0].lock()->getTask(), ft1.getTask()));
+    ASSERT_EQ(vec[0].lock()->getId().getId(), 0);
+
+    ASSERT_TRUE(Task::Compare(vec[1].lock()->getTask(), ft2.getTask()));
+    ASSERT_EQ(vec[1].lock()->getId().getId(), 1);
 }
 
 TEST_F(ViewByDateTest, shouldGetFullTasksForWeek2) {
@@ -102,24 +91,12 @@ TEST_F(ViewByDateTest, shouldGetFullTasksForWeek2) {
 
     auto vec = vbd.getTasksForWeek(Date::create(1500, 3, 1));
 
-    ASSERT_EQ(vec[0].lock()->getTask().getDate().getYear(), 1500);
-    ASSERT_EQ(vec[0].lock()->getTask().getDate().getMounth(), 2);
-    ASSERT_EQ(vec[0].lock()->getTask().getDate().getDay(), 26);
-    ASSERT_EQ(vec[0].lock()->getTask().getName(), "name3");
-    ASSERT_EQ(vec[0].lock()->getTask().getLabel(), "label3");
-    ASSERT_EQ(vec[0].lock()->getTask().getPrior(), Task::Priority::Third);
+    ASSERT_TRUE(Task::Compare(vec[0].lock()->getTask(), ft3.getTask()));
+    ASSERT_EQ(vec[0].lock()->getId().getId(), 0);
 
-    ASSERT_EQ(vec[1].lock()->getTask().getDate().getYear(), 1500);
-    ASSERT_EQ(vec[1].lock()->getTask().getDate().getMounth(), 2);
-    ASSERT_EQ(vec[1].lock()->getTask().getDate().getDay(), 28);
-    ASSERT_EQ(vec[1].lock()->getTask().getName(), "");
-    ASSERT_EQ(vec[1].lock()->getTask().getLabel(), "");
-    ASSERT_EQ(vec[1].lock()->getTask().getPrior(), Task::Priority::None);
+    ASSERT_TRUE(Task::Compare(vec[1].lock()->getTask(), ft5.getTask()));
+    ASSERT_EQ(vec[1].lock()->getId().getId(), 2);
 
-    ASSERT_EQ(vec[2].lock()->getTask().getDate().getYear(), 1500);
-    ASSERT_EQ(vec[2].lock()->getTask().getDate().getMounth(), 3);
-    ASSERT_EQ(vec[2].lock()->getTask().getDate().getDay(), 4);
-    ASSERT_EQ(vec[2].lock()->getTask().getName(), "name4");
-    ASSERT_EQ(vec[2].lock()->getTask().getLabel(), "");
-    ASSERT_EQ(vec[2].lock()->getTask().getPrior(), Task::Priority::First);
+    ASSERT_TRUE(Task::Compare(vec[2].lock()->getTask(), ft4.getTask()));
+    ASSERT_EQ(vec[2].lock()->getId().getId(), 1);
 }

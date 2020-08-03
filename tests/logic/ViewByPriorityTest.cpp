@@ -63,39 +63,17 @@ TEST_F(ViewByPriorityTest, shouldGetAllFullTasks) {
     vbp.getStorage().putTaskInRightPlace(sft5);
 
     auto vec = vbp.getAllTasks();
-    ASSERT_EQ(vec[0].lock()->getTask().getDate().getYear(), 1500);
-    ASSERT_EQ(vec[0].lock()->getTask().getDate().getMounth(), 3);
-    ASSERT_EQ(vec[0].lock()->getTask().getDate().getDay(), 4);
-    ASSERT_EQ(vec[0].lock()->getTask().getName(), "name4");
-    ASSERT_EQ(vec[0].lock()->getTask().getLabel(), "");
-    ASSERT_EQ(vec[0].lock()->getTask().getPrior(), Task::Priority::First);
+    ASSERT_TRUE(Task::Compare(vec[0].lock()->getTask(), ft4.getTask()));
+    ASSERT_EQ(vec[0].lock()->getId().getId(), 3);
+    ASSERT_TRUE(Task::Compare(vec[1].lock()->getTask(), ft2.getTask()));
+    ASSERT_EQ(vec[1].lock()->getId().getId(), 1);
+    ASSERT_TRUE(Task::Compare(vec[2].lock()->getTask(), ft3.getTask()));
+    ASSERT_EQ(vec[2].lock()->getId().getId(), 2);
+    ASSERT_TRUE(Task::Compare(vec[3].lock()->getTask(), ft1.getTask()));
+    ASSERT_EQ(vec[3].lock()->getId().getId(), 0);
+    ASSERT_TRUE(Task::Compare(vec[4].lock()->getTask(), ft5.getTask()));
+    ASSERT_EQ(vec[4].lock()->getId().getId(), 4);
 
-    ASSERT_EQ(vec[1].lock()->getTask().getDate().getYear(), 2020);
-    ASSERT_EQ(vec[1].lock()->getTask().getDate().getMounth(), 8);
-    ASSERT_EQ(vec[1].lock()->getTask().getDate().getDay(), 2);
-    ASSERT_EQ(vec[1].lock()->getTask().getName(), "name2");
-    ASSERT_EQ(vec[1].lock()->getTask().getLabel(), "456578y&#&@)(#$?><</*-+fdg");
-    ASSERT_EQ(vec[1].lock()->getTask().getPrior(), Task::Priority::Second);
 
-    ASSERT_EQ(vec[2].lock()->getTask().getDate().getYear(), 1500);
-    ASSERT_EQ(vec[2].lock()->getTask().getDate().getMounth(), 2);
-    ASSERT_EQ(vec[2].lock()->getTask().getDate().getDay(), 26);
-    ASSERT_EQ(vec[2].lock()->getTask().getName(), "name3");
-    ASSERT_EQ(vec[2].lock()->getTask().getLabel(), "label3");
-    ASSERT_EQ(vec[2].lock()->getTask().getPrior(), Task::Priority::Third);
-
-    ASSERT_EQ(vec[3].lock()->getTask().getDate().getYear(), 2020);
-    ASSERT_EQ(vec[3].lock()->getTask().getDate().getMounth(), 7);
-    ASSERT_EQ(vec[3].lock()->getTask().getDate().getDay(), 31);
-    ASSERT_EQ(vec[3].lock()->getTask().getName(), "name1");
-    ASSERT_EQ(vec[3].lock()->getTask().getLabel(), "");
-    ASSERT_EQ(vec[3].lock()->getTask().getPrior(), Task::Priority::None);
-
-    ASSERT_EQ(vec[4].lock()->getTask().getDate().getYear(), 1500);
-    ASSERT_EQ(vec[4].lock()->getTask().getDate().getMounth(), 2);
-    ASSERT_EQ(vec[4].lock()->getTask().getDate().getDay(), 28);
-    ASSERT_EQ(vec[4].lock()->getTask().getName(), "");
-    ASSERT_EQ(vec[4].lock()->getTask().getLabel(), "");
-    ASSERT_EQ(vec[4].lock()->getTask().getPrior(), Task::Priority::None);
 }
 
