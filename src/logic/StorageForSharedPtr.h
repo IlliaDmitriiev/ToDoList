@@ -14,9 +14,6 @@ public:
     std::weak_ptr<FullTask> getTask(TaskID id);
     void deleteTask(TaskID id);
 
-    const std::unordered_map<TaskID, std::shared_ptr<FullTask>,
-    TaskID::Hasher, TaskID::Comparator> &getAllTasks() const;
-
 private:
     std::unordered_map<TaskID, std::shared_ptr<FullTask>,
             TaskID::Hasher, TaskID::Comparator > allTasks_;
