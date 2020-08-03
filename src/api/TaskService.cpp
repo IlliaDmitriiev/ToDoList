@@ -11,7 +11,7 @@ TaskID TaskService::addTask(Date date, const std::string &name, const std::strin
     auto sft = std::make_shared<FullTask>(ft);
     view_.getViewByD().getStorage().addTask(sft);
     view_.getViewByP().getStorage().putTaskInRightPlace(sft);
-    storage_.addTask(id, std::move(sft));
+    storage_.addTask(std::move(sft));
     return id;
 }
 

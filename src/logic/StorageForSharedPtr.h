@@ -10,9 +10,13 @@
 class StorageForSharedPtr {
 
 public:
-    void addTask(TaskID id, std::shared_ptr<FullTask> sft);
+    void addTask(std::shared_ptr<FullTask> sft);
     std::weak_ptr<FullTask> getTask(TaskID id);
     void deleteTask(TaskID id);
+    void go(){
+        for(auto i: allTasks_)
+            std::cout <<"count\n";
+    }
 
 private:
     std::unordered_map<TaskID, std::shared_ptr<FullTask>,

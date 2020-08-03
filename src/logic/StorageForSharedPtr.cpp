@@ -4,8 +4,8 @@
 
 #include "StorageForSharedPtr.h"
 
-void StorageForSharedPtr::addTask(TaskID id, std::shared_ptr<FullTask> sft){
-    allTasks_.insert({id, std::move(sft)});
+void StorageForSharedPtr::addTask(std::shared_ptr<FullTask> sft){
+    allTasks_.insert({sft->getId(), std::move(sft)});
 }
 
 std::weak_ptr<FullTask> StorageForSharedPtr::getTask(TaskID id){
