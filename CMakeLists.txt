@@ -40,7 +40,6 @@ include_directories(src)
 include_directories(src/api)
 include_directories(src/logic)
 include_directories(src/model)
-
 include_directories(tests)
 
 include(GoogleTest)
@@ -60,6 +59,7 @@ add_executable(TestsExecutable
         tests/logic/StorageByPriorTest.cpp
         tests/logic/ConvertorTest.cpp
         tests/logic/StorageByDateTest.cpp
+        tests/logic/StorageForSharedPtrTest.cpp
         src/logic/IDGenerator.cpp
         src/logic/TaskDTO.cpp
         src/logic/ViewByDate.cpp
