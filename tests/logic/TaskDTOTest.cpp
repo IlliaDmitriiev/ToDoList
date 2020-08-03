@@ -25,7 +25,7 @@ TEST_F(TaskDTOTest, shouldCreate) {
     ASSERT_EQ(Task::Priority::None, dto.getPrior());
 }
 
-TEST_F(TaskDTOTest, shouldThrowExeption_2) {
+TEST_F(TaskDTOTest, shouldThrowExeption_1) {
     ASSERT_ANY_THROW(TaskDTO::create(
             TaskID::create(47),
             Date::create(2020, 7, 32),
