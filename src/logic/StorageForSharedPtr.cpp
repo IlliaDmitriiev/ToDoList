@@ -9,7 +9,9 @@ void StorageForSharedPtr::addTask(std::shared_ptr<FullTask> sft){
 }
 
 std::weak_ptr<FullTask> StorageForSharedPtr::getTask(TaskID id){
-    return allTasks_[id];
+    if (allTasks_.find(id) == allTasks_.end())
+        throw std::runtime_error("");
+    else return allTasks_[id];
 }
 
 void StorageForSharedPtr::deleteTask(TaskID id){
