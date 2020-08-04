@@ -10,14 +10,19 @@ FullTask FullTask::create(const TaskID& id, const Task &task){
 }
 
 void FullTask::addSubtask( std::weak_ptr<FullTask> ft){
-   subtask_.push_back(ft);
+  allTasks_.insert({ft.lock()->getId(), ft});
+  ft.lock()->setParent(id_);
+}
+
+void FullTask::setParent(TaskID id){
+    parent_ = id;
 }
 
 const Task &FullTask::getTask() const {
     return task_;
 }
 
-FullTask::FullTask(TaskID ID, const Task &t) : id_(ID), task_(t) {}
+FullTask::FullTask(TaskID id, const Task &t) : id_(id), task_(t), parent_(id){}
 
 const TaskID &FullTask::getId() const {
     return id_;

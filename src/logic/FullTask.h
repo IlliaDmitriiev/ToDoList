@@ -8,7 +8,7 @@
 #include "Task.h"
 #include "IDGenerator.h"
 #include <memory>
-#include <vector>
+#include <unordered_map>
 
 class FullTask {
 
@@ -22,13 +22,18 @@ public:
     const Task &getTask() const;
     const TaskID &getId() const;
 
+public:
+    void setParent(TaskID id);
+
 private:
     FullTask(TaskID ID, const Task &t);
 
 private:
     TaskID id_;
+    TaskID parent_;
     Task task_;
-    std::vector<std::weak_ptr<FullTask>> subtask_;
+    std::unordered_map<TaskID, std::weak_ptr<FullTask>,
+            TaskID::Hasher, TaskID::Comparator > allTasks_;
 };
 
 #endif //TODOLIST_FULLTASK_H
