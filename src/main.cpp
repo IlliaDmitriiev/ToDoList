@@ -9,6 +9,6 @@ int main() {
             "name2", "label2", Task::Priority::Third);
     ts.addSubtask(TaskID::create(1), Date::create(2020,8,1),
                "name3", "label3", Task::Priority::Second);
-    ts.showTasksForWeek();
+    ts.getTasksForWeek();
     return 0;
 }

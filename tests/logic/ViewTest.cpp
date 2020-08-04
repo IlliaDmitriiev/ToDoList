@@ -68,3 +68,37 @@ TEST_F(ViewTest, shouldGetAllTasksByPrior) {
     ASSERT_TRUE(Task::Compare(vec[2].lock()->getTask(), t1));
     ASSERT_TRUE(Task::Compare(vec[3].lock()->getTask(), t4));
 }
+
+TEST_F(ViewTest, shouldGetAllTasksForToday) {
+    View view;
+    time_t now = time(0);
+    auto cur = std::make_unique<tm>(*gmtime(&now));
+    Date date = Date::create(cur->tm_year+1900, cur->tm_mon + 1, cur->tm_mday);
+
+    Task t11 = Task::create(
+            date,
+            "name1",
+            "456578y&#&@)(#$?><</*-+fdg",
+            Task::Priority::Second);
+    Task t12 = Task::create(
+            date,
+            "name2",
+            "4565><</*-+fdg",
+            Task::Priority::First);
+
+    FullTask ft11 = FullTask::create(gen.generateId(), t11);
+    FullTask ft12 = FullTask::create(gen.generateId(), t12);
+
+    auto sft11 = std::make_shared<FullTask>(ft11);
+    auto sft12 = std::make_shared<FullTask>(ft12);
+
+    view.getViewByD().getStorage().addTask(sft11);
+    view.getViewByD().getStorage().addTask(sft12);
+
+    auto vec = view.getTasksForToday();
+
+    ASSERT_EQ(vec.size(), 2);
+    ASSERT_TRUE(Task::Compare(vec[0].lock()->getTask(), t12));
+    ASSERT_TRUE(Task::Compare(vec[1].lock()->getTask(), t11));
+
+}
