@@ -61,6 +61,7 @@ add_executable(TestsExecutable
         tests/logic/StorageByDateTest.cpp
         tests/logic/StorageForSharedPtrTest.cpp
         tests/logic/ViewTest.cpp
+        tests/logic/FullTaskTest.cpp
         src/logic/IDGenerator.cpp
         src/logic/TaskDTO.cpp
         src/logic/ViewByDate.cpp
@@ -71,8 +72,7 @@ add_executable(TestsExecutable
         src/logic/FullTask.cpp
         src/logic/View.cpp
         src/logic/Convertor.cpp
-        src/logic/Cleaner.cpp
-        )
+        src/logic/Cleaner.cpp)
 
 target_link_libraries(TestsExecutable GTest::GTest GTest::Main)
 
