@@ -6,6 +6,7 @@
 #define TODOLIST_STORAGEFORSHAREDPTR_H
 
 #include "FullTask.h"
+#include <unordered_map>
 
 class StorageForSharedPtr {
 
