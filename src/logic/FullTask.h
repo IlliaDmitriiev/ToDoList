@@ -16,12 +16,15 @@ public:
     static FullTask create(const TaskID& id, const Task &task);
 
 public:
-    void addSubtask( std::weak_ptr<FullTask> ft);
+    void addSubtask( const std::weak_ptr<FullTask>& ft);
+    void deleteSubtask(TaskID id);
 
 public:
     const Task &getTask() const;
     const TaskID &getId() const;
-
+    const TaskID &getParent() const;
+    std::unordered_map<TaskID, std::weak_ptr<FullTask>,
+            TaskID::Hasher, TaskID::Comparator>& getSubTasks();
 public:
     void setParent(TaskID id);
 
@@ -33,7 +36,7 @@ private:
     TaskID parent_;
     Task task_;
     std::unordered_map<TaskID, std::weak_ptr<FullTask>,
-            TaskID::Hasher, TaskID::Comparator > allTasks_;
+            TaskID::Hasher, TaskID::Comparator> subTasks_;
 };
 
 #endif //TODOLIST_FULLTASK_H
