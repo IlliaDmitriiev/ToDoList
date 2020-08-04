@@ -63,7 +63,7 @@ public:
 
 };
 
-TEST_F(StorageByDateTest, shoulPutFullTasksIntoRightPlace) {
+TEST_F(StorageByDateTest, shouldPutFullTasksIntoRightPlace) {
     storage.addTask(sft1);
     storage.addTask(sft2);
     storage.addTask(sft3);
@@ -95,3 +95,20 @@ TEST_F(StorageByDateTest, shoulPutFullTasksIntoRightPlace) {
     ASSERT_TRUE(Task::Compare(vecPriorNone[0].lock()->getTask(), sft5->getTask()));
     ASSERT_EQ(vecPriorNone[0].lock()->getId().getId(), 4);
 }
+
+TEST_F(StorageByDateTest, shouldDelete) {
+    storage.addTask(sft1);
+    storage.addTask(sft2);
+
+    sft2.reset();
+    storage.deleteDanglingPointers();
+
+    auto mp = storage.getMap();
+    auto vecPriorSecond = mp[Date::create(2020,7,31)].getVSecondPrior();
+    auto vecPriorNone = mp[Date::create(2020,7,31)].getVNonePrior();
+
+    ASSERT_EQ(0, vecPriorSecond.size());
+    ASSERT_TRUE(Task::Compare(vecPriorNone[0].lock()->getTask(), sft1->getTask()));
+    ASSERT_EQ(vecPriorNone[0].lock()->getId().getId(), 0);
+}
+
