@@ -100,5 +100,54 @@ TEST_F(ViewTest, shouldGetAllTasksForToday) {
     ASSERT_EQ(vec.size(), 2);
     ASSERT_TRUE(Task::Compare(vec[0].lock()->getTask(), t12));
     ASSERT_TRUE(Task::Compare(vec[1].lock()->getTask(), t11));
-
 }
+
+TEST_F(ViewTest, shouldGetAllTasksForWeek) {
+    View view;
+    time_t now = time(0);
+    auto cur = std::make_unique<tm>(*gmtime(&now));
+    Date date1 = Date::create(cur->tm_year+1900, cur->tm_mon + 1, cur->tm_mday);
+    Date date2 = Date::create(cur->tm_year+1900, cur->tm_mon + 1, cur->tm_mday);
+    Date date3 = Date::create(cur->tm_year+1900, cur->tm_mon + 1, cur->tm_mday);
+    int WeekDay1 = date1.getWday();
+    if(WeekDay1 == 0) WeekDay1+=7;
+    date1.moveWithinTheWeek(-WeekDay1 + 1);
+
+    int WeekDay3 = date3.getWday();
+    if(WeekDay3 == 0) WeekDay1+=7;
+
+    Task t11 = Task::create(
+            date1,
+            "name1",
+            "456578y&#&@)(#$?><</*-+fdg",
+            Task::Priority::Second);
+    Task t12 = Task::create(
+            date2,
+            "name2",
+            "4565><</*-+fdg",
+            Task::Priority::First);
+    Task t13 = Task::create(
+            date3,
+            "name3",
+            "",
+            Task::Priority::None);
+    FullTask ft11 = FullTask::create(gen.generateId(), t11);
+    FullTask ft12 = FullTask::create(gen.generateId(), t12);
+    FullTask ft13 = FullTask::create(gen.generateId(), t13);
+
+    auto sft11 = std::make_shared<FullTask>(ft11);
+    auto sft12 = std::make_shared<FullTask>(ft12);
+    auto sft13 = std::make_shared<FullTask>(ft13);
+
+    view.getViewByD().getStorage().addTask(sft11);
+    view.getViewByD().getStorage().addTask(sft12);
+    view.getViewByD().getStorage().addTask(sft13);
+
+    auto vec = view.getTasksForWeek();
+
+    ASSERT_EQ(vec.size(), 3);
+    ASSERT_TRUE(Task::Compare(vec[0].lock()->getTask(), t11));
+    ASSERT_TRUE(Task::Compare(vec[1].lock()->getTask(), t12));
+    ASSERT_TRUE(Task::Compare(vec[2].lock()->getTask(), t13));
+}
+
