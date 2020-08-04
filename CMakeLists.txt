@@ -62,6 +62,7 @@ add_executable(TestsExecutable
         tests/logic/StorageForSharedPtrTest.cpp
         tests/logic/ViewTest.cpp
         tests/logic/FullTaskTest.cpp
+        tests/logic/CleanerTest.cpp
         src/logic/IDGenerator.cpp
         src/logic/TaskDTO.cpp
         src/logic/ViewByDate.cpp
