@@ -14,12 +14,7 @@ Date Date::create(int y, int m, int d){
     return date;
 }
 
-void Date::Print(const Date& date){
-    int day = date.getDay();
-    int mon = date.getMounth();
-    int year = date.getYear();
-    std::cout << day/10<<day%10<<"."<<mon/10<<mon%10<<"."<<year<<"\n";
-}
+
 
 void Date::CalcWeekDay(){
     int m = mounth;

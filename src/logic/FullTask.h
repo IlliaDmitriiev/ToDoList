@@ -16,9 +16,6 @@ public:
     static FullTask create(const TaskID& id, const Task &task);
 
 public:
-    static void Print(const std::weak_ptr<FullTask> &task);
-
-public:
     void addSubtask(TaskID subtaskID, std::weak_ptr<FullTask> ft);
     void removeSubtasks( std::unordered_map<TaskID, std::shared_ptr<FullTask>, TaskID::Hasher, TaskID::Comparator> &allTasks);
 

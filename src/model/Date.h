@@ -11,8 +11,7 @@ class Date{
 public:
     static  Date create(int y, int m, int d);
 
-public:
-    static void Print(const Date& date);
+
 
 public:
     struct Hasher{
