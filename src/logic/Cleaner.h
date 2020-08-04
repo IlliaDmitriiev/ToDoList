@@ -10,6 +10,8 @@
 #include "StorageByDate.h"
 
 class Cleaner {
+public:
+    Cleaner();
 
 public:
     void deleteTask(StorageForSharedPtr& storage, TaskID id);
@@ -22,8 +24,8 @@ public:
     void increaseDeletedCount(int x);
 
 private:
-    int totalTaskCount;
-    int deletedTaskCount;
+    int totalTaskCount_;
+    int deletedTaskCount_;
 };
 
 
