@@ -9,23 +9,8 @@ FullTask FullTask::create(const TaskID& id, const Task &task){
     return ft;
 }
 
-
-void FullTask::addSubtask(TaskID subtaskID, std::weak_ptr<FullTask> ft){
-    subtasks_.insert({subtaskID, ft});
-}
-
-void FullTask::removeSubtasks( std::unordered_map<TaskID, std::shared_ptr<FullTask>, TaskID::Hasher, TaskID::Comparator> &allTasks){
-
-    for (auto i: subtasks_){
-        if (!i.second.expired())
-            i.second.lock()->removeSubtasks(allTasks);
-
-        allTasks[i.first].reset();
-        i.second.reset();
-        allTasks.erase(i.first);
-    }
-
-    subtasks_.clear();
+void FullTask::addSubtask( std::weak_ptr<FullTask> ft){
+   subtask_.push_back(ft);
 }
 
 const Task &FullTask::getTask() const {
