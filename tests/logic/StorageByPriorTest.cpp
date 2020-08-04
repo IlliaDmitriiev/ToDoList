@@ -98,7 +98,7 @@ TEST_F(StorageByPriorTest, shoulPutFullTasksIntoRightPlace) {
 
 }
 
-TEST_F(StorageByPriorTest, shoulDeleteDanglingPointers) {
+TEST_F(StorageByPriorTest, shoulDeleteDanglingPointers_1) {
 
     storage.putTaskInRightPlace(sft1);
     storage.putTaskInRightPlace(sft2);
@@ -132,4 +132,29 @@ TEST_F(StorageByPriorTest, shoulDeleteDanglingPointers) {
 
     ASSERT_EQ(vecPriorNone[1].lock()->getTask().getLabel(), "");
     ASSERT_EQ(vecPriorNone[1].lock()->getTask().getPrior(), Task::Priority::None);
+}
+
+TEST_F(StorageByPriorTest, shoulDeleteDanglingPointers_2) {
+
+    storage.putTaskInRightPlace(sft1);
+    storage.putTaskInRightPlace(sft2);
+    storage.putTaskInRightPlace(sft3);
+    sft1.reset();
+
+    storage.deleteDanglingPointers();
+
+    auto vecPriorFirst = storage.getVFirstPrior();
+    auto vecPriorSecond = storage.getVSecondPrior();
+    auto vecPriorThird = storage.getVThirdPrior();
+    auto vecPriorNone = storage.getVNonePrior();
+
+    ASSERT_EQ(0, vecPriorFirst.size());
+    ASSERT_EQ(1, vecPriorSecond.size());
+    ASSERT_EQ(1, vecPriorThird.size());
+    ASSERT_EQ(0, vecPriorNone.size());
+
+    ASSERT_TRUE(Task::Compare(vecPriorSecond[0].lock()->getTask(), sft2->getTask()));
+    ASSERT_EQ(vecPriorSecond[0].lock()->getId().getId(), 1);
+    ASSERT_TRUE(Task::Compare(vecPriorThird[0].lock()->getTask(), sft3->getTask()));
+    ASSERT_EQ(vecPriorThird[0].lock()->getId().getId(), 2);
 }
