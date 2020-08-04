@@ -40,13 +40,24 @@ const Task t5 = Task::create(
         "",
         Task::Priority::None);
 
-TEST_F(ViewByDateTest, shouldGetFullTasksForToday) {
+TEST_F(ViewByDateTest, shouldGetFullTasksForToday_1) {
     ViewByDate vbd;
     IDGenerator gen;
     FullTask ft = FullTask::create(gen.generateId(), t1);
     auto sft = std::make_shared<FullTask>(ft);
     vbd.getStorage().addTask(sft);
     auto vec = vbd.getTasksForToday(Date::create(2020, 7, 31));
+    ASSERT_TRUE(Task::Compare(vec[0].lock()->getTask(), ft.getTask()));
+    ASSERT_EQ(vec[0].lock()->getId().getId(), 0);
+}
+
+TEST_F(ViewByDateTest, shouldGetFullTasksForToday_2) {
+    ViewByDate vbd;
+    IDGenerator gen;
+    FullTask ft = FullTask::create(gen.generateId(), t3);
+    auto sft = std::make_shared<FullTask>(ft);
+    vbd.getStorage().addTask(sft);
+    auto vec = vbd.getTasksForToday(Date::create(1500, 2, 26));
     ASSERT_TRUE(Task::Compare(vec[0].lock()->getTask(), ft.getTask()));
     ASSERT_EQ(vec[0].lock()->getId().getId(), 0);
 }
