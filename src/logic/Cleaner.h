@@ -15,6 +15,15 @@ public:
     void deleteTask(StorageForSharedPtr& storage, TaskID id);
     void deleteDanglingPointers(StorageByPrior& storage);
     void deleteDanglingPointers(StorageByDate& storage);
+    bool isItTimeToUpdate();
+
+public:
+    void increaseTotalCount(int x);
+    void increaseDeletedCount(int x);
+
+private:
+    int totalTaskCount;
+    int deletedTaskCount;
 };
 
 
