@@ -20,8 +20,8 @@ add_executable(ToDoList
         src/logic/StorageByDate.h
         src/api/TaskService.cpp
         src/api/TaskService.h
-        src/logic/TaskDTO.cpp
-        src/logic/TaskDTO.h
+        src/api/TaskDTO.cpp
+        src/api/TaskDTO.h
         src/logic/ViewByDate.cpp
         src/logic/ViewByDate.h
         src/logic/ViewByPriority.cpp
@@ -50,7 +50,7 @@ add_executable(TestsExecutable
         src/model/Date.cpp
         src/model/TaskID.cpp
         tests/logic/IDGeneratorTest.cpp
-        tests/logic/TaskDTOTest.cpp
+        tests/api/TaskDTOTest.cpp
         tests/logic/ViewByDateTest.cpp
         tests/logic/ViewByPriorityTest.cpp
         tests/logic/StorageByPriorTest.cpp
@@ -61,7 +61,7 @@ add_executable(TestsExecutable
         tests/logic/FullTaskTest.cpp
         tests/logic/CleanerTest.cpp
         src/logic/IDGenerator.cpp
-        src/logic/TaskDTO.cpp
+        src/api/TaskDTO.cpp
         src/logic/ViewByDate.cpp
         src/logic/ViewByPriority.cpp
         src/logic/StorageForSharedPtr.cpp

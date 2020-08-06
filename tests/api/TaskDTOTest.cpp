@@ -3,7 +3,7 @@
 //
 
 #include <gtest/gtest.h>
-#include "logic/TaskDTO.h"
+#include "api/TaskDTO.h"
 
 class TaskDTOTest : public ::testing::Test {
 
