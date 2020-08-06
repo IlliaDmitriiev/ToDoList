@@ -3,7 +3,7 @@
 //
 
 #include <gtest/gtest.h>
-#include "Cleaner.h"
+#include "logic/Cleaner.h"
 
 
 class CleanerTest : public ::testing::Test {

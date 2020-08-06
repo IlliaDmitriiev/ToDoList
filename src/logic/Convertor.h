@@ -6,7 +6,7 @@
 #define TODOLIST_CONVERTOR_H
 
 #include "FullTask.h"
-#include "TaskDTO.h"
+#include "api/TaskDTO.h"
 
 class Convertor{
 
