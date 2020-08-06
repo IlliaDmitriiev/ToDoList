@@ -3,7 +3,7 @@
 //
 
 #include <gtest/gtest.h>
-#include "ViewByDate.h"
+#include "logic/ViewByDate.h"
 
 class ViewByDateTest : public ::testing::Test {
 

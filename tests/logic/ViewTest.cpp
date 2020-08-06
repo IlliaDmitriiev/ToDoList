@@ -4,7 +4,7 @@
 
 
 #include <gtest/gtest.h>
-#include "View.h"
+#include "logic/View.h"
 
 const Task t1 = Task::create(
         Date::create(2020, 7, 31),

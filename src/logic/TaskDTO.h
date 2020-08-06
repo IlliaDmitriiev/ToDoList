@@ -6,7 +6,7 @@
 #define TODOLIST_TASKDTO_H
 
 #include <model/TaskID.h>
-#include "Task.h"
+#include "model/Task.h"
 
 class TaskDTO {
 public:

@@ -3,7 +3,7 @@
 //
 
 #include <gtest/gtest.h>
-#include "ViewByPriority.h"
+#include "logic/ViewByPriority.h"
 
 class ViewByPriorityTest : public ::testing::Test {
 

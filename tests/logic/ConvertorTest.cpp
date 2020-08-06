@@ -3,8 +3,8 @@
 //
 
 #include <gtest/gtest.h>
-#include "IDGenerator.h"
-#include "Convertor.h"
+#include "logic/IDGenerator.h"
+#include "logic/Convertor.h"
 
 class ConvertorTest : public ::testing::Test {
 

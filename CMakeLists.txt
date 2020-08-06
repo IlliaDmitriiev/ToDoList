@@ -37,10 +37,7 @@ add_executable(ToDoList
         )
 
 include_directories(src)
-include_directories(src/api)
-include_directories(src/logic)
-include_directories(src/model)
-include_directories(tests)
+
 
 include(GoogleTest)
 find_package(GTest REQUIRED)

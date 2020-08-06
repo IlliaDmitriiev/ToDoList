@@ -3,7 +3,7 @@
 //
 
 #include <gtest/gtest.h>
-#include "StorageByPrior.h"
+#include "logic/StorageByPrior.h"
 
 const Task t1 = Task::create(
         Date::create(2020, 7, 31),

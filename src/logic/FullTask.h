@@ -5,7 +5,7 @@
 #ifndef TODOLIST_FULLTASK_H
 #define TODOLIST_FULLTASK_H
 
-#include "Task.h"
+#include "model/Task.h"
 #include "IDGenerator.h"
 #include <memory>
 #include <unordered_map>
