@@ -9,7 +9,7 @@ TaskCreationResult TaskCreationResult::success(const TaskID &id) {
 }
 
 TaskCreationResult TaskCreationResult::taskNotFound() {
-    return TaskCreationResult(std::nullopt, "Task not found");
+    return TaskCreationResult(std::nullopt, std::nullopt);
 }
 
 TaskCreationResult TaskCreationResult::error(const std::string &message) {
