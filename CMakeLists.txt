@@ -62,6 +62,7 @@ add_executable(TestsExecutable
         tests/logic/ViewTest.cpp
         tests/logic/FullTaskTest.cpp
         tests/logic/CleanerTest.cpp
+        tests/api/TaskCreationResultTest.cpp
         src/logic/IDGenerator.cpp
         src/api/TaskDTO.cpp
         src/api/TaskCreationResult.cpp
