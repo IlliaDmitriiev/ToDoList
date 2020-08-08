@@ -7,12 +7,13 @@
 
 #include "FullTask.h"
 #include <unordered_map>
+#include <optional>
 
 class StorageForSharedPtr {
 
 public:
     void addTask(std::shared_ptr<FullTask> sft);
-    std::weak_ptr<FullTask> getTask(TaskID id);
+    std::optional<std::weak_ptr<FullTask>> getTask(TaskID id);
     void deleteTask(TaskID id);
 
 
