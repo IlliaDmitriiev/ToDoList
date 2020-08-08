@@ -4,21 +4,28 @@
 
 #include "TaskService.h"
 
-TaskID TaskService::addTask(Date date, const std::string &name, const std::string &label, Task::Priority prior){
+TaskCreationResult TaskService::addTask(Date date, const std::string &name, const std::string &label, Task::Priority prior){
     TaskID id = generator_.generateId();
-    Task t = Task::create(date, name, label, prior);
-    FullTask ft = FullTask::create(id, t);
-    auto sft = std::make_shared<FullTask>(ft);
+    auto sft = std::make_shared<FullTask>(FullTask::create(id, Task::create(date, name, label, prior)));
     view_.getViewByD().getStorage().addTask(sft);
     view_.getViewByP().getStorage().putTaskInRightPlace(sft);
     storage_.addTask(std::move(sft));
-    return id;
+    return TaskCreationResult::success(id);
 }
 
-TaskID TaskService::addSubtask(TaskID id, Date date, const std::string &name, const std::string &label, Task::Priority prior){
-    TaskID subtaskID = addTask(date, name, label, prior);
-    storage_.getTask(id).lock()->addSubtask(storage_.getTask(subtaskID));
-    return subtaskID;
+TaskCreationResult TaskService::addSubtask(TaskID id, Date date, const std::string &name, const std::string &label, Task::Priority prior){
+    auto subtaskID = addTask(date, name, label, prior);
+    std::optional<std::weak_ptr<FullTask>> ft = storage_.getTask(id);
+    if(ft.has_value()) {
+        if (subtaskID.getTaskID().has_value()) {
+            ft.value().lock()->addSubtask(storage_.getTask(subtaskID.getTaskID().value()).value());
+            return TaskCreationResult::success(subtaskID.getTaskID().value());
+        }
+        else
+            return TaskCreationResult::error("can't create subtask");
+    }
+    else
+        return TaskCreationResult::taskNotFound();
 }
 
 std::vector<TaskDTO> TaskService::getAllTasksByPrior(){
@@ -52,8 +59,13 @@ void TaskService::removeTask(TaskID id){
    cleaner_.deleteTask(storage_, id);
 }
 
-TaskDTO TaskService::getTask(TaskID id){
-    return convertor_.convert(storage_.getTask(id));
+std::optional<TaskDTO> TaskService::getTask(TaskID id){
+    std::optional<std::weak_ptr<FullTask>> ft = storage_.getTask(id);
+    if (ft.has_value())
+        return
+            std::optional<TaskDTO>(convertor_.convert(ft.value()));
+     else
+         return std::nullopt;
 }
 
 

@@ -13,15 +13,15 @@
 #include "logic/Convertor.h"
 #include "logic/Cleaner.h"
 #include "logic/StorageForSharedPtr.h"
-
+#include "TaskCreationResult.h"
 #include <algorithm>
 
 class TaskService {
 
 public:
-    TaskID addTask(Date date, const std::string &name,
+    TaskCreationResult addTask(Date date, const std::string &name,
             const std::string &label, Task::Priority prior);
-    TaskID addSubtask(TaskID id, Date date, const std::string &name,
+    TaskCreationResult addSubtask(TaskID id, Date date, const std::string &name,
             const std::string &label, Task::Priority prior);
 public:
     std::vector<TaskDTO> getAllTasksByPrior();
@@ -30,7 +30,7 @@ public:
 
 public:
     void removeTask(TaskID id);
-    TaskDTO getTask(TaskID id);
+    std::optional<TaskDTO> getTask(TaskID id);
 
 private:
     IDGenerator generator_;
