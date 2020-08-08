@@ -11,7 +11,9 @@
 class Convertor{
 
 public:
-    TaskDTO convert(std::weak_ptr<FullTask> ft);
+    static TaskDTO getTaskDTO(std::weak_ptr<FullTask> ft);
+    static Task getTask(TaskDTO td);
+
 };
 
 
