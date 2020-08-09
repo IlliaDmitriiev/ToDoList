@@ -10,8 +10,18 @@ TaskDTO TaskDTO::create(const TaskID &taskId, const Date &date, const std::strin
     return task;
 }
 
+TaskDTO TaskDTO::createWithoutID(const Date &date, const std::string &name, const std::string &label,
+                        Task::Priority prior){
+    TaskDTO task(date, name, label, prior);
+    return task;
+}
+
 TaskDTO::TaskDTO(const TaskID &taskId, const Date &date, const std::string &name, const std::string &label,
         Task::Priority prior) : id_(taskId), date_(date), name_(name), label_(label), prior_(prior) {}
+
+TaskDTO::TaskDTO(const Date &date, const std::string &name, const std::string &label,
+                 Task::Priority prior) : id_(TaskID::create(0)), date_(date),
+                                        name_(name), label_(label), prior_(prior) {}
 
 const TaskID &TaskDTO::getTaskId() const {
     return id_;

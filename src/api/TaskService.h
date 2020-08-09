@@ -19,10 +19,9 @@
 class TaskService {
 
 public:
-    TaskCreationResult addTask(Date date, const std::string &name,
-            const std::string &label, Task::Priority prior);
-    TaskCreationResult addSubtask(TaskID id, Date date, const std::string &name,
-            const std::string &label, Task::Priority prior);
+    TaskCreationResult addTask(const TaskDTO &taskDto);
+    TaskCreationResult addSubtask(TaskID taskID, const TaskDTO &subTask);
+
 public:
     std::vector<TaskDTO> getAllTasksByPrior();
     std::vector<TaskDTO> getTasksForToday();
@@ -35,7 +34,6 @@ public:
 private:
     IDGenerator generator_;
     View view_;
-    Convertor convertor_;
     StorageForSharedPtr storage_;
     Cleaner cleaner_;
 

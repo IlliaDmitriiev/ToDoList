@@ -4,12 +4,21 @@
 
 #include "Convertor.h"
 
-TaskDTO Convertor::convert(std::weak_ptr<FullTask> ft){
+TaskDTO Convertor::getTaskDTO(std::weak_ptr<FullTask> ft){
     return TaskDTO::create(
             ft.lock()->getId(),
             ft.lock()->getTask().getDate(),
             ft.lock()->getTask().getName(),
             ft.lock()->getTask().getLabel(),
             ft.lock()->getTask().getPrior()
+            );
+}
+
+Task Convertor::getTask(TaskDTO td){
+    return Task::create(
+            td.getDate(),
+            td.getName(),
+            td.getLabel(),
+            td.getPrior()
             );
 }

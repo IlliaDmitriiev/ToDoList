@@ -9,10 +9,13 @@
 #include "model/Task.h"
 
 class TaskDTO {
+
 public:
     static TaskDTO create(const TaskID &taskId, const Date &date, const std::string &name, const std::string &label,
                           Task::Priority prior);
-
+    static TaskDTO createWithoutID(const Date &date, const std::string &name, const std::string &label,
+                                   Task::Priority prior);
+public:
     const TaskID &getTaskId() const;
 
     const Date &getDate() const;
@@ -26,6 +29,8 @@ public:
 private:
     TaskDTO(const TaskID &taskId, const Date &date, const std::string &name, const std::string &label,
             Task::Priority prior);
+    TaskDTO(const Date &date, const std::string &name, const std::string &label,
+            Task::Priority prior);
 
 private:
     TaskID id_;
@@ -34,6 +39,5 @@ private:
     std::string label_;
     Task::Priority prior_;
 };
-
 
 #endif //TODOLIST_TASKDTO_H
