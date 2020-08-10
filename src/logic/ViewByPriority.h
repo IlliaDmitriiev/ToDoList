@@ -5,17 +5,16 @@
 #ifndef TODOLIST_PRIORITYVIEW_H
 #define TODOLIST_PRIORITYVIEW_H
 
-#include "StorageByPrior.h"
+#include "StorageByPriority.h"
 
 class ViewByPriority {
 
 public:
-    StorageByPrior &getStorage();
-
+    StorageByPriority &getStorage();
     std::vector<std::weak_ptr<FullTask>> getAllTasks();
 
 private:
-    StorageByPrior storage_;
+    StorageByPriority storage_;
 };
 
 
