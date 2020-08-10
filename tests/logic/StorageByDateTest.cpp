@@ -63,7 +63,8 @@ public:
 
 };
 
-TEST_F(StorageByDateTest, shouldPutFullTasksIntoRightPlace) {
+TEST_F(StorageByDateTest, shouldAddTask) {
+
     storage.addTask(sft1);
     storage.addTask(sft2);
     storage.addTask(sft3);
@@ -72,43 +73,22 @@ TEST_F(StorageByDateTest, shouldPutFullTasksIntoRightPlace) {
 
     auto mp = storage.getMap();
 
-    auto vecPriorSecond = mp[Date::create(2020,7,31)].getVSecondPrior();
-    auto vecPriorNone = mp[Date::create(2020,7,31)].getVNonePrior();
+    auto PriorityMap_= mp[Date::create(2020,7,31)].getMap();
 
-    ASSERT_TRUE(Task::Compare(vecPriorNone[0].lock()->getTask(), sft1->getTask()));
-    ASSERT_EQ(vecPriorNone[0].lock()->getId().getId(), 0);
-    ASSERT_TRUE(Task::Compare(vecPriorSecond[0].lock()->getTask(), sft2->getTask()));
-    ASSERT_EQ(vecPriorSecond[0].lock()->getId().getId(), 1);
+    ASSERT_TRUE(Task::Compare(PriorityMap_[0].find(sft1->getId())->second.lock()->getTask(), t1));
+    ASSERT_TRUE(Task::Compare(PriorityMap_[2].find(sft2->getId())->second.lock()->getTask(), t2));
 
-    auto vecPriorThird = mp[Date::create(1500, 2, 26)].getVThirdPrior();
-
-    ASSERT_TRUE(Task::Compare(vecPriorThird[0].lock()->getTask(), sft3->getTask()));
-    ASSERT_EQ(vecPriorThird[0].lock()->getId().getId(), 2);
-
-    auto vecPriorFirst = mp[Date::create(1500, 3, 4)].getVFirstPrior();
-
-    ASSERT_TRUE(Task::Compare(vecPriorFirst[0].lock()->getTask(), sft4->getTask()));
-    ASSERT_EQ(vecPriorFirst[0].lock()->getId().getId(), 3);
-
-    vecPriorNone = mp[Date::create(1500, 2, 28)].getVNonePrior();
-
-    ASSERT_TRUE(Task::Compare(vecPriorNone[0].lock()->getTask(), sft5->getTask()));
-    ASSERT_EQ(vecPriorNone[0].lock()->getId().getId(), 4);
 }
 
 TEST_F(StorageByDateTest, shouldDelete) {
     storage.addTask(sft1);
     storage.addTask(sft2);
 
-    sft2.reset();
-    storage.deleteDanglingPointers();
+    storage.deleteTask(sft1);
 
     auto mp = storage.getMap();
-    auto vecPriorSecond = mp[Date::create(2020,7,31)].getVSecondPrior();
-    auto vecPriorNone = mp[Date::create(2020,7,31)].getVNonePrior();
+    auto PriorityMap_ = mp[Date::create(2020,7,31)].getMap();
 
-    ASSERT_EQ(0, vecPriorSecond.size());
-    ASSERT_TRUE(Task::Compare(vecPriorNone[0].lock()->getTask(), sft1->getTask()));
-    ASSERT_EQ(vecPriorNone[0].lock()->getId().getId(), 0);
+    ASSERT_EQ(PriorityMap_[0].find(sft1->getId()), PriorityMap_[0].end());
+    ASSERT_TRUE(Task::Compare(PriorityMap_[2].find(sft2->getId())->second.lock()->getTask(), t2));
 }
-
