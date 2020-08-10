@@ -56,10 +56,10 @@ public:
 
 TEST_F(ViewTest, shouldGetAllTasksByPrior) {
     View view;
-    view.getViewByP().getStorage().putTaskInRightPlace(sft1);
-    view.getViewByP().getStorage().putTaskInRightPlace(sft2);
-    view.getViewByP().getStorage().putTaskInRightPlace(sft3);
-    view.getViewByP().getStorage().putTaskInRightPlace(sft4);
+    view.getViewByP().getStorage().addTask(sft1);
+    view.getViewByP().getStorage().addTask(sft2);
+    view.getViewByP().getStorage().addTask(sft3);
+    view.getViewByP().getStorage().addTask(sft4);
 
     auto vec = view.getAllTasksByPrior();
     ASSERT_EQ(vec.size(), 4);
@@ -114,7 +114,8 @@ TEST_F(ViewTest, shouldGetAllTasksForWeek) {
     date1.moveWithinTheWeek(-WeekDay1 + 1);
 
     int WeekDay3 = date3.getWday();
-    if(WeekDay3 == 0) WeekDay1+=7;
+    if(WeekDay3 == 0) WeekDay3+=7;
+    date3.moveWithinTheWeek(7 - WeekDay3);
 
     Task t11 = Task::create(
             date1,
@@ -146,8 +147,8 @@ TEST_F(ViewTest, shouldGetAllTasksForWeek) {
     auto vec = view.getTasksForWeek();
 
     ASSERT_EQ(vec.size(), 3);
-    ASSERT_TRUE(Task::Compare(vec[0].lock()->getTask(), t11));
-    ASSERT_TRUE(Task::Compare(vec[1].lock()->getTask(), t12));
+    ASSERT_TRUE(Task::Compare(vec[0].lock()->getTask(), t12));
+    ASSERT_TRUE(Task::Compare(vec[1].lock()->getTask(), t11));
     ASSERT_TRUE(Task::Compare(vec[2].lock()->getTask(), t13));
 }
 
