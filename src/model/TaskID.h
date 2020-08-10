@@ -24,6 +24,12 @@ public:
 
         }
     };
+    struct MapComparator{
+        bool operator()( const TaskID& l, const TaskID& r ) const{
+            return l.getId() < r.getId();
+
+        }
+    };
 
 public:
     unsigned int getId() const;
