@@ -5,26 +5,20 @@
 #include "ViewByPriority.h"
 
 std::vector<std::weak_ptr<FullTask>> ViewByPriority::getAllTasks(){
+    auto map = storage_.getMap();
     std::vector<std::weak_ptr<FullTask>> v;
-    auto vFirst = storage_.getVFirstPrior();
-    auto vSecond = storage_.getVSecondPrior();
-    auto vThird = storage_.getVThirdPrior();
-    auto vNone = storage_.getVNonePrior();
-    for (auto i: vFirst)
-        if (!i.expired())
-            v.push_back(i);
-    for (auto i: vSecond)
-        if (!i.expired())
-            v.push_back(i);
-    for (auto i: vThird)
-        if (!i.expired())
-            v.push_back(i);
-    for (auto i: vNone)
-        if (!i.expired())
-            v.push_back(i);
+    for(auto i: map[1])
+        v.push_back(i.second);
+    for(auto i: map[2])
+        v.push_back(i.second);
+    for(auto i: map[3])
+        v.push_back(i.second);
+    for(auto i: map[0])
+        v.push_back(i.second);
+
     return v;
 }
 
-StorageByPrior &ViewByPriority::getStorage(){
+StorageByPriority &ViewByPriority::getStorage(){
     return storage_;
 }

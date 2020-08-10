@@ -7,34 +7,28 @@
 
 std::vector<std::weak_ptr<FullTask>> ViewByDate::getTasksForToday(Date date){
 
-    auto mp = storage_.getMap();
-    auto NeedData = mp.find(date);
-
+    auto DataMap = storage_.getMap();
+    auto Node = DataMap.find(date);
     std::vector<std::weak_ptr<FullTask>> v;
-    if(NeedData!=mp.end()){
-        auto vFirst = NeedData->second.getVFirstPrior();
-        auto vSecond = NeedData->second.getVSecondPrior();
-        auto vThird = NeedData->second.getVThirdPrior();
-        auto vNone = NeedData->second.getVNonePrior();
-        for (auto i: vFirst)
-            if (!i.expired())
-                v.push_back(i);
-        for (auto i: vSecond)
-            if (!i.expired())
-                v.push_back(i);
-        for (auto i: vThird)
-            if (!i.expired())
-                v.push_back(i);
-        for (auto i: vNone)
-            if (!i.expired())
-                v.push_back(i);
+
+    if(Node!=DataMap.end()){
+        auto PriorityMap = Node->second.getMap();
+
+        for( auto i: PriorityMap[1])
+            v.push_back(i.second);
+        for( auto i: PriorityMap[2])
+            v.push_back(i.second);
+        for( auto i: PriorityMap[3])
+            v.push_back(i.second);
+        for( auto i: PriorityMap[0])
+            v.push_back(i.second);
     }
     return v;
 }
 
 std::vector<std::weak_ptr<FullTask>>  ViewByDate::getTasksForWeek(Date date){
 
-    auto mp = storage_.getMap();
+    auto map = storage_.getMap();
     std::vector<std::weak_ptr<FullTask>> v;
 
     for (int i = 1; i<=7; ++i) {
@@ -42,24 +36,18 @@ std::vector<std::weak_ptr<FullTask>>  ViewByDate::getTasksForWeek(Date date){
         if (WeekDay == 0) WeekDay = 7;
         date.moveWithinTheWeek(i - WeekDay);
 
-        auto NeedData = mp.find(date);
-        if (NeedData != mp.end()) {
-            auto vFirst = NeedData->second.getVFirstPrior();
-            auto vSecond = NeedData->second.getVSecondPrior();
-            auto vThird = NeedData->second.getVThirdPrior();
-            auto vNone = NeedData->second.getVNonePrior();
-            for (auto i: vFirst)
-                if (!i.expired())
-                    v.push_back(i);
-            for (auto i: vSecond)
-                if (!i.expired())
-                    v.push_back(i);
-            for (auto i: vThird)
-                if (!i.expired())
-                    v.push_back(i);
-            for (auto i: vNone)
-                if (!i.expired())
-                    v.push_back(i);
+        auto NeedData = map.find(date);
+        if (NeedData != map.end()) {
+            auto PriorityMap = NeedData->second.getMap();
+
+            for( auto i: PriorityMap[1])
+                v.push_back(i.second);
+            for( auto i: PriorityMap[2])
+                v.push_back(i.second);
+            for( auto i: PriorityMap[3])
+                v.push_back(i.second);
+            for( auto i: PriorityMap[0])
+                v.push_back(i.second);
         }
     }
     return v;
