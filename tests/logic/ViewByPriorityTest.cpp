@@ -40,7 +40,7 @@ const Task t5 = Task::create(
         "",
         Task::Priority::None);
 
-TEST_F(ViewByPriorityTest, shouldGetAllFullTasks) {
+TEST_F(ViewByPriorityTest, shouldGetAllFullTasksByPriority) {
     ViewByPriority vbp;
     IDGenerator gen;
 
@@ -56,13 +56,14 @@ TEST_F(ViewByPriorityTest, shouldGetAllFullTasks) {
     auto sft4 = std::make_shared<FullTask>(ft4);
     auto sft5 = std::make_shared<FullTask>(ft5);
 
-    vbp.getStorage().putTaskInRightPlace(sft1);
-    vbp.getStorage().putTaskInRightPlace(sft2);
-    vbp.getStorage().putTaskInRightPlace(sft3);
-    vbp.getStorage().putTaskInRightPlace(sft4);
-    vbp.getStorage().putTaskInRightPlace(sft5);
+    vbp.getStorage().addTask(sft1);
+    vbp.getStorage().addTask(sft2);
+    vbp.getStorage().addTask(sft3);
+    vbp.getStorage().addTask(sft4);
+    vbp.getStorage().addTask(sft5);
 
     auto vec = vbp.getAllTasks();
+
     ASSERT_TRUE(Task::Compare(vec[0].lock()->getTask(), ft4.getTask()));
     ASSERT_EQ(vec[0].lock()->getId().getId(), 3);
     ASSERT_TRUE(Task::Compare(vec[1].lock()->getTask(), ft2.getTask()));
@@ -73,7 +74,6 @@ TEST_F(ViewByPriorityTest, shouldGetAllFullTasks) {
     ASSERT_EQ(vec[3].lock()->getId().getId(), 0);
     ASSERT_TRUE(Task::Compare(vec[4].lock()->getTask(), ft5.getTask()));
     ASSERT_EQ(vec[4].lock()->getId().getId(), 4);
-
 
 }
 
