@@ -19,7 +19,9 @@ void StorageByDate::addTask(const std::weak_ptr<FullTask>& ft){
 }
 
 void StorageByDate::deleteTask(const std::weak_ptr<FullTask>& ft){
-    map_[ft.lock()->getTask().getDate()].deleteTask(ft.lock()->getTask().getPrior(), ft.lock()->getId());
+    Date date = ft.lock()->getTask().getDate();
+    Task::Priority priority = ft.lock()->getTask().getPrior();
+    map_[date].deleteTask(priority, ft.lock()->getId());
 
 }
 
