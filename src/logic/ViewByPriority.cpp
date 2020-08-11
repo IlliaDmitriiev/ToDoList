@@ -12,7 +12,7 @@ ViewByPriority::ViewByPriority(){
     map_[Task::Priority::None]= mp;
 }
 
-std::vector<std::weak_ptr<FullTask>> ViewByPriority::getAllTasks(){
+std::vector<std::weak_ptr<FullTask>> ViewByPriority::getAllTasksByPrior(){
     std::vector<std::weak_ptr<FullTask>> v;
 
     for(auto i: map_.at(Task::Priority::First))
@@ -27,17 +27,24 @@ std::vector<std::weak_ptr<FullTask>> ViewByPriority::getAllTasks(){
     return v;
 }
 
-void ViewByPriority::addTask(std::weak_ptr<FullTask> cur){
+std::vector<std::weak_ptr<FullTask>> ViewByPriority::getTasksForToday(Date date) {
+    std::vector<std::weak_ptr<FullTask>> v;
+    return v;
+}
+
+std::vector<std::weak_ptr<FullTask>> ViewByPriority::getTasksForWeek(Date date){
+    std::vector<std::weak_ptr<FullTask>> v;
+    return v;
+}
+
+void ViewByPriority::addTask(const std::weak_ptr<FullTask>& cur){
     Task::Priority priority = cur.lock()->getTask().getPrior();
     map_[priority][cur.lock()->getId()] = cur;
 
 }
 
-bool ViewByPriority::deleteTask(Task::Priority priority, TaskID id){
+bool ViewByPriority::deleteTask(const std::weak_ptr<FullTask>& cur){
+    Task::Priority priority = cur.lock()->getTask().getPrior();
+    TaskID id = cur.lock()->getId();
     return map_[priority].erase(id);
-}
-
-const std::map<Task::Priority, std::map<TaskID, std::weak_ptr<FullTask>, TaskID::MapComparator>> &
-ViewByPriority::getMap() const {
-    return map_;
 }
