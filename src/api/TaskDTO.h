@@ -5,7 +5,7 @@
 #ifndef TODOLIST_TASKDTO_H
 #define TODOLIST_TASKDTO_H
 
-#include <model/TaskID.h>
+#include <api/TaskID.h>
 #include "model/Task.h"
 
 class TaskDTO {

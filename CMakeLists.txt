@@ -10,8 +10,8 @@ add_executable(ToDoList
         src/model/Task.h
         src/logic/FullTask.cpp
         src/logic/FullTask.h
-        src/model/TaskID.cpp
-        src/model/TaskID.h
+        src/api/TaskID.cpp
+        src/api/TaskID.h
         src/logic/IDGenerator.cpp
         src/logic/IDGenerator.h
         src/api/TaskService.cpp
@@ -44,7 +44,7 @@ add_executable(TestsExecutable
         tests/model/TaskTest.cpp
         tests/model/TaskIDTest.cpp
         src/model/Date.cpp
-        src/model/TaskID.cpp
+        src/api/TaskID.cpp
         tests/logic/IDGeneratorTest.cpp
         tests/api/TaskDTOTest.cpp
         tests/logic/ViewByDateTest.cpp
