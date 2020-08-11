@@ -17,8 +17,8 @@ public:
     std::vector<std::weak_ptr<FullTask>> getTasksForWeek();
 
 public:
-    ViewByDate &getViewByD() ;
-    ViewByPriority &getViewByP() ;
+    void addTask(const std::weak_ptr<FullTask>& ft);
+    void deleteTask(const std::weak_ptr<FullTask>& ft);
 
 private:
     ViewByDate viewByD_;
