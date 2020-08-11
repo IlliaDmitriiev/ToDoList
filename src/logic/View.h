@@ -18,7 +18,7 @@ public:
 
 public:
     void addTask(const std::weak_ptr<FullTask>& ft);
-    void deleteTask(const std::weak_ptr<FullTask>& ft);
+    bool deleteTask(const std::weak_ptr<FullTask>& ft);
 
 private:
     ViewByDate viewByD_;

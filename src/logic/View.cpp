@@ -29,7 +29,8 @@ void View::addTask(const std::weak_ptr<FullTask>& ft){
     viewByP_.addTask(ft);
 }
 
-void View::deleteTask(const std::weak_ptr<FullTask>& ft){
-    viewByD_.deleteTask(ft);
+bool View::deleteTask(const std::weak_ptr<FullTask>& ft){
+    return
+    viewByD_.deleteTask(ft) &&
     viewByP_.deleteTask(ft.lock()->getTask().getPrior(), ft.lock()->getId());
 }
