@@ -24,11 +24,32 @@ TEST_F(TaskConvertorTest, shouldConvertFullTaskIntoDTO) {
     auto sft = std::make_shared<FullTask>(ft);
     TaskDTO td = con.transferToTaskDTO(sft);
 
-    ASSERT_EQ(td.getTaskId().getId(), 0);
-    ASSERT_EQ(td.getPrior(), Task::Priority::None);
-    ASSERT_EQ(td.getLabel(), "");
-    ASSERT_EQ(td.getName(), "name1");
-    ASSERT_EQ(td.getDate().getYear(), 2020);
-    ASSERT_EQ(td.getDate().getMounth(), 7);
-    ASSERT_EQ(td.getDate().getDay(), 31);
+    EXPECT_EQ(td.getTaskId().getId(), 0);
+    EXPECT_EQ(td.getPrior(), Task::Priority::None);
+    EXPECT_EQ(td.getLabel(), "");
+    EXPECT_EQ(td.getName(), "name1");
+    EXPECT_EQ(td.getDate().getYear(), 2020);
+    EXPECT_EQ(td.getDate().getMounth(), 7);
+    EXPECT_EQ(td.getDate().getDay(), 31);
+}
+
+TEST_F(TaskConvertorTest, shouldConvertTaskDTOIntoTask) {
+    IDGenerator gen;
+    TaskConvertor con;
+    TaskDTO td = TaskDTO::createWithoutID(
+            Date::create(2020, 7, 31),
+            "name1",
+            "",
+            Task::Priority::None
+            );
+
+    Task t = con.transferToTask(td);
+
+    EXPECT_EQ(td.getTaskId().getId(), 0);
+    EXPECT_EQ(td.getPrior(), Task::Priority::None);
+    EXPECT_EQ(td.getLabel(), "");
+    EXPECT_EQ(td.getName(), "name1");
+    EXPECT_EQ(td.getDate().getYear(), 2020);
+    EXPECT_EQ(td.getDate().getMounth(), 7);
+    EXPECT_EQ(td.getDate().getDay(), 31);
 }
