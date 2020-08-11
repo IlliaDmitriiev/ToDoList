@@ -38,7 +38,7 @@ const Task t5 = Task::create(
 
 class ViewByPriorTest : public ::testing::Test {
 public:
-    ViewByPriority storage;
+    ViewByPriority viewByPriority;
     IDGenerator gen;
 
     std::shared_ptr<FullTask> sft1;
@@ -65,43 +65,53 @@ public:
 
 TEST_F(ViewByPriorTest, shouldAddTask) {
 
-    EXPECT_NO_THROW(storage.addTask(sft1));
-    EXPECT_NO_THROW(storage.addTask(sft2));
-    EXPECT_NO_THROW(storage.addTask(sft3));
-    EXPECT_NO_THROW(storage.addTask(sft4));
-    EXPECT_NO_THROW(storage.addTask(sft5));
+    EXPECT_NO_THROW(viewByPriority.addTask(sft1));
+    EXPECT_NO_THROW(viewByPriority.addTask(sft2));
+    EXPECT_NO_THROW(viewByPriority.addTask(sft3));
+    EXPECT_NO_THROW(viewByPriority.addTask(sft4));
+    EXPECT_NO_THROW(viewByPriority.addTask(sft5));
 }
 
 TEST_F(ViewByPriorTest, shouldDeleteTask) {
 
-    EXPECT_NO_THROW(storage.addTask(sft1));
-    EXPECT_NO_THROW(storage.addTask(sft2));
-    EXPECT_NO_THROW(storage.addTask(sft3));
-    EXPECT_NO_THROW(storage.addTask(sft4));
-    EXPECT_NO_THROW(storage.addTask(sft5));
+    EXPECT_NO_THROW(viewByPriority.addTask(sft1));
+    EXPECT_NO_THROW(viewByPriority.addTask(sft2));
+    EXPECT_NO_THROW(viewByPriority.addTask(sft3));
+    EXPECT_NO_THROW(viewByPriority.addTask(sft4));
+    EXPECT_NO_THROW(viewByPriority.addTask(sft5));
 
-    EXPECT_TRUE(storage.deleteTask(sft5));
-    EXPECT_TRUE(storage.deleteTask(sft3));
+    EXPECT_TRUE(viewByPriority.deleteTask(sft5));
+    EXPECT_TRUE(viewByPriority.deleteTask(sft3));
 }
 
-TEST_F(ViewByPriorTest, shouldGetAllTasksByPriority) {
+TEST_F(ViewByPriorTest, shouldGetAllTasksByPriority1) {
 
-    storage.addTask(sft4);
-    storage.addTask(sft5);
+    EXPECT_NO_THROW(viewByPriority.addTask(sft4));
+    EXPECT_NO_THROW(viewByPriority.addTask(sft5));
 
-    auto vec = storage.getAllTasksByPrior();
+    auto vec = viewByPriority.getAllTasksByPrior();
 
     EXPECT_EQ(vec.size(), 2);
     EXPECT_TRUE(Task::Compare(vec[0].lock()->getTask(), t4));
     EXPECT_TRUE(Task::Compare(vec[1].lock()->getTask(), t5));
 }
 
+TEST_F(ViewByPriorTest, shouldGetAllTasksByPriority2) {
+
+    EXPECT_NO_THROW(viewByPriority.addTask(sft2));
+    EXPECT_NO_THROW(viewByPriority.addTask(sft3));
+
+    auto vec = viewByPriority.getAllTasksByPrior();
+
+    EXPECT_EQ(vec.size(), 2);
+}
+
 TEST_F(ViewByPriorTest, shouldDeleteNonExistentTask) {
-    EXPECT_FALSE(storage.deleteTask(sft4));
+    EXPECT_FALSE(viewByPriority.deleteTask(sft4));
 }
 
 TEST_F(ViewByPriorTest, shouldGetEmptyVector) {
-    EXPECT_TRUE(storage.getAllTasksByPrior().empty());
+    EXPECT_TRUE(viewByPriority.getAllTasksByPrior().empty());
 }
 
 TEST_F(ViewByPriorTest, shouldGenerateEmptyVectorOfTasksForToday) {
@@ -109,7 +119,7 @@ TEST_F(ViewByPriorTest, shouldGenerateEmptyVectorOfTasksForToday) {
     auto cur = std::make_unique<tm>(*gmtime(&now));
     Date date = Date::create(cur->tm_year+1900, cur->tm_mon + 1, cur->tm_mday);
 
-    EXPECT_TRUE(storage.getTasksForToday(date).empty());
+    EXPECT_TRUE(viewByPriority.getTasksForToday(date).empty());
 }
 
 TEST_F(ViewByPriorTest, shouldGenerateEmptyVectorOfTasksForWeek) {
@@ -117,5 +127,5 @@ TEST_F(ViewByPriorTest, shouldGenerateEmptyVectorOfTasksForWeek) {
     auto cur = std::make_unique<tm>(*gmtime(&now));
     Date date = Date::create(cur->tm_year+1900, cur->tm_mon + 1, cur->tm_mday);
 
-    EXPECT_TRUE(storage.getTasksForWeek(date).empty());
+    EXPECT_TRUE(viewByPriority.getTasksForWeek(date).empty());
 }
