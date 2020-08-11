@@ -72,11 +72,11 @@ TEST_F(ViewByPriorTest, shouldAddTask) {
     storage.addTask(sft5);
 
     auto mp = storage.getMap();
-    ASSERT_TRUE(Task::Compare(mp[Task::Priority::None][TaskID::create(0)].lock()->getTask(), t1));
-    ASSERT_TRUE(Task::Compare(mp[Task::Priority::None][TaskID::create(4)].lock()->getTask(), t5));
-    ASSERT_TRUE(Task::Compare(mp[Task::Priority::First][TaskID::create(3)].lock()->getTask(), t4));
-    ASSERT_TRUE(Task::Compare(mp[Task::Priority::Second][TaskID::create(1)].lock()->getTask(), t2));
-    ASSERT_TRUE(Task::Compare(mp[Task::Priority::Third][TaskID::create(2)].lock()->getTask(), t3));
+    EXPECT_TRUE(Task::Compare(mp[Task::Priority::None][TaskID::create(0)].lock()->getTask(), t1));
+    EXPECT_TRUE(Task::Compare(mp[Task::Priority::None][TaskID::create(4)].lock()->getTask(), t5));
+    EXPECT_TRUE(Task::Compare(mp[Task::Priority::First][TaskID::create(3)].lock()->getTask(), t4));
+    EXPECT_TRUE(Task::Compare(mp[Task::Priority::Second][TaskID::create(1)].lock()->getTask(), t2));
+    EXPECT_TRUE(Task::Compare(mp[Task::Priority::Third][TaskID::create(2)].lock()->getTask(), t3));
 
 }
 
@@ -88,14 +88,14 @@ TEST_F(ViewByPriorTest, shouldDeleteTask) {
     storage.addTask(sft4);
     storage.addTask(sft5);
 
-    storage.deleteTask(sft5->getTask().getPrior(), sft5->getId());
-    storage.deleteTask(sft3->getTask().getPrior(), sft3->getId());
+    EXPECT_TRUE(storage.deleteTask(sft5->getTask().getPrior(), sft5->getId()));
+    EXPECT_TRUE(storage.deleteTask(sft3->getTask().getPrior(), sft3->getId()));
 
     auto mp = storage.getMap();
 
-    ASSERT_EQ(mp[Task::Priority::None].find(TaskID::create(4)), mp[Task::Priority::None].end());
-    ASSERT_NE(mp[Task::Priority::None].find(TaskID::create(0)), mp[Task::Priority::None].end());
-    ASSERT_EQ(mp[Task::Priority::Third].find(TaskID::create(2)), mp[Task::Priority::Third].end());
+    EXPECT_EQ(mp[Task::Priority::None].find(TaskID::create(4)), mp[Task::Priority::None].end());
+    EXPECT_NE(mp[Task::Priority::None].find(TaskID::create(0)), mp[Task::Priority::None].end());
+    EXPECT_EQ(mp[Task::Priority::Third].find(TaskID::create(2)), mp[Task::Priority::Third].end());
 }
 
 TEST_F(ViewByPriorTest, shouldGetAllTasksByPriority) {
@@ -105,10 +105,16 @@ TEST_F(ViewByPriorTest, shouldGetAllTasksByPriority) {
 
     auto vec = storage.getAllTasks();
 
-    ASSERT_EQ(vec.size(), 2);
-    ASSERT_TRUE(Task::Compare(vec[0].lock()->getTask(), t4));
-    ASSERT_TRUE(Task::Compare(vec[1].lock()->getTask(), t5));
-
-
+    EXPECT_EQ(vec.size(), 2);
+    EXPECT_TRUE(Task::Compare(vec[0].lock()->getTask(), t4));
+    EXPECT_TRUE(Task::Compare(vec[1].lock()->getTask(), t5));
 }
 
+TEST_F(ViewByPriorTest, shouldDeleteWithInccorectID) {
+    storage.addTask(sft4);
+    EXPECT_FALSE(storage.deleteTask(sft4->getTask().getPrior(), TaskID::create(154545)));
+}
+
+TEST_F(ViewByPriorTest, shouldDeleteWithNonExistentPriority) {
+    EXPECT_FALSE(storage.deleteTask(Task::Priority::None, TaskID::create(18)));
+}
