@@ -16,7 +16,7 @@ public:
 
 public:
     void addTask(const std::weak_ptr<FullTask>& ft);
-    void deleteTask(const std::weak_ptr<FullTask>& ft);
+    bool deleteTask(const std::weak_ptr<FullTask>& ft);
 
 private:
     std::unordered_map<Date, ViewByPriority, Date::Hasher, Date::Comparator> map_;

@@ -65,9 +65,9 @@ void ViewByDate::addTask(const std::weak_ptr<FullTask>& ft){
     }
 }
 
-void ViewByDate::deleteTask(const std::weak_ptr<FullTask>& ft){
+bool ViewByDate::deleteTask(const std::weak_ptr<FullTask>& ft){
     Date date = ft.lock()->getTask().getDate();
     Task::Priority priority = ft.lock()->getTask().getPrior();
-    map_[date].deleteTask(priority, ft.lock()->getId());
+    return map_[date].deleteTask(priority, ft.lock()->getId());
 
 }
