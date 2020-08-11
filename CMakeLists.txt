@@ -26,8 +26,8 @@ add_executable(ToDoList
         src/logic/ViewByPriority.h
         src/logic/View.cpp
         src/logic/View.h
-        src/logic/Convertor.cpp
-        src/logic/Convertor.h
+        src/logic/TaskConvertor.cpp
+        src/logic/TaskConvertor.h
         src/logic/StorageForSharedPtr.cpp
         src/logic/StorageForSharedPtr.h
         )
@@ -49,7 +49,7 @@ add_executable(TestsExecutable
         tests/api/TaskDTOTest.cpp
         tests/logic/ViewByDateTest.cpp
         tests/logic/ViewByPriorityTest.cpp
-        tests/logic/ConvertorTest.cpp
+        tests/logic/TaskConvertorTest.cpp
         tests/logic/StorageForSharedPtrTest.cpp
         tests/logic/ViewTest.cpp
         tests/logic/FullTaskTest.cpp
@@ -62,7 +62,7 @@ add_executable(TestsExecutable
         src/logic/StorageForSharedPtr.cpp
         src/logic/FullTask.cpp
         src/logic/View.cpp
-        src/logic/Convertor.cpp
+        src/logic/TaskConvertor.cpp
         )
 
 target_link_libraries(TestsExecutable GTest::GTest GTest::Main)
