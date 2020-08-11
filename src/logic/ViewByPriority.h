@@ -16,7 +16,7 @@ public:
 
 public:
     void addTask(std::weak_ptr<FullTask> cur);
-    void deleteTask(Task::Priority priority, TaskID id);
+    bool deleteTask(Task::Priority priority, TaskID id);
 
 public:
     const std::map<Task::Priority, std::map<TaskID, std::weak_ptr<FullTask>, TaskID::MapComparator>> &getMap() const;

@@ -25,8 +25,8 @@ void ViewByPriority::addTask(std::weak_ptr<FullTask> cur){
 
 }
 
-void ViewByPriority::deleteTask(Task::Priority priority, TaskID id){
-    map_[priority].erase(id);
+bool ViewByPriority::deleteTask(Task::Priority priority, TaskID id){
+    return map_[priority].erase(id);
 }
 
 const std::map<Task::Priority, std::map<TaskID, std::weak_ptr<FullTask>, TaskID::MapComparator>> &
