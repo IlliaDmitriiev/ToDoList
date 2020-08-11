@@ -19,13 +19,6 @@
 class TaskService {
 
 public:
-    static TaskService create(){
-        auto viewByPriority = std::make_unique<ViewByPriority>();
-        auto viewByDate = std::make_unique<ViewByDate>();
-        return TaskService(std::move(viewByPriority), std::move(viewByDate));
-    }
-
-public:
     TaskService(
         std::unique_ptr<ViewInterface> byPriority,
         std::unique_ptr<ViewInterface> byDate)
