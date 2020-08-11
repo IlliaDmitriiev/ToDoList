@@ -91,11 +91,11 @@ TEST_F(ViewByPriorTest, shouldDeleteTask) {
     EXPECT_TRUE(storage.deleteTask(sft5->getTask().getPrior(), sft5->getId()));
     EXPECT_TRUE(storage.deleteTask(sft3->getTask().getPrior(), sft3->getId()));
 
-    auto mp = storage.getMap();
+    const auto& mp = storage.getMap();
 
-    EXPECT_EQ(mp[Task::Priority::None].find(TaskID::create(4)), mp[Task::Priority::None].end());
-    EXPECT_NE(mp[Task::Priority::None].find(TaskID::create(0)), mp[Task::Priority::None].end());
-    EXPECT_EQ(mp[Task::Priority::Third].find(TaskID::create(2)), mp[Task::Priority::Third].end());
+    EXPECT_EQ(mp.at(Task::Priority::None).find(TaskID::create(4)), mp.at(Task::Priority::None).end());
+    EXPECT_NE(mp.at(Task::Priority::None).find(TaskID::create(0)), mp.at(Task::Priority::None).end());
+    EXPECT_EQ(mp.at(Task::Priority::Third).find(TaskID::create(2)), mp.at(Task::Priority::Third).end());
 }
 
 TEST_F(ViewByPriorTest, shouldGetAllTasksByPriority) {

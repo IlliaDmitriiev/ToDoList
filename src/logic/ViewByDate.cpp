@@ -11,15 +11,15 @@ std::vector<std::weak_ptr<FullTask>> ViewByDate::getTasksForToday(Date date){
     std::vector<std::weak_ptr<FullTask>> v;
 
     if(Node!=map_.end()){
-        auto PriorityMap = Node->second.getMap();
+        const auto& PriorityMap = Node->second.getMap();
 
-        for( auto i: PriorityMap[Task::Priority::First])
+        for( auto i: PriorityMap.at(Task::Priority::First))
             v.push_back(i.second);
-        for( auto i: PriorityMap[Task::Priority::Second])
+        for( auto i: PriorityMap.at(Task::Priority::Second))
             v.push_back(i.second);
-        for( auto i: PriorityMap[Task::Priority::Third])
+        for( auto i: PriorityMap.at(Task::Priority::Third))
             v.push_back(i.second);
-        for( auto i: PriorityMap[Task::Priority::None])
+        for( auto i: PriorityMap.at(Task::Priority::None))
             v.push_back(i.second);
     }
     return v;
@@ -36,15 +36,15 @@ std::vector<std::weak_ptr<FullTask>>  ViewByDate::getTasksForWeek(Date date){
 
         auto NeedData = map_.find(date);
         if (NeedData != map_.end()) {
-            auto PriorityMap = NeedData->second.getMap();
+            const auto& PriorityMap = NeedData->second.getMap();
 
-            for( auto i: PriorityMap[Task::Priority::First])
+            for( auto i: PriorityMap.at(Task::Priority::First))
                 v.push_back(i.second);
-            for( auto i: PriorityMap[Task::Priority::Second])
+            for( auto i: PriorityMap.at(Task::Priority::Second))
                 v.push_back(i.second);
-            for( auto i: PriorityMap[Task::Priority::Third])
+            for( auto i: PriorityMap.at(Task::Priority::Third))
                 v.push_back(i.second);
-            for( auto i: PriorityMap[Task::Priority::None])
+            for( auto i: PriorityMap.at(Task::Priority::None))
                 v.push_back(i.second);
         }
     }

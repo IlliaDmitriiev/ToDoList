@@ -12,6 +12,9 @@
 class ViewByPriority {
 
 public:
+    ViewByPriority();
+
+public:
     std::vector<std::weak_ptr<FullTask>> getAllTasks();
 
 public:

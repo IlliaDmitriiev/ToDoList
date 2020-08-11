@@ -4,16 +4,24 @@
 
 #include "ViewByPriority.h"
 
+ViewByPriority::ViewByPriority(){
+    std::map<TaskID, std::weak_ptr<FullTask>, TaskID::MapComparator> mp;
+    map_[Task::Priority::First] = mp;
+    map_[Task::Priority::Second] = mp;
+    map_[Task::Priority::Third]= mp;
+    map_[Task::Priority::None]= mp;
+}
+
 std::vector<std::weak_ptr<FullTask>> ViewByPriority::getAllTasks(){
     std::vector<std::weak_ptr<FullTask>> v;
 
-    for(auto i: map_[Task::Priority::First])
+    for(auto i: map_.at(Task::Priority::First))
         v.push_back(i.second);
-    for(auto i: map_[Task::Priority::Second])
+    for(auto i: map_.at(Task::Priority::Second))
         v.push_back(i.second);
-    for(auto i: map_[Task::Priority::Third])
+    for(auto i: map_.at(Task::Priority::Third))
         v.push_back(i.second);
-    for(auto i: map_[Task::Priority::None])
+    for(auto i: map_.at(Task::Priority::None))
         v.push_back(i.second);
 
     return v;
