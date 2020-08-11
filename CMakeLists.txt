@@ -24,13 +24,12 @@ add_executable(ToDoList
         src/logic/ViewByDate.h
         src/logic/ViewByPriority.cpp
         src/logic/ViewByPriority.h
-        src/logic/View.cpp
-        src/logic/View.h
+        src/logic/ViewInterface.h
         src/logic/TaskConvertor.cpp
         src/logic/TaskConvertor.h
         src/logic/StorageForSharedPtr.cpp
         src/logic/StorageForSharedPtr.h
-        )
+        src/api/Injector.h)
 
 include_directories(src)
 
@@ -51,7 +50,6 @@ add_executable(TestsExecutable
         tests/logic/ViewByPriorityTest.cpp
         tests/logic/TaskConvertorTest.cpp
         tests/logic/StorageForSharedPtrTest.cpp
-        tests/logic/ViewTest.cpp
         tests/logic/FullTaskTest.cpp
         tests/api/TaskCreationResultTest.cpp
         src/logic/IDGenerator.cpp
@@ -61,7 +59,6 @@ add_executable(TestsExecutable
         src/logic/ViewByPriority.cpp
         src/logic/StorageForSharedPtr.cpp
         src/logic/FullTask.cpp
-        src/logic/View.cpp
         src/logic/TaskConvertor.cpp
         )
 
