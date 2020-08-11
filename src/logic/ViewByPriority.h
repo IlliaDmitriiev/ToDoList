@@ -5,17 +5,28 @@
 #ifndef TODOLIST_PRIORITYVIEW_H
 #define TODOLIST_PRIORITYVIEW_H
 
-#include "StorageByPriority.h"
+#include "FullTask.h"
+#include <map>
+#include <vector>
 
 class ViewByPriority {
 
 public:
-    StorageByPriority &getStorage();
+    ViewByPriority();
+
+public:
     std::vector<std::weak_ptr<FullTask>> getAllTasks();
 
-private:
-    StorageByPriority storage_;
-};
+public:
+    void addTask(std::weak_ptr<FullTask> cur);
+    bool deleteTask(Task::Priority priority, TaskID id);
 
+public:
+    const std::map<Task::Priority, std::map<TaskID, std::weak_ptr<FullTask>, TaskID::MapComparator>> &getMap() const;
+
+private:
+    std::map<Task::Priority, std::map<TaskID, std::weak_ptr<FullTask>, TaskID::MapComparator> > map_;
+
+};
 
 #endif //TODOLIST_PRIORITYVIEW_H

@@ -24,12 +24,13 @@ std::vector<std::weak_ptr<FullTask>> View::getTasksForWeek(){
     return viewByD_.getTasksForWeek(date);
 }
 
-ViewByDate &View::getViewByD() {
-    return viewByD_;
+void View::addTask(const std::weak_ptr<FullTask>& ft){
+    viewByD_.addTask(ft);
+    viewByP_.addTask(ft);
 }
 
-ViewByPriority &View::getViewByP()  {
-    return viewByP_;
+bool View::deleteTask(const std::weak_ptr<FullTask>& ft){
+    return
+    viewByD_.deleteTask(ft) &&
+    viewByP_.deleteTask(ft.lock()->getTask().getPrior(), ft.lock()->getId());
 }
-
-

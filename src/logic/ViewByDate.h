@@ -5,9 +5,8 @@
 #ifndef TODOLIST_VIEWBYPRIORITY_H
 #define TODOLIST_VIEWBYPRIORITY_H
 
-#include "StorageByDate.h"
+#include "ViewByPriority.h"
 
-#include <iostream>
 
 class ViewByDate {
 
@@ -16,10 +15,11 @@ public:
     std::vector<std::weak_ptr<FullTask>> getTasksForWeek(Date date);
 
 public:
-    StorageByDate &getStorage();
+    void addTask(const std::weak_ptr<FullTask>& ft);
+    bool deleteTask(const std::weak_ptr<FullTask>& ft);
 
 private:
-    StorageByDate storage_;
+    std::unordered_map<Date, ViewByPriority, Date::Hasher, Date::Comparator> map_;
 };
 
 

@@ -5,10 +5,6 @@
 #include <gtest/gtest.h>
 #include "logic/ViewByPriority.h"
 
-class ViewByPriorityTest : public ::testing::Test {
-
-};
-
 const Task t1 = Task::create(
         Date::create(2020, 7, 31),
         "name1",
@@ -16,7 +12,7 @@ const Task t1 = Task::create(
         Task::Priority::None);
 
 const Task t2 = Task::create(
-        Date::create(2020, 8, 2),
+        Date::create(2020, 7, 31),
         "name2",
         "456578y&#&@)(#$?><</*-+fdg",
         Task::Priority::Second);
@@ -40,40 +36,85 @@ const Task t5 = Task::create(
         "",
         Task::Priority::None);
 
-TEST_F(ViewByPriorityTest, shouldGetAllFullTasksByPriority) {
-    ViewByPriority vbp;
+class ViewByPriorTest : public ::testing::Test {
+public:
+    ViewByPriority storage;
     IDGenerator gen;
 
-    FullTask ft1 = FullTask::create(gen.generateId(), t1);
-    FullTask ft2 = FullTask::create(gen.generateId(), t2);
-    FullTask ft3 = FullTask::create(gen.generateId(), t3);
-    FullTask ft4 = FullTask::create(gen.generateId(), t4);
-    FullTask ft5 = FullTask::create(gen.generateId(), t5);
+    std::shared_ptr<FullTask> sft1;
+    std::shared_ptr<FullTask> sft2;
+    std::shared_ptr<FullTask> sft3;
+    std::shared_ptr<FullTask> sft4;
+    std::shared_ptr<FullTask> sft5;
 
-    auto sft1 = std::make_shared<FullTask>(ft1);
-    auto sft2 = std::make_shared<FullTask>(ft2);
-    auto sft3 = std::make_shared<FullTask>(ft3);
-    auto sft4 = std::make_shared<FullTask>(ft4);
-    auto sft5 = std::make_shared<FullTask>(ft5);
+    ViewByPriorTest() {
+        FullTask ft1 = FullTask::create(gen.generateId(), t1);
+        FullTask ft2 = FullTask::create(gen.generateId(), t2);
+        FullTask ft3 = FullTask::create(gen.generateId(), t3);
+        FullTask ft4 = FullTask::create(gen.generateId(), t4);
+        FullTask ft5 = FullTask::create(gen.generateId(), t5);
 
-    vbp.getStorage().addTask(sft1);
-    vbp.getStorage().addTask(sft2);
-    vbp.getStorage().addTask(sft3);
-    vbp.getStorage().addTask(sft4);
-    vbp.getStorage().addTask(sft5);
+        sft1 = std::make_shared<FullTask>(ft1);
+        sft2 = std::make_shared<FullTask>(ft2);
+        sft3 = std::make_shared<FullTask>(ft3);
+        sft4 = std::make_shared<FullTask>(ft4);
+        sft5 = std::make_shared<FullTask>(ft5);
+    }
 
-    auto vec = vbp.getAllTasks();
+};
 
-    ASSERT_TRUE(Task::Compare(vec[0].lock()->getTask(), ft4.getTask()));
-    ASSERT_EQ(vec[0].lock()->getId().getId(), 3);
-    ASSERT_TRUE(Task::Compare(vec[1].lock()->getTask(), ft2.getTask()));
-    ASSERT_EQ(vec[1].lock()->getId().getId(), 1);
-    ASSERT_TRUE(Task::Compare(vec[2].lock()->getTask(), ft3.getTask()));
-    ASSERT_EQ(vec[2].lock()->getId().getId(), 2);
-    ASSERT_TRUE(Task::Compare(vec[3].lock()->getTask(), ft1.getTask()));
-    ASSERT_EQ(vec[3].lock()->getId().getId(), 0);
-    ASSERT_TRUE(Task::Compare(vec[4].lock()->getTask(), ft5.getTask()));
-    ASSERT_EQ(vec[4].lock()->getId().getId(), 4);
+TEST_F(ViewByPriorTest, shouldAddTask) {
+
+    storage.addTask(sft1);
+    storage.addTask(sft2);
+    storage.addTask(sft3);
+    storage.addTask(sft4);
+    storage.addTask(sft5);
+
+    auto mp = storage.getMap();
+    EXPECT_TRUE(Task::Compare(mp[Task::Priority::None][TaskID::create(0)].lock()->getTask(), t1));
+    EXPECT_TRUE(Task::Compare(mp[Task::Priority::None][TaskID::create(4)].lock()->getTask(), t5));
+    EXPECT_TRUE(Task::Compare(mp[Task::Priority::First][TaskID::create(3)].lock()->getTask(), t4));
+    EXPECT_TRUE(Task::Compare(mp[Task::Priority::Second][TaskID::create(1)].lock()->getTask(), t2));
+    EXPECT_TRUE(Task::Compare(mp[Task::Priority::Third][TaskID::create(2)].lock()->getTask(), t3));
 
 }
 
+TEST_F(ViewByPriorTest, shouldDeleteTask) {
+
+    storage.addTask(sft1);
+    storage.addTask(sft2);
+    storage.addTask(sft3);
+    storage.addTask(sft4);
+    storage.addTask(sft5);
+
+    EXPECT_TRUE(storage.deleteTask(sft5->getTask().getPrior(), sft5->getId()));
+    EXPECT_TRUE(storage.deleteTask(sft3->getTask().getPrior(), sft3->getId()));
+
+    const auto& mp = storage.getMap();
+
+    EXPECT_EQ(mp.at(Task::Priority::None).find(TaskID::create(4)), mp.at(Task::Priority::None).end());
+    EXPECT_NE(mp.at(Task::Priority::None).find(TaskID::create(0)), mp.at(Task::Priority::None).end());
+    EXPECT_EQ(mp.at(Task::Priority::Third).find(TaskID::create(2)), mp.at(Task::Priority::Third).end());
+}
+
+TEST_F(ViewByPriorTest, shouldGetAllTasksByPriority) {
+
+    storage.addTask(sft4);
+    storage.addTask(sft5);
+
+    auto vec = storage.getAllTasks();
+
+    EXPECT_EQ(vec.size(), 2);
+    EXPECT_TRUE(Task::Compare(vec[0].lock()->getTask(), t4));
+    EXPECT_TRUE(Task::Compare(vec[1].lock()->getTask(), t5));
+}
+
+TEST_F(ViewByPriorTest, shouldDeleteWithInccorectID) {
+    storage.addTask(sft4);
+    EXPECT_FALSE(storage.deleteTask(sft4->getTask().getPrior(), TaskID::create(154545)));
+}
+
+TEST_F(ViewByPriorTest, shouldDeleteWithNonExistentPriority) {
+    EXPECT_FALSE(storage.deleteTask(Task::Priority::None, TaskID::create(18)));
+}
