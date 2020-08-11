@@ -2,9 +2,9 @@
 // Created by Илля on 02.08.2020.
 //
 
-#include "Convertor.h"
+#include "TaskConvertor.h"
 
-TaskDTO Convertor::getTaskDTO(std::weak_ptr<FullTask> ft){
+TaskDTO TaskConvertor::transferToTaskDTO(std::weak_ptr<FullTask> ft){
     return TaskDTO::create(
             ft.lock()->getId(),
             ft.lock()->getTask().getDate(),
@@ -14,7 +14,7 @@ TaskDTO Convertor::getTaskDTO(std::weak_ptr<FullTask> ft){
             );
 }
 
-Task Convertor::getTask(TaskDTO td){
+Task TaskConvertor::transferToTask(TaskDTO td){
     return Task::create(
             td.getDate(),
             td.getName(),
