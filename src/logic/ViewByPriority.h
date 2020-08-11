@@ -5,24 +5,21 @@
 #ifndef TODOLIST_PRIORITYVIEW_H
 #define TODOLIST_PRIORITYVIEW_H
 
-#include "FullTask.h"
-#include <map>
-#include <vector>
+#include "ViewInterface.h"
 
-class ViewByPriority {
+class ViewByPriority: public ViewInterface{
 
 public:
     ViewByPriority();
 
 public:
-    std::vector<std::weak_ptr<FullTask>> getAllTasks();
+    std::vector<std::weak_ptr<FullTask>> getAllTasksByPrior() override;
+    std::vector<std::weak_ptr<FullTask>> getTasksForToday(Date date) override;
+    std::vector<std::weak_ptr<FullTask>> getTasksForWeek(Date date) override;
 
 public:
-    void addTask(std::weak_ptr<FullTask> cur);
-    bool deleteTask(Task::Priority priority, TaskID id);
-
-public:
-    const std::map<Task::Priority, std::map<TaskID, std::weak_ptr<FullTask>, TaskID::MapComparator>> &getMap() const;
+    void addTask(const std::weak_ptr<FullTask>& ft) override ;
+    bool deleteTask(const std::weak_ptr<FullTask>& ft) override ;
 
 private:
     std::map<Task::Priority, std::map<TaskID, std::weak_ptr<FullTask>, TaskID::MapComparator> > map_;

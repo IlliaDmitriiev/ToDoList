@@ -7,16 +7,27 @@
 
 
 #include "logic/FullTask.h"
-#include "logic/StorageByDate.h"
 #include "logic/IDGenerator.h"
-#include "logic/View.h"
-#include "logic/Convertor.h"
-#include "logic/Cleaner.h"
+#include "logic/ViewInterface.h"
+#include "logic/ViewByPriority.h"
+#include "logic/ViewByDate.h"
+#include "logic/TaskConvertor.h"
 #include "logic/StorageForSharedPtr.h"
 #include "TaskCreationResult.h"
 #include <algorithm>
 
 class TaskService {
+
+public:
+    TaskService(
+        std::unique_ptr<ViewInterface> byPriority,
+        std::unique_ptr<ViewInterface> byDate)
+    :
+    generator_(),
+    storage_(),
+    byPriority_(std::move(byPriority)),
+    byDate_(std::move(byDate))
+    {}
 
 public:
     TaskCreationResult addTask(const TaskDTO &taskDto);
@@ -33,10 +44,11 @@ public:
 
 private:
     IDGenerator generator_;
-    View view_;
     StorageForSharedPtr storage_;
-    Cleaner cleaner_;
 
+private:
+    std::unique_ptr<ViewInterface> byPriority_;
+    std::unique_ptr<ViewInterface> byDate_;
 };
 
 #endif //TODOLIST_TASKSERVICE_H
