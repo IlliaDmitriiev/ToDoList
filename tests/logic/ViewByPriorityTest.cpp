@@ -96,6 +96,19 @@ TEST_F(ViewByPriorTest, shouldDeleteTask) {
     ASSERT_EQ(mp[Task::Priority::None].find(TaskID::create(4)), mp[Task::Priority::None].end());
     ASSERT_NE(mp[Task::Priority::None].find(TaskID::create(0)), mp[Task::Priority::None].end());
     ASSERT_EQ(mp[Task::Priority::Third].find(TaskID::create(2)), mp[Task::Priority::Third].end());
+}
+
+TEST_F(ViewByPriorTest, shouldGetAllTasksByPriority) {
+
+    storage.addTask(sft4);
+    storage.addTask(sft5);
+
+    auto vec = storage.getAllTasks();
+
+    ASSERT_EQ(vec.size(), 2);
+    ASSERT_TRUE(Task::Compare(vec[0].lock()->getTask(), t4));
+    ASSERT_TRUE(Task::Compare(vec[1].lock()->getTask(), t5));
+
 
 }
 
