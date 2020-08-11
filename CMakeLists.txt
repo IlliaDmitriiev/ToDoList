@@ -42,7 +42,7 @@ enable_testing()
 add_executable(TestsExecutable
         tests/model/DateTest.cpp
         tests/model/TaskTest.cpp
-        tests/model/TaskIDTest.cpp
+        tests/api/TaskIDTest.cpp
         src/model/Date.cpp
         src/api/TaskID.cpp
         tests/logic/IDGeneratorTest.cpp
