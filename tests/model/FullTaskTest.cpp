@@ -15,7 +15,7 @@ TEST_F(FullTaskTest, shouldCreate) {
             Date::create(2020, 7, 31),
             "name1",
             "",
-            Task::Priority::None);
+            TaskPriority::None);
     FullTask ft = FullTask::create(gen.generateId(), t);
     ASSERT_TRUE(Task::Compare(t, ft.getTask()));
 }
@@ -26,7 +26,7 @@ TEST_F(FullTaskTest, shouldGetId) {
             Date::create(2020, 7, 31),
             "name1",
             "",
-            Task::Priority::None);
+            TaskPriority::None);
     FullTask ft = FullTask::create(gen.generateId(), t);
     ASSERT_EQ(ft.getId().getId(),0);
 }
@@ -37,12 +37,12 @@ TEST_F(FullTaskTest, shouldCreateParent) {
             Date::create(2020, 7, 31),
             "name1",
             "",
-            Task::Priority::None);
+            TaskPriority::None);
     Task t2 = Task::create(
             Date::create(2485, 3, 5),
             "name2",
             "label",
-            Task::Priority::Second);
+            TaskPriority::Second);
     FullTask ft1 = FullTask::create(gen.generateId(), t1);
     FullTask ft2 = FullTask::create(gen.generateId(), t2);
     auto sft = std::make_shared<FullTask>(ft2);
@@ -58,12 +58,12 @@ TEST_F(FullTaskTest, shouldEraseSubTask) {
             Date::create(2020, 7, 31),
             "name1",
             "",
-            Task::Priority::None);
+            TaskPriority::None);
     Task t2 = Task::create(
             Date::create(2485, 3, 5),
             "name2",
             "label",
-            Task::Priority::Second);
+            TaskPriority::Second);
     FullTask ft1 = FullTask::create(gen.generateId(), t1);
     FullTask ft2 = FullTask::create(gen.generateId(), t2);
     auto sft = std::make_shared<FullTask>(ft2);

@@ -15,14 +15,14 @@ TEST_F(TaskDTOTest, shouldCreate) {
             Date::create(2020, 7, 30),
             "name",
             "label",
-            Task::Priority::None);
+            TaskPriority::None);
     ASSERT_EQ(47, dto.getTaskId().getId());
     ASSERT_EQ(2020, dto.getDate().getYear());
     ASSERT_EQ(7, dto.getDate().getMounth());
     ASSERT_EQ(30, dto.getDate().getDay());
     ASSERT_EQ("name", dto.getName());
     ASSERT_EQ("label", dto.getLabel());
-    ASSERT_EQ(Task::Priority::None, dto.getPrior());
+    ASSERT_EQ(TaskPriority::None, dto.getPriority());
 }
 
 TEST_F(TaskDTOTest, shouldThrowExeption_1) {
@@ -31,7 +31,7 @@ TEST_F(TaskDTOTest, shouldThrowExeption_1) {
             Date::create(2020, 7, 32),
             "name",
             "label",
-            Task::Priority::None);
+            TaskPriority::None);
     );
 
 }
@@ -42,7 +42,7 @@ TEST_F(TaskDTOTest, shouldThrowExeption_2) {
             Date::create(2015, 2, 29),
             "name",
             "label",
-            Task::Priority::None);
+            TaskPriority::None);
     );
 
 }

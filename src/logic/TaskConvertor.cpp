@@ -10,7 +10,7 @@ TaskDTO TaskConvertor::transferToTaskDTO(std::weak_ptr<FullTask> ft){
             ft.lock()->getTask().getDate(),
             ft.lock()->getTask().getName(),
             ft.lock()->getTask().getLabel(),
-            ft.lock()->getTask().getPrior()
+            ft.lock()->getTask().getPriority()
             );
 }
 
@@ -19,6 +19,6 @@ Task TaskConvertor::transferToTask(TaskDTO td){
             td.getDate(),
             td.getName(),
             td.getLabel(),
-            td.getPrior()
+            td.getPriority()
             );
 }
