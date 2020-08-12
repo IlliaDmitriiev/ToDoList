@@ -9,32 +9,32 @@ const Task t1 = Task::create(
         Date::create(2020, 7, 31),
         "name1",
         "",
-        Task::Priority::None);
+        TaskPriority::None);
 
 const Task t2 = Task::create(
         Date::create(2020, 7, 31),
         "name2",
         "456578y&#&@)(#$?><</*-+fdg",
-        Task::Priority::Second);
+        TaskPriority::Second);
 
 
 const Task t3 = Task::create(
         Date::create(1500, 2, 26),
         "name3",
         "label3",
-        Task::Priority::Third);
+        TaskPriority::Third);
 
 const Task t4 = Task::create(
         Date::create(1500, 3, 4),
         "name4",
         "",
-        Task::Priority::First);
+        TaskPriority::First);
 
 const Task t5 = Task::create(
         Date::create(1500, 2, 28),
         "",
         "",
-        Task::Priority::None);
+        TaskPriority::None);
 
 class ViewByPriorTest : public ::testing::Test {
 public:
@@ -65,20 +65,20 @@ public:
 
 TEST_F(ViewByPriorTest, shouldAddTask) {
 
-    EXPECT_NO_THROW(viewByPriority.addTask(sft1));
-    EXPECT_NO_THROW(viewByPriority.addTask(sft2));
-    EXPECT_NO_THROW(viewByPriority.addTask(sft3));
-    EXPECT_NO_THROW(viewByPriority.addTask(sft4));
-    EXPECT_NO_THROW(viewByPriority.addTask(sft5));
+    EXPECT_TRUE(viewByPriority.addTask(sft1));
+    EXPECT_TRUE(viewByPriority.addTask(sft2));
+    EXPECT_TRUE(viewByPriority.addTask(sft3));
+    EXPECT_TRUE(viewByPriority.addTask(sft4));
+    EXPECT_TRUE(viewByPriority.addTask(sft5));
 }
 
 TEST_F(ViewByPriorTest, shouldDeleteTask) {
 
-    EXPECT_NO_THROW(viewByPriority.addTask(sft1));
-    EXPECT_NO_THROW(viewByPriority.addTask(sft2));
-    EXPECT_NO_THROW(viewByPriority.addTask(sft3));
-    EXPECT_NO_THROW(viewByPriority.addTask(sft4));
-    EXPECT_NO_THROW(viewByPriority.addTask(sft5));
+    EXPECT_TRUE(viewByPriority.addTask(sft1));
+    EXPECT_TRUE(viewByPriority.addTask(sft2));
+    EXPECT_TRUE(viewByPriority.addTask(sft3));
+    EXPECT_TRUE(viewByPriority.addTask(sft4));
+    EXPECT_TRUE(viewByPriority.addTask(sft5));
 
     EXPECT_TRUE(viewByPriority.deleteTask(sft5));
     EXPECT_TRUE(viewByPriority.deleteTask(sft3));
@@ -86,8 +86,8 @@ TEST_F(ViewByPriorTest, shouldDeleteTask) {
 
 TEST_F(ViewByPriorTest, shouldGetAllTasksByPriority1) {
 
-    EXPECT_NO_THROW(viewByPriority.addTask(sft4));
-    EXPECT_NO_THROW(viewByPriority.addTask(sft5));
+    EXPECT_TRUE(viewByPriority.addTask(sft4));
+    EXPECT_TRUE(viewByPriority.addTask(sft5));
 
     auto vec = viewByPriority.getAllTasksByPrior();
 
@@ -98,8 +98,8 @@ TEST_F(ViewByPriorTest, shouldGetAllTasksByPriority1) {
 
 TEST_F(ViewByPriorTest, shouldGetAllTasksByPriority2) {
 
-    EXPECT_NO_THROW(viewByPriority.addTask(sft2));
-    EXPECT_NO_THROW(viewByPriority.addTask(sft3));
+    EXPECT_TRUE(viewByPriority.addTask(sft2));
+    EXPECT_TRUE(viewByPriority.addTask(sft3));
 
     auto vec = viewByPriority.getAllTasksByPrior();
 

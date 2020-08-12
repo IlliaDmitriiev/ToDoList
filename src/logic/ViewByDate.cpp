@@ -16,13 +16,13 @@ std::vector<std::weak_ptr<FullTask>> ViewByDate::getTasksForToday(Date date){
 
     if(Node!=map_.end()){
 
-        for( auto &i: Node->second.at(Task::Priority::First))
+        for( auto &i: Node->second.at(TaskPriority::First))
             v.push_back(i.second);
-        for( auto &i: Node->second.at(Task::Priority::Second))
+        for( auto &i: Node->second.at(TaskPriority::Second))
             v.push_back(i.second);
-        for( auto &i: Node->second.at(Task::Priority::Third))
+        for( auto &i: Node->second.at(TaskPriority::Third))
             v.push_back(i.second);
-        for( auto &i: Node->second.at(Task::Priority::None))
+        for( auto &i: Node->second.at(TaskPriority::None))
             v.push_back(i.second);
     }
     return v;
@@ -40,46 +40,48 @@ std::vector<std::weak_ptr<FullTask>>  ViewByDate::getTasksForWeek(Date date){
         const auto& NeedData = map_.find(date);
         if (NeedData != map_.end()) {
 
-            for( auto &i: NeedData->second.at(Task::Priority::First))
+            for( auto &i: NeedData->second.at(TaskPriority::First))
                 v.push_back(i.second);
-            for( auto &i: NeedData->second.at(Task::Priority::Second))
+            for( auto &i: NeedData->second.at(TaskPriority::Second))
                 v.push_back(i.second);
-            for( auto &i: NeedData->second.at(Task::Priority::Third))
+            for( auto &i: NeedData->second.at(TaskPriority::Third))
                 v.push_back(i.second);
-            for( auto &i: NeedData->second.at(Task::Priority::None))
+            for( auto &i: NeedData->second.at(TaskPriority::None))
                 v.push_back(i.second);
         }
     }
     return v;
 }
 
-void ViewByDate::addTask(const std::weak_ptr<FullTask>& ft){
+bool ViewByDate::addTask(const std::weak_ptr<FullTask>& ft){
     Date date = ft.lock()->getTask().getDate();
     auto foundDate = map_.find(date);
 
     if (foundDate != map_.end()) {
-        Task::Priority priority = ft.lock()->getTask().getPrior();
+        TaskPriority priority = ft.lock()->getTask().getPriority();
         foundDate->second[priority][ft.lock()->getId()] = ft;
+        return true;
     }
     else {
-        std::map<Task::Priority, std::map<TaskID, std::weak_ptr<FullTask>, TaskID::MapComparator> > map;
+        std::map<TaskPriority, std::map<TaskID, std::weak_ptr<FullTask>, TaskID::MapComparator> > map;
         std::map<TaskID, std::weak_ptr<FullTask>, TaskID::MapComparator> EmptyMap;
 
-        map[Task::Priority::First] = EmptyMap;
-        map[Task::Priority::Second] = EmptyMap;
-        map[Task::Priority::Third]= EmptyMap;
-        map[Task::Priority::None]= EmptyMap;
+        map[TaskPriority::First] = EmptyMap;
+        map[TaskPriority::Second] = EmptyMap;
+        map[TaskPriority::Third]= EmptyMap;
+        map[TaskPriority::None]= EmptyMap;
 
-        Task::Priority priority = ft.lock()->getTask().getPrior();
+        TaskPriority priority = ft.lock()->getTask().getPriority();
         map[priority][ft.lock()->getId()] = ft;
 
         map_.insert({date, map});
+        return true;
     }
 }
 
 bool ViewByDate::deleteTask(const std::weak_ptr<FullTask>& ft){
     Date date = ft.lock()->getTask().getDate();
-    Task::Priority priority = ft.lock()->getTask().getPrior();
+    TaskPriority priority = ft.lock()->getTask().getPriority();
     TaskID id = ft.lock()->getId();
 
     return map_[date][priority].erase(id);

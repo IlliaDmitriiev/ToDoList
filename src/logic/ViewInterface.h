@@ -17,7 +17,7 @@ public:
     virtual std::vector<std::weak_ptr<FullTask>> getTasksForWeek(Date date)= 0;
 
 public:
-    virtual void addTask(const std::weak_ptr<FullTask>& ft)= 0;
+    virtual bool addTask(const std::weak_ptr<FullTask>& ft)= 0;
     virtual bool deleteTask(const std::weak_ptr<FullTask>& ft)= 0;
 
 };

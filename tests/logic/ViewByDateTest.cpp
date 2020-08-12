@@ -32,38 +32,38 @@ public:
                 date1,
                 "name1",
                 "",
-                Task::Priority::None);
+                TaskPriority::None);
 
         const Task t2 = Task::create(
                 date2,
                 "name2",
                 "456578y&#&@)(#$?><</*-+fdg",
-                Task::Priority::Second);
+                TaskPriority::Second);
 
 
         const Task t3 = Task::create(
                 Date::create(1500, 2, 26),
                 "name3",
                 "label3",
-                Task::Priority::Third);
+                TaskPriority::Third);
 
         const Task t4 = Task::create(
                 date1,
                 "name4",
                 "",
-                Task::Priority::First);
+                TaskPriority::First);
 
         const Task t5 = Task::create(
                 date1,
                 "name5",
                 "LABEL%^",
-                Task::Priority::Second);
+                TaskPriority::Second);
 
         const Task t6 = Task::create(
                 date1,
                 "name6",
                 "label6",
-                Task::Priority::Third);
+                TaskPriority::Third);
 
 
         FullTask ft1 = FullTask::create(gen.generateId(), t1);
@@ -85,14 +85,14 @@ public:
 };
 
 TEST_F(ViewByDateTest, shouldAddTask) {
-    EXPECT_NO_THROW(viewByDate.addTask(sft1));
-    EXPECT_NO_THROW(viewByDate.addTask(sft2));
-    EXPECT_NO_THROW(viewByDate.addTask(sft3));
+    EXPECT_TRUE(viewByDate.addTask(sft1));
+    EXPECT_TRUE(viewByDate.addTask(sft2));
+    EXPECT_TRUE(viewByDate.addTask(sft3));
 }
 
 TEST_F(ViewByDateTest, shouldDelete) {
-    EXPECT_NO_THROW(viewByDate.addTask(sft1));
-    EXPECT_NO_THROW(viewByDate.addTask(sft2));
+    EXPECT_TRUE(viewByDate.addTask(sft1));
+    EXPECT_TRUE(viewByDate.addTask(sft2));
 
     EXPECT_TRUE(viewByDate.deleteTask(sft1));
 }
@@ -111,10 +111,10 @@ TEST_F(ViewByDateTest, shouldGetAllTasksForToday1) {
     auto cur = std::make_unique<tm>(*gmtime(&now));
     Date date = Date::create(cur->tm_year+1900, cur->tm_mon + 1, cur->tm_mday);
 
-    EXPECT_NO_THROW(viewByDate.addTask(sft1));
-    EXPECT_NO_THROW(viewByDate.addTask(sft2));
-    EXPECT_NO_THROW(viewByDate.addTask(sft3));
-    EXPECT_NO_THROW(viewByDate.addTask(sft4));
+    EXPECT_TRUE(viewByDate.addTask(sft1));
+    EXPECT_TRUE(viewByDate.addTask(sft2));
+    EXPECT_TRUE(viewByDate.addTask(sft3));
+    EXPECT_TRUE(viewByDate.addTask(sft4));
 
     EXPECT_EQ(viewByDate.getTasksForToday(date).size(), 2);
 }
@@ -124,8 +124,8 @@ TEST_F(ViewByDateTest, shouldGetAllTasksForToday2) {
     auto cur = std::make_unique<tm>(*gmtime(&now));
     Date date = Date::create(cur->tm_year+1900, cur->tm_mon + 1, cur->tm_mday);
 
-    EXPECT_NO_THROW(viewByDate.addTask(sft5));
-    EXPECT_NO_THROW(viewByDate.addTask(sft6));
+    EXPECT_TRUE(viewByDate.addTask(sft5));
+    EXPECT_TRUE(viewByDate.addTask(sft6));
 
     EXPECT_EQ(viewByDate.getTasksForToday(date).size(), 2);
 }
@@ -135,20 +135,20 @@ TEST_F(ViewByDateTest, shouldGetAllTasksForWeek1) {
     auto cur = std::make_unique<tm>(*gmtime(&now));
     Date date = Date::create(cur->tm_year+1900, cur->tm_mon + 1, cur->tm_mday);
 
-    EXPECT_NO_THROW(viewByDate.addTask(sft1));
-    EXPECT_NO_THROW(viewByDate.addTask(sft2));
-    EXPECT_NO_THROW(viewByDate.addTask(sft3));
-    EXPECT_NO_THROW(viewByDate.addTask(sft4));
+    EXPECT_TRUE(viewByDate.addTask(sft1));
+    EXPECT_TRUE(viewByDate.addTask(sft2));
+    EXPECT_TRUE(viewByDate.addTask(sft3));
+    EXPECT_TRUE(viewByDate.addTask(sft4));
 
     EXPECT_EQ(viewByDate.getTasksForWeek(date).size(), 3);
 }
 
 TEST_F(ViewByDateTest, shouldGetAllTasksForWeek2) {
 
-    EXPECT_NO_THROW(viewByDate.addTask(sft1));
-    EXPECT_NO_THROW(viewByDate.addTask(sft2));
-    EXPECT_NO_THROW(viewByDate.addTask(sft3));
-    EXPECT_NO_THROW(viewByDate.addTask(sft4));
+    EXPECT_TRUE(viewByDate.addTask(sft1));
+    EXPECT_TRUE(viewByDate.addTask(sft2));
+    EXPECT_TRUE(viewByDate.addTask(sft3));
+    EXPECT_TRUE(viewByDate.addTask(sft4));
 
     EXPECT_EQ(viewByDate.getTasksForWeek(Date::create(1500, 2, 26)).size(), 1);
 }

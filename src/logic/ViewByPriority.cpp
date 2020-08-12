@@ -6,22 +6,22 @@
 
 ViewByPriority::ViewByPriority(){
     std::map<TaskID, std::weak_ptr<FullTask>, TaskID::MapComparator> mp;
-    map_[Task::Priority::First] = mp;
-    map_[Task::Priority::Second] = mp;
-    map_[Task::Priority::Third]= mp;
-    map_[Task::Priority::None]= mp;
+    map_[TaskPriority::First] = mp;
+    map_[TaskPriority::Second] = mp;
+    map_[TaskPriority::Third]= mp;
+    map_[TaskPriority::None]= mp;
 }
 
 std::vector<std::weak_ptr<FullTask>> ViewByPriority::getAllTasksByPrior(){
     std::vector<std::weak_ptr<FullTask>> v;
 
-    for(auto &i: map_.at(Task::Priority::First))
+    for(auto &i: map_.at(TaskPriority::First))
         v.push_back(i.second);
-    for(auto &i: map_.at(Task::Priority::Second))
+    for(auto &i: map_.at(TaskPriority::Second))
         v.push_back(i.second);
-    for(auto &i: map_.at(Task::Priority::Third))
+    for(auto &i: map_.at(TaskPriority::Third))
         v.push_back(i.second);
-    for(auto &i: map_.at(Task::Priority::None))
+    for(auto &i: map_.at(TaskPriority::None))
         v.push_back(i.second);
 
     return v;
@@ -37,14 +37,14 @@ std::vector<std::weak_ptr<FullTask>> ViewByPriority::getTasksForWeek(Date date){
     return v;
 }
 
-void ViewByPriority::addTask(const std::weak_ptr<FullTask>& cur){
-    Task::Priority priority = cur.lock()->getTask().getPrior();
+bool ViewByPriority::addTask(const std::weak_ptr<FullTask>& cur){
+    TaskPriority priority = cur.lock()->getTask().getPriority();
     map_[priority][cur.lock()->getId()] = cur;
-
+    return true;
 }
 
 bool ViewByPriority::deleteTask(const std::weak_ptr<FullTask>& cur){
-    Task::Priority priority = cur.lock()->getTask().getPrior();
+    TaskPriority priority = cur.lock()->getTask().getPriority();
     TaskID id = cur.lock()->getId();
     return map_[priority].erase(id);
 }
