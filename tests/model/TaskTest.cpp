@@ -13,12 +13,12 @@ TEST_F(TaskTest, shouldCreateTask) {
     Date date = Date::create(2020,7,23);
     std::string name = "name";
     std::string label = "label";
-    Task::Priority tp = Task::Priority::Second;
+    TaskPriority tp = TaskPriority::Second;
     Task task = Task::create(date, name, label, tp);
 
     ASSERT_EQ(name, task.getName());
     ASSERT_EQ(label, task.getLabel());
-    ASSERT_EQ(tp, task.getPrior());
+    ASSERT_EQ(tp, task.getPriority());
 }
 
 TEST_F(TaskTest, shouldThrowExpception_1) {
@@ -26,7 +26,7 @@ TEST_F(TaskTest, shouldThrowExpception_1) {
         Date::create(1855, 14, 14),
         "dsfdgfhg",
         "aertys4gb5",
-        Task::Priority::None)
+        TaskPriority::None)
     );
 }
 
@@ -35,7 +35,7 @@ TEST_F(TaskTest, shouldThrowExpception_2) {
         Date::create(2100, 2, 29),
         "name",
         "label",
-        Task::Priority::Third)
+        TaskPriority::Third)
     );
 }
 
@@ -45,12 +45,12 @@ TEST_F(TaskTest, sholdCompare_1) {
                 Date::create(2100, 2, 27),
                 "name",
                 "label",
-                Task::Priority::Third),
+                TaskPriority::Third),
                 Task::create(
                 Date::create(2100, 2, 28),
                 "name",
                 "label",
-                Task::Priority::Third)
+                TaskPriority::Third)
             )
     );
 }
@@ -61,12 +61,12 @@ TEST_F(TaskTest, sholdCompare_2) {
                     Date::create(1500, 4, 27),
                     "name",
                     "label",
-                    Task::Priority::Third),
+                    TaskPriority::Third),
             Task::create(
                     Date::create(2178, 2, 27),
                     "name",
                     "LABEL",
-                    Task::Priority::Third)
+                    TaskPriority::Third)
     )
     );
 }
@@ -77,12 +77,12 @@ TEST_F(TaskTest, sholdCompare_3) {
                     Date::create(2000, 3, 31),
                     "name",
                     "label",
-                    Task::Priority::None),
+                    TaskPriority::None),
             Task::create(
                     Date::create(2000, 3, 31),
                     "name",
                     "label",
-                    Task::Priority::None)
+                    TaskPriority::None)
     )
     );
 }

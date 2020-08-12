@@ -19,13 +19,13 @@ TEST_F(TaskConvertorTest, shouldConvertFullTaskIntoDTO) {
             Date::create(2020, 7, 31),
             "name1",
             "",
-            Task::Priority::None);
+            TaskPriority::None);
     FullTask ft = FullTask::create(gen.generateId(), t);
     auto sft = std::make_shared<FullTask>(ft);
     TaskDTO td = con.transferToTaskDTO(sft);
 
     EXPECT_EQ(td.getTaskId().getId(), 0);
-    EXPECT_EQ(td.getPrior(), Task::Priority::None);
+    EXPECT_EQ(td.getPriority(), TaskPriority::None);
     EXPECT_EQ(td.getLabel(), "");
     EXPECT_EQ(td.getName(), "name1");
     EXPECT_EQ(td.getDate().getYear(), 2020);
@@ -40,13 +40,13 @@ TEST_F(TaskConvertorTest, shouldConvertTaskDTOIntoTask) {
             Date::create(2020, 7, 31),
             "name1",
             "",
-            Task::Priority::None
+            TaskPriority::None
             );
 
     Task t = con.transferToTask(td);
 
     EXPECT_EQ(td.getTaskId().getId(), 0);
-    EXPECT_EQ(td.getPrior(), Task::Priority::None);
+    EXPECT_EQ(td.getPriority(), TaskPriority::None);
     EXPECT_EQ(td.getLabel(), "");
     EXPECT_EQ(td.getName(), "name1");
     EXPECT_EQ(td.getDate().getYear(), 2020);

@@ -12,9 +12,9 @@ class TaskDTO {
 
 public:
     static TaskDTO create(const TaskID &taskId, const Date &date, const std::string &name, const std::string &label,
-                          Task::Priority prior);
+                          TaskPriority priority);
     static TaskDTO create(const Date &date, const std::string &name, const std::string &label,
-                                   Task::Priority prior);
+                                   TaskPriority priority);
 public:
     const TaskID &getTaskId() const;
 
@@ -24,20 +24,20 @@ public:
 
     const std::string &getLabel() const;
 
-    Task::Priority getPrior() const;
+    TaskPriority getPriority() const;
 
 private:
-    TaskDTO(const TaskID &taskId, const Date &date, const std::string &name, const std::string &label,
-            Task::Priority prior);
+    TaskDTO(const TaskID &taskID, const Date &date, const std::string &name, const std::string &label,
+            TaskPriority priority);
     TaskDTO(const Date &date, const std::string &name, const std::string &label,
-            Task::Priority prior);
+            TaskPriority priority);
 
 private:
     TaskID id_;
     Date date_;
     std::string name_;
     std::string label_;
-    Task::Priority prior_;
+    TaskPriority priority_;
 };
 
 #endif //TODOLIST_TASKDTO_H

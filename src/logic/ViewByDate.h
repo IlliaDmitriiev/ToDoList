@@ -21,7 +21,7 @@ public:
 
 private:
     std::unordered_map<Date,
-        std::map<Task::Priority,
+        std::map<TaskPriority,
             std::map<TaskID, std::weak_ptr<FullTask>, TaskID::MapComparator> >,
         Date::Hasher,
         Date::Comparator> map_;
