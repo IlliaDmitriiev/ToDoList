@@ -22,7 +22,7 @@ public:
     bool deleteTask(const std::weak_ptr<FullTask>& ft) override ;
 
 private:
-    std::map<Task::Priority, std::map<TaskID, std::weak_ptr<FullTask>, TaskID::MapComparator> > map_;
+    std::map<TaskPriority, std::map<TaskID, std::weak_ptr<FullTask>, TaskID::MapComparator> > map_;
 
 };
 
