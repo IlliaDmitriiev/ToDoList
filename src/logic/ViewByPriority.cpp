@@ -15,13 +15,13 @@ ViewByPriority::ViewByPriority(){
 std::vector<std::weak_ptr<FullTask>> ViewByPriority::getAllTasksByPrior(){
     std::vector<std::weak_ptr<FullTask>> v;
 
-    for(auto i: map_.at(Task::Priority::First))
+    for(auto &i: map_.at(Task::Priority::First))
         v.push_back(i.second);
-    for(auto i: map_.at(Task::Priority::Second))
+    for(auto &i: map_.at(Task::Priority::Second))
         v.push_back(i.second);
-    for(auto i: map_.at(Task::Priority::Third))
+    for(auto &i: map_.at(Task::Priority::Third))
         v.push_back(i.second);
-    for(auto i: map_.at(Task::Priority::None))
+    for(auto &i: map_.at(Task::Priority::None))
         v.push_back(i.second);
 
     return v;

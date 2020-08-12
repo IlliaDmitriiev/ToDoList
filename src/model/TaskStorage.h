@@ -2,14 +2,14 @@
 // Created by Илля on 03.08.2020.
 //
 
-#ifndef TODOLIST_STORAGEFORSHAREDPTR_H
-#define TODOLIST_STORAGEFORSHAREDPTR_H
+#ifndef TODOLIST_TASKSTORAGE_H
+#define TODOLIST_TASKSTORAGE_H
 
 #include "FullTask.h"
 #include <unordered_map>
 #include <optional>
 
-class StorageForSharedPtr {
+class TaskStorage {
 
 public:
     void addTask(std::shared_ptr<FullTask> sft);
@@ -23,4 +23,4 @@ private:
 };
 
 
-#endif //TODOLIST_STORAGEFORSHAREDPTR_H
+#endif //TODOLIST_TASKSTORAGE_H

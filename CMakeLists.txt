@@ -8,8 +8,8 @@ add_executable(ToDoList
         src/model/Date.cpp
         src/model/Date.h
         src/model/Task.h
-        src/logic/FullTask.cpp
-        src/logic/FullTask.h
+        src/model/FullTask.cpp
+        src/model/FullTask.h
         src/api/TaskID.cpp
         src/api/TaskID.h
         src/logic/IDGenerator.cpp
@@ -27,9 +27,9 @@ add_executable(ToDoList
         src/logic/ViewInterface.h
         src/logic/TaskConvertor.cpp
         src/logic/TaskConvertor.h
-        src/logic/StorageForSharedPtr.cpp
-        src/logic/StorageForSharedPtr.h
-        src/api/Injector.h)
+        src/model/TaskStorage.cpp
+        src/model/TaskStorage.h
+        src/api/Creator.h)
 
 include_directories(src)
 
@@ -49,16 +49,16 @@ add_executable(TestsExecutable
         tests/logic/ViewByDateTest.cpp
         tests/logic/ViewByPriorityTest.cpp
         tests/logic/TaskConvertorTest.cpp
-        tests/logic/StorageForSharedPtrTest.cpp
-        tests/logic/FullTaskTest.cpp
+        tests/model/TaskStorageTest.cpp
+        tests/model/FullTaskTest.cpp
         tests/api/TaskCreationResultTest.cpp
         src/logic/IDGenerator.cpp
         src/api/TaskDTO.cpp
         src/api/TaskCreationResult.cpp
         src/logic/ViewByDate.cpp
         src/logic/ViewByPriority.cpp
-        src/logic/StorageForSharedPtr.cpp
-        src/logic/FullTask.cpp
+        src/model/TaskStorage.cpp
+        src/model/FullTask.cpp
         src/logic/TaskConvertor.cpp
         )
 

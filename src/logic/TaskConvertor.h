@@ -5,7 +5,7 @@
 #ifndef TODOLIST_TASKCONVERTOR_H
 #define TODOLIST_TASKCONVERTOR_H
 
-#include "FullTask.h"
+#include "model/FullTask.h"
 #include "api/TaskDTO.h"
 
 class TaskConvertor{

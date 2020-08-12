@@ -3,7 +3,7 @@
 //
 
 #include <gtest/gtest.h>
-#include "logic/FullTask.h"
+#include "model/FullTask.h"
 
 class FullTaskTest : public ::testing::Test {
 

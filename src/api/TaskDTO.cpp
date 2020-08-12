@@ -10,7 +10,7 @@ TaskDTO TaskDTO::create(const TaskID &taskId, const Date &date, const std::strin
     return task;
 }
 
-TaskDTO TaskDTO::createWithoutID(const Date &date, const std::string &name, const std::string &label,
+TaskDTO TaskDTO::create(const Date &date, const std::string &name, const std::string &label,
                         Task::Priority prior){
     TaskDTO task(date, name, label, prior);
     return task;
