@@ -29,7 +29,7 @@ add_executable(ToDoList
         src/logic/TaskConvertor.h
         src/model/TaskStorage.cpp
         src/model/TaskStorage.h
-        src/api/Injector.h)
+        src/api/Creator.h)
 
 include_directories(src)
 
