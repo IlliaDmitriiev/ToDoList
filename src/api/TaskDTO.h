@@ -13,7 +13,7 @@ class TaskDTO {
 public:
     static TaskDTO create(const TaskID &taskId, const Date &date, const std::string &name, const std::string &label,
                           Task::Priority prior);
-    static TaskDTO createWithoutID(const Date &date, const std::string &name, const std::string &label,
+    static TaskDTO create(const Date &date, const std::string &name, const std::string &label,
                                    Task::Priority prior);
 public:
     const TaskID &getTaskId() const;

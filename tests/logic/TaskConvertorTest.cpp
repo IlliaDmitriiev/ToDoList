@@ -36,7 +36,7 @@ TEST_F(TaskConvertorTest, shouldConvertFullTaskIntoDTO) {
 TEST_F(TaskConvertorTest, shouldConvertTaskDTOIntoTask) {
     IDGenerator gen;
     TaskConvertor con;
-    TaskDTO td = TaskDTO::createWithoutID(
+    TaskDTO td = TaskDTO::create(
             Date::create(2020, 7, 31),
             "name1",
             "",
