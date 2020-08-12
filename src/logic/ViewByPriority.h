@@ -6,6 +6,7 @@
 #define TODOLIST_PRIORITYVIEW_H
 
 #include "ViewInterface.h"
+#include "api/TaskCreationResult.h"
 
 class ViewByPriority: public ViewInterface{
 
@@ -18,7 +19,7 @@ public:
     std::vector<std::weak_ptr<FullTask>> getTasksForWeek(Date date) override;
 
 public:
-    void addTask(const std::weak_ptr<FullTask>& ft) override ;
+    bool addTask(const std::weak_ptr<FullTask>& ft) override ;
     bool deleteTask(const std::weak_ptr<FullTask>& ft) override ;
 
 private:

@@ -53,13 +53,14 @@ std::vector<std::weak_ptr<FullTask>>  ViewByDate::getTasksForWeek(Date date){
     return v;
 }
 
-void ViewByDate::addTask(const std::weak_ptr<FullTask>& ft){
+bool ViewByDate::addTask(const std::weak_ptr<FullTask>& ft){
     Date date = ft.lock()->getTask().getDate();
     auto foundDate = map_.find(date);
 
     if (foundDate != map_.end()) {
         TaskPriority priority = ft.lock()->getTask().getPriority();
         foundDate->second[priority][ft.lock()->getId()] = ft;
+        return true;
     }
     else {
         std::map<TaskPriority, std::map<TaskID, std::weak_ptr<FullTask>, TaskID::MapComparator> > map;
@@ -74,6 +75,7 @@ void ViewByDate::addTask(const std::weak_ptr<FullTask>& ft){
         map[priority][ft.lock()->getId()] = ft;
 
         map_.insert({date, map});
+        return true;
     }
 }
 
