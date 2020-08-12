@@ -9,20 +9,13 @@
 #include <string>
 #include <ctime>
 #include "Date.h"
+#include "api/TaskPriority.h"
 
 
 class Task{
 
 public:
-    enum class Priority{
-        None,
-        First,
-        Second,
-        Third
-    };
-
-public:
-    static Task create(const Date &date, const std::string &name, const std::string &label, Task::Priority prior){
+    static Task create(const Date &date, const std::string &name, const std::string &label, TaskPriority prior){
         Task task(date, name, label, prior);
         return task;
     }
@@ -40,9 +33,10 @@ public:
         return label_;
     }
 
-    Priority getPrior() const {
-        return prior_;
+    TaskPriority getPriority() const {
+        return priority_;
 }
+
 public:
     static bool Compare(const Task &t1, const Task &t2){
         return
@@ -51,18 +45,18 @@ public:
                 t1.getDate().getDay() == t2.getDate().getDay() &&
                 t1.getName() == t2.getName() &&
                 t1.getLabel() == t2.getLabel() &&
-                t1.getPrior() == t2.getPrior();
+                t1.getPriority() == t2.getPriority();
     }
 
 private:
-    Task(const Date &date, const std::string &name, const std::string &label, Task::Priority prior)
-            : date_(date), name_(name), label_(label), prior_(prior) {}
+    Task(const Date &date, const std::string &name, const std::string &label, TaskPriority priority)
+            : date_(date), name_(name), label_(label), priority_(priority) {}
 
 private:
     Date date_;
     std::string name_;
     std::string label_;
-    Priority prior_;
+    TaskPriority priority_;
 };
 
 
