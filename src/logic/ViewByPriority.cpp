@@ -37,10 +37,10 @@ std::vector<std::weak_ptr<FullTask>> ViewByPriority::getTasksForWeek(Date date){
     return v;
 }
 
-void ViewByPriority::addTask(const std::weak_ptr<FullTask>& cur){
+bool ViewByPriority::addTask(const std::weak_ptr<FullTask>& cur){
     TaskPriority priority = cur.lock()->getTask().getPriority();
     map_[priority][cur.lock()->getId()] = cur;
-
+    return true;
 }
 
 bool ViewByPriority::deleteTask(const std::weak_ptr<FullTask>& cur){
