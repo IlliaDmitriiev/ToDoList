@@ -29,7 +29,7 @@ TaskCreationResult TaskService::addSubtask(TaskID taskID, const TaskDTO &subTask
         return TaskCreationResult::taskNotFound();
 }
 
-std::vector<TaskDTO> TaskService::getAllTasksByPrior(){
+std::vector<TaskDTO> TaskService::getAllTasksByPriority(){
     auto v = byPriority_->getAllTasksByPrior();
     std::vector<TaskDTO> vec;
     for(auto i: v)

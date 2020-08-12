@@ -34,7 +34,7 @@ public:
     TaskCreationResult addSubtask(TaskID taskID, const TaskDTO &subTask);
 
 public:
-    std::vector<TaskDTO> getAllTasksByPrior();
+    std::vector<TaskDTO> getAllTasksByPriority();
     std::vector<TaskDTO> getTasksForToday();
     std::vector<TaskDTO> getTasksForWeek();
 
