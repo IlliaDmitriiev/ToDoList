@@ -17,13 +17,15 @@ std::optional<std::weak_ptr<FullTask>> TaskStorage::getTask(TaskID id){
 
 
 bool TaskStorage::deleteSubtaskInParent(TaskID ParentID, TaskID taskID){
-    if (ParentID.getId()!=taskID.getId()) {
-        auto ParentTask = allTasks_.find(ParentID);
-        if(ParentTask == allTasks_.end())
-            return false;
+    auto task = allTasks_.find(taskID);
+    auto ParentTask = allTasks_.find(ParentID);
+
+    if(ParentTask == allTasks_.end()|| task ==allTasks_.end())
+        return false;
+
+    if (ParentID.getId()!=taskID.getId())
         ParentTask->second->deleteSubtask(taskID);
-        return true;
-    }
+
     return true;
 }
 
