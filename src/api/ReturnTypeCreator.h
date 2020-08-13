@@ -7,17 +7,31 @@
 
 namespace operation_result{
 
-   AddTaskResult createAddTask(const ResultType &result, const std::optional <TaskID> &id, const std::string &error_message) {
+   AddTaskResult TaskAddedSuccessful(const std::optional <TaskID> &id) {
         AddTaskResult outcome;
-        outcome.result = result;
+        outcome.result = ResultType::SUCCESS;
         outcome.id = id;
+        outcome.error_message = "";
+        return outcome;
+   }
+   AddTaskResult TaskAddedUnsuccessful(const std::string &error_message) {
+        AddTaskResult outcome;
+        outcome.result = ResultType::FAILURE;
+        outcome.id = std::nullopt;
         outcome.error_message = error_message;
         return outcome;
    }
 
-   RequstTaskResult createRequestTask(const ResultType &result, const std::string &error_message) {
+   RequstTaskResult TaskRequestedSuccessful() {
         RequstTaskResult outcome;
-        outcome.result = result;
+        outcome.result = ResultType::SUCCESS;
+        outcome.error_message = "";
+        return outcome;
+   }
+
+   RequstTaskResult TaskRequestedUnsuccessful(const std::string &error_message) {
+        RequstTaskResult outcome;
+        outcome.result = ResultType::FAILURE;;
         outcome.error_message = error_message;
         return outcome;
    }
