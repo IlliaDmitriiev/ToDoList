@@ -5,16 +5,13 @@
 #ifndef TODOLIST_TASKSERVICE_H
 #define TODOLIST_TASKSERVICE_H
 
-
-#include "model/FullTask.h"
 #include "logic/IDGenerator.h"
 #include "logic/ViewInterface.h"
 #include "logic/ViewByPriority.h"
 #include "logic/ViewByDate.h"
 #include "logic/TaskConvertor.h"
 #include "model/TaskStorage.h"
-#include "TaskCreationResult.h"
-#include <algorithm>
+#include "ReturnType.h"
 
 class TaskService {
 
@@ -28,9 +25,9 @@ public:
     {}
 
 public:
-    TaskCreationResult addTask(const TaskDTO &taskDto);
-    TaskCreationResult addSubtask(TaskID taskID, const TaskDTO &subTask);
-    bool deleteTask(TaskID id);
+    AddTaskResult addTask(const TaskDTO &taskDto);
+    AddTaskResult addSubtask(TaskID taskID, const TaskDTO &subTask);
+    RequstTaskResult deleteTask(TaskID id);
 
 public:
     std::vector<TaskDTO> getAllTasksByPriority();
