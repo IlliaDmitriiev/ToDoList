@@ -14,7 +14,7 @@ AddTaskResult TaskService::addTask(const TaskDTO &taskDTO){
     byPriority_->addTask(shared_task);
     storage_.addTask(std::move(shared_task));
 
-    return return_type::createAddTaskResult(ResultType::SUCCESS, id, "");
+    return operation_result::createAddTask(ResultType::SUCCESS, id, "");
 }
 
 AddTaskResult TaskService::addSubtask(TaskID taskID, const TaskDTO &subTask){
@@ -24,13 +24,13 @@ AddTaskResult TaskService::addSubtask(TaskID taskID, const TaskDTO &subTask){
     if(ft.has_value()) {
         if (subtask_result.id.has_value()) {
             ft.value().lock()->addSubtask(storage_.getTask(subtask_result.id.value()).value());
-            return return_type::createAddTaskResult(ResultType::SUCCESS, subtask_result.id.value(), "");
+            return operation_result::createAddTask(ResultType::SUCCESS, subtask_result.id.value(), "");
         }
         else
-            return return_type::createAddTaskResult(ResultType::FAILURE, std::nullopt, "subtask creation is failed");
+            return operation_result::createAddTask(ResultType::FAILURE, std::nullopt, "subtask creation is failed");
     }
     else
-        return return_type::createAddTaskResult(ResultType::FAILURE, std::nullopt, "task not found");
+        return operation_result::createAddTask(ResultType::FAILURE, std::nullopt, "task not found");
 
 }
 
@@ -83,13 +83,13 @@ RequstTaskResult TaskService::deleteTask(TaskID id){
         }
 
         if(!removeTask(task.value().lock()))
-            return return_type::createRequestTaskResult(ResultType::FAILURE,"delete of subtasks is failed");
+            return operation_result::createRequestTask(ResultType::FAILURE,"delete of subtasks is failed");
 
         storage_.deleteTask(task.value().lock()->getId());
         return subtask_results;
     }
     else
-        return return_type::createRequestTaskResult(ResultType::FAILURE, "task not found");
+        return operation_result::createRequestTask(ResultType::FAILURE, "task not found");
 }
 
 bool TaskService::removeTask(const std::weak_ptr<FullTask> &task){

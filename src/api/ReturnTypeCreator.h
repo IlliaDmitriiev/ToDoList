@@ -5,9 +5,9 @@
 #ifndef TODOLIST_RETURNTYPECREATOR_H
 #define TODOLIST_RETURNTYPECREATOR_H
 
-namespace return_type{
+namespace operation_result{
 
-   AddTaskResult createAddTaskResult(const ResultType &result, const std::optional <TaskID> &id, const std::string &error_message) {
+   AddTaskResult createAddTask(const ResultType &result, const std::optional <TaskID> &id, const std::string &error_message) {
         AddTaskResult outcome;
         outcome.result = result;
         outcome.id = id;
@@ -15,7 +15,7 @@ namespace return_type{
         return outcome;
    }
 
-   RequstTaskResult createRequestTaskResult(const ResultType &result, const std::string &error_message) {
+   RequstTaskResult createRequestTask(const ResultType &result, const std::string &error_message) {
         RequstTaskResult outcome;
         outcome.result = result;
         outcome.error_message = error_message;
