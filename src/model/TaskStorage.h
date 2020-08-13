@@ -7,14 +7,16 @@
 
 #include "FullTask.h"
 #include <unordered_map>
+#include <vector>
 #include <optional>
 
 class TaskStorage {
 
 public:
-    void addTask(std::shared_ptr<FullTask> sft);
+    bool addTask(std::shared_ptr<FullTask> sft);
     std::optional<std::weak_ptr<FullTask>> getTask(TaskID id);
-    void deleteTask(TaskID id);
+    bool deleteSubtaskInParent(TaskID ParentID, TaskID taskID);
+    bool deleteTask(TaskID id);
 
 
 private:

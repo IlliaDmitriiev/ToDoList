@@ -64,12 +64,26 @@ std::vector<TaskDTO> TaskService::getTasksForWeek(){
     return vec;
 };
 
-void TaskService::removeTask(TaskID id){
-    auto fullTask = storage_.getTask(id);
-    if(fullTask.has_value()) {
-        byDate_->deleteTask(fullTask.value());
-        byPriority_->deleteTask(fullTask.value());
+bool TaskService::deleteTask(TaskID id){
+    auto task = storage_.getTask(id);
+    if(task.has_value()) {
+        bool noErrors = true;
+        for(TaskID subtaskID: task.value().lock()->getSubtasks())
+            if(!deleteTask(subtaskID))  noErrors = false;
+
+        if(!removeTask(task.value().lock()) || !noErrors)
+            return false;
+        storage_.deleteTask(task.value().lock()->getId());
+        return true;
     }
+    else return false;
+}
+
+bool TaskService::removeTask(const std::weak_ptr<FullTask> &task){
+    return
+        byDate_->deleteTask(task) &&
+        byPriority_->deleteTask(task) &&
+        storage_.deleteSubtaskInParent(task.lock()->getParent(), task.lock()->getId());
 }
 
 std::optional<TaskDTO> TaskService::getTask(TaskID id){
@@ -77,8 +91,7 @@ std::optional<TaskDTO> TaskService::getTask(TaskID id){
     if (ft.has_value())
         return
             std::optional<TaskDTO>(TaskConvertor::transferToTaskDTO(ft.value()));
-     else
-         return std::nullopt;
+     else return std::nullopt;
 }
 
 

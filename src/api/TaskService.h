@@ -23,8 +23,6 @@ public:
         std::unique_ptr<ViewInterface> byPriority,
         std::unique_ptr<ViewInterface> byDate)
     :
-    generator_(),
-    storage_(),
     byPriority_(std::move(byPriority)),
     byDate_(std::move(byDate))
     {}
@@ -32,15 +30,16 @@ public:
 public:
     TaskCreationResult addTask(const TaskDTO &taskDto);
     TaskCreationResult addSubtask(TaskID taskID, const TaskDTO &subTask);
+    bool deleteTask(TaskID id);
 
 public:
     std::vector<TaskDTO> getAllTasksByPriority();
     std::vector<TaskDTO> getTasksForToday();
     std::vector<TaskDTO> getTasksForWeek();
-
-public:
-    void removeTask(TaskID id);
     std::optional<TaskDTO> getTask(TaskID id);
+
+private:
+    bool removeTask(const std::weak_ptr<FullTask> &task);
 
 private:
     IDGenerator generator_;

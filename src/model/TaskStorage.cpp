@@ -4,7 +4,7 @@
 
 #include "TaskStorage.h"
 
-void TaskStorage::addTask(std::shared_ptr<FullTask> sft){
+bool TaskStorage::addTask(std::shared_ptr<FullTask> sft){
     allTasks_.insert({sft->getId(), std::move(sft)});
 }
 
@@ -15,7 +15,22 @@ std::optional<std::weak_ptr<FullTask>> TaskStorage::getTask(TaskID id){
         return allTasks_[id];
 }
 
-void TaskStorage::deleteTask(TaskID id){
-    allTasks_.erase(id);
+
+bool TaskStorage::deleteSubtaskInParent(TaskID ParentID, TaskID taskID){
+    auto task = allTasks_.find(taskID);
+    auto ParentTask = allTasks_.find(ParentID);
+
+    if(ParentTask == allTasks_.end()|| task ==allTasks_.end())
+        return false;
+
+    if (ParentID.getId()!=taskID.getId())
+        ParentTask->second->deleteSubtask(taskID);
+
+    return true;
 }
+
+bool TaskStorage::deleteTask(TaskID id){
+    return allTasks_.erase(id);
+}
+
 
