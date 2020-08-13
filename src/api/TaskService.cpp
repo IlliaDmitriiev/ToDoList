@@ -67,11 +67,11 @@ std::vector<TaskDTO> TaskService::getTasksForWeek(){
 bool TaskService::deleteTask(TaskID id){
     auto task = storage_.getTask(id);
     if(task.has_value()) {
-        bool b = true;
+        bool noErrors = true;
         for(TaskID subtaskID: task.value().lock()->getSubtasks())
-            if(!deleteTask(subtaskID) || !b)  b= false;
+            if(!deleteTask(subtaskID))  noErrors = false;
 
-        if(!removeTask(task.value().lock()) || !b)
+        if(!removeTask(task.value().lock()) || !noErrors)
             return false;
         storage_.deleteTask(task.value().lock()->getId());
         return true;
