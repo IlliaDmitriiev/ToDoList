@@ -6,7 +6,6 @@
 #define TODOLIST_PRIORITYVIEW_H
 
 #include "ViewInterface.h"
-#include "api/TaskCreationResult.h"
 
 class ViewByPriority: public ViewInterface{
 
