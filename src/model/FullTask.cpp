@@ -36,8 +36,11 @@ const TaskID &FullTask::getParent() const {
     return parent_;
 }
 
-std::unordered_map<TaskID, std::weak_ptr<FullTask>,
-        TaskID::Hasher, TaskID::Comparator >& FullTask::getSubTasks(){
-    return subTasks_;
+std::vector<TaskID> FullTask::getSubtasks() const {
+    std::vector<TaskID> sub;
+    for (const auto& node : subTasks_) {
+        sub.push_back(node.first);
+    }
+    return sub;
 }
 

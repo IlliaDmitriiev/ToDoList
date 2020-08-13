@@ -9,27 +9,26 @@
 #include "logic/IDGenerator.h"
 #include <memory>
 #include <unordered_map>
+#include <vector>
 
 class FullTask {
 
 public:
     static FullTask create(const TaskID& id, const Task &task);
 
+private:
+    FullTask(TaskID ID, const Task &t);
+
 public:
     void addSubtask( const std::weak_ptr<FullTask>& ft);
     void deleteSubtask(TaskID id);
+    void setParent(TaskID id);
 
 public:
     const Task &getTask() const;
     const TaskID &getId() const;
     const TaskID &getParent() const;
-    std::unordered_map<TaskID, std::weak_ptr<FullTask>,
-            TaskID::Hasher, TaskID::Comparator>& getSubTasks();
-public:
-    void setParent(TaskID id);
-
-private:
-    FullTask(TaskID ID, const Task &t);
+    std::vector<TaskID> getSubtasks() const;
 
 private:
     TaskID id_;
