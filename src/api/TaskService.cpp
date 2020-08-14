@@ -34,6 +34,21 @@ AddTaskResult TaskService::addSubtask(TaskID taskID, const TaskDTO &subTask){
 
 }
 
+RequstTaskResult TaskService::complete(TaskID id){
+    auto node = storage_.getTask(id);
+    if(node.has_value()){
+        node.value().lock()->complete();
+
+        for (TaskID subtaskID : node.value().lock()->getSubtasks())
+            complete(subtaskID);
+
+        return operation_result::TaskRequestedSuccessful();
+    }
+    else
+        return operation_result::TaskRequestedUnsuccessful("task not found");
+
+}
+
 std::vector<TaskDTO> TaskService::getAllTasksByPriority(){
     auto v = byPriority_->getAllTasksByPrior();
     std::vector<TaskDTO> vec;
