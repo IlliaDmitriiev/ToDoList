@@ -28,6 +28,8 @@ const Task &FullTask::getTask() const {
 
 void FullTask::complete(){
     complete_ = true;
+    for(auto i: subTasks_)
+        i.second.lock()->complete();
 }
 
 FullTask::FullTask(TaskID id, const Task &t) : id_(id), task_(t), parent_(id){}

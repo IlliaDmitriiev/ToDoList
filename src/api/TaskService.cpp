@@ -38,10 +38,6 @@ RequstTaskResult TaskService::complete(TaskID id){
     auto node = storage_.getTask(id);
     if(node.has_value()){
         node.value().lock()->complete();
-
-        for (TaskID subtaskID : node.value().lock()->getSubtasks())
-            complete(subtaskID);
-
         return operation_result::TaskRequestedSuccessful();
     }
     else
