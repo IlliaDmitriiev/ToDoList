@@ -8,8 +8,6 @@ include_directories(src)
 
 add_executable(ToDoList
         src/main.cpp
-        src/model/Date.cpp
-        src/model/Date.h
         src/model/Task.h
         src/model/FullTask.cpp
         src/model/FullTask.h
@@ -51,10 +49,8 @@ find_package(GTest REQUIRED)
 enable_testing()
 
 add_executable(TestsExecutable
-        tests/model/DateTest.cpp
         tests/model/TaskTest.cpp
         tests/api/TaskIDTest.cpp
-        src/model/Date.cpp
         src/api/TaskID.cpp
         tests/logic/IDGeneratorTest.cpp
         tests/api/TaskDTOTest.cpp
