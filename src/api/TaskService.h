@@ -26,9 +26,10 @@ public:
 
 public:
     AddTaskResult addTask(const TaskDTO &taskDto);
-    AddTaskResult addSubtask(TaskID taskID, const TaskDTO &subTask);
+    AddTaskResult addSubtask(TaskID taskID, const TaskDTO &subtask);
     RequstTaskResult deleteTask(TaskID id);
     RequstTaskResult complete(TaskID id);
+    RequstTaskResult postponeTask(TaskID id, boost::gregorian::date new_date);
 
 public:
     std::vector<TaskDTO> getAllTasksByPriority();

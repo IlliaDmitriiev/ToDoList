@@ -32,6 +32,10 @@ void FullTask::complete(){
         i.second.lock()->complete();
 }
 
+void FullTask::postpone(boost::gregorian::date new_date){
+    task_ = Task::create(new_date, task_.getName(), task_.getLabel(), task_.getPriority());
+}
+
 FullTask::FullTask(TaskID id, const Task &t) : id_(id), task_(t), parent_(id){}
 
 const TaskID &FullTask::getId() const {

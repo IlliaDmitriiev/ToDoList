@@ -24,6 +24,7 @@ public:
     void deleteSubtask(TaskID id);
     void setParent(TaskID id);
     void complete();
+    void postpone(boost::gregorian::date new_date);
 
 public:
     const Task &getTask() const;
