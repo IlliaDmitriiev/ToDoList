@@ -19,7 +19,7 @@ public:
 public:
     virtual bool addTask(const std::weak_ptr<FullTask>& ft)= 0;
     virtual bool deleteTask(const std::weak_ptr<FullTask>& ft)= 0;
-
+    virtual ~ViewInterface() = default;
 };
 
 

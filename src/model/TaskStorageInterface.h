@@ -17,6 +17,7 @@ public:
     virtual std::optional<std::weak_ptr<FullTask>> getTask(TaskID id)= 0;
     virtual bool deleteSubtaskInParent(TaskID ParentID, TaskID taskID)= 0;
     virtual bool deleteTask(TaskID id)= 0;
+    virtual ~TaskStorageInterface() = default;
 
 };
 
