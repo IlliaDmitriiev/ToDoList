@@ -14,8 +14,8 @@ public:
 
 public:
     std::vector<std::weak_ptr<FullTask>> getAllTasksByPrior() override;
-    std::vector<std::weak_ptr<FullTask>> getTasksForToday(BoostDate date) override;
-    std::vector<std::weak_ptr<FullTask>> getTasksForWeek(BoostDate date) override;
+    std::vector<std::weak_ptr<FullTask>> getTasksForToday(boost::gregorian::date date) override;
+    std::vector<std::weak_ptr<FullTask>> getTasksForWeek(boost::gregorian::date date) override;
 
 public:
     bool addTask(const std::weak_ptr<FullTask>& ft) override ;

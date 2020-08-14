@@ -11,18 +11,16 @@
 #include "boost/date_time/gregorian/gregorian.hpp"
 #include "api/TaskPriority.h"
 
-using BoostDate = boost::gregorian::date;
-
 class Task{
 
 public:
-    static Task create(const BoostDate &date, const std::string &name, const std::string &label, TaskPriority prior){
+    static Task create(const boost::gregorian::date &date, const std::string &name, const std::string &label, TaskPriority prior){
         Task task(date, name, label, prior);
         return task;
     }
 
 public:
-    BoostDate getDate() const {
+    boost::gregorian::date getDate() const {
         return date_;
     }
 
@@ -50,11 +48,11 @@ public:
     }
 
 private:
-    Task(const BoostDate &date, const std::string &name, const std::string &label, TaskPriority priority)
+    Task(const boost::gregorian::date &date, const std::string &name, const std::string &label, TaskPriority priority)
             : date_(date), name_(name), label_(label), priority_(priority) {}
 
 private:
-    BoostDate date_;
+    boost::gregorian::date date_;
     std::string name_;
     std::string label_;
     TaskPriority priority_;

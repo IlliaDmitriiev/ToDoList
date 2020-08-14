@@ -13,8 +13,8 @@ class ViewInterface {
 
 public:
     virtual std::vector<std::weak_ptr<FullTask>> getAllTasksByPrior() = 0;
-    virtual std::vector<std::weak_ptr<FullTask>> getTasksForToday(BoostDate date) = 0;
-    virtual std::vector<std::weak_ptr<FullTask>> getTasksForWeek(BoostDate date)= 0;
+    virtual std::vector<std::weak_ptr<FullTask>> getTasksForToday(boost::gregorian::date date) = 0;
+    virtual std::vector<std::weak_ptr<FullTask>> getTasksForWeek(boost::gregorian::date date)= 0;
 
 public:
     virtual bool addTask(const std::weak_ptr<FullTask>& ft)= 0;

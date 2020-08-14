@@ -9,7 +9,7 @@ std::vector<std::weak_ptr<FullTask>> ViewByDate::getAllTasksByPrior() {
     return v;
 }
 
-std::vector<std::weak_ptr<FullTask>> ViewByDate::getTasksForToday(BoostDate date){
+std::vector<std::weak_ptr<FullTask>> ViewByDate::getTasksForToday(boost::gregorian::date date){
 
     const auto& Node = map_.find(date);
     std::vector<std::weak_ptr<FullTask>> v;
@@ -28,20 +28,20 @@ std::vector<std::weak_ptr<FullTask>> ViewByDate::getTasksForToday(BoostDate date
     return v;
 }
 
-std::vector<std::weak_ptr<FullTask>>  ViewByDate::getTasksForWeek(BoostDate current_date){
+std::vector<std::weak_ptr<FullTask>>  ViewByDate::getTasksForWeek(boost::gregorian::date current_date){
 
     std::vector<std::weak_ptr<FullTask>> v;
 
-    BoostDate date = current_date;
+    boost::gregorian::date date = current_date;
     int days_count = current_date.day_number();
 
     for(int i = 0; i<=6; ++i){
-        BoostDate date1(days_count - i);
+        boost::gregorian::date date1(days_count - i);
         if((int)date1.day_of_week() == 1) date = date1;
     }
 
     for (int j = 0; j<=6; ++j) {
-        BoostDate date1(date.day_number() + j);
+        boost::gregorian::date date1(date.day_number() + j);
         const auto& NeedData = map_.find(date1);
 
         if (NeedData != map_.end()) {
@@ -59,7 +59,7 @@ std::vector<std::weak_ptr<FullTask>>  ViewByDate::getTasksForWeek(BoostDate curr
 }
 
 bool ViewByDate::addTask(const std::weak_ptr<FullTask>& ft){
-    BoostDate date = ft.lock()->getTask().getDate();
+    boost::gregorian::date date = ft.lock()->getTask().getDate();
     auto foundDate = map_.find(date);
 
     if (foundDate != map_.end()) {
@@ -85,7 +85,7 @@ bool ViewByDate::addTask(const std::weak_ptr<FullTask>& ft){
 }
 
 bool ViewByDate::deleteTask(const std::weak_ptr<FullTask>& ft){
-    BoostDate date = ft.lock()->getTask().getDate();
+    boost::gregorian::date date = ft.lock()->getTask().getDate();
     TaskPriority priority = ft.lock()->getTask().getPriority();
     TaskID id = ft.lock()->getId();
 

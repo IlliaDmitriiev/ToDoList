@@ -57,7 +57,7 @@ std::vector<TaskDTO> TaskService::getAllTasksByPriority(){
 std::vector<TaskDTO> TaskService::getTasksForToday(){
     time_t now = time(0);
     auto cur = std::make_unique<tm>(*gmtime(&now));
-    BoostDate date(cur->tm_year+1900, cur->tm_mon + 1, cur->tm_mday);
+    boost::gregorian::date date(cur->tm_year+1900, cur->tm_mon + 1, cur->tm_mday);
 
     auto v = byDate_->getTasksForToday(date);
     std::vector<TaskDTO> vec;
@@ -70,7 +70,7 @@ std::vector<TaskDTO> TaskService::getTasksForToday(){
 std::vector<TaskDTO> TaskService::getTasksForWeek(){
     time_t now = time(0);
     auto cur = std::make_unique<tm>(*gmtime(&now));
-    BoostDate date(cur->tm_year+1900, cur->tm_mon + 1, cur->tm_mday);
+    boost::gregorian::date date(cur->tm_year+1900, cur->tm_mon + 1, cur->tm_mday);
 
     auto v = byDate_->getTasksForWeek(date);
     std::vector<TaskDTO> vec;

@@ -24,15 +24,15 @@ class ViewByDate: public ViewInterface {
 
 public:
     std::vector<std::weak_ptr<FullTask>> getAllTasksByPrior() override;
-    std::vector<std::weak_ptr<FullTask>> getTasksForToday(BoostDate date) override ;
-    std::vector<std::weak_ptr<FullTask>> getTasksForWeek(BoostDate date) override ;
+    std::vector<std::weak_ptr<FullTask>> getTasksForToday(boost::gregorian::date date) override ;
+    std::vector<std::weak_ptr<FullTask>> getTasksForWeek(boost::gregorian::date date) override ;
 
 public:
     bool addTask(const std::weak_ptr<FullTask>& ft)  override ;
     bool deleteTask(const std::weak_ptr<FullTask>& ft) override ;
 
 private:
-    std::unordered_map<BoostDate,
+    std::unordered_map<boost::gregorian::date,
         std::map<TaskPriority,
             std::map<TaskID, std::weak_ptr<FullTask>, TaskID::MapComparator>
                  >
