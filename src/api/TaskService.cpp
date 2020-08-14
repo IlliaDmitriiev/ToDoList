@@ -45,6 +45,17 @@ RequstTaskResult TaskService::complete(TaskID id){
 
 }
 
+RequstTaskResult TaskService::postponeTask(TaskID id, boost::gregorian::date new_date){
+    auto task = storage_.getTask(id);
+    if(task.has_value()){
+        task.value().lock()->postpone(new_date);
+        return operation_result::TaskRequestedSuccessful();
+    }
+    else
+        return operation_result::TaskRequestedUnsuccessful("task not found");
+
+}
+
 std::vector<TaskDTO> TaskService::getAllTasksByPriority(){
     auto v = byPriority_->getAllTasksByPrior();
     std::vector<TaskDTO> vec;
