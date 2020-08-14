@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 project(ToDoList)
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 
 include_directories(src)
 
@@ -44,12 +44,17 @@ if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
 endif()
 
+target_link_libraries(ToDoList -static)
+target_link_libraries(ToDoList ${Boost_LIBRARIES})
+
 include(GoogleTest)
 find_package(GTest REQUIRED)
+include_directories(${GMOCK_INCLUDE_DIR})
 enable_testing()
 
 add_executable(TestsExecutable
         tests/model/TaskTest.cpp
+        src/api/TaskService.cpp
         tests/api/TaskIDTest.cpp
         src/api/TaskID.cpp
         tests/logic/IDGeneratorTest.cpp
@@ -66,8 +71,8 @@ add_executable(TestsExecutable
         src/model/TaskStorage.cpp
         src/model/FullTask.cpp
         src/logic/TaskConvertor.cpp
-        src/model/TaskStorageInterface.h)
+        tests/api/TaskServiceTest.cpp)
 
-target_link_libraries(TestsExecutable GTest::GTest GTest::Main)
+target_link_libraries(TestsExecutable GTest::GTest GTest::Main ${GMOCK_LIBRARY} ${GMOCK_MAIN_LIBRARY})
 
 gtest_discover_tests(TestsExecutable)
