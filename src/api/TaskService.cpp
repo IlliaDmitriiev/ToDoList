@@ -12,18 +12,18 @@ AddTaskResult TaskService::addTask(const TaskDTO &taskDTO){
 
     byDate_->addTask(shared_task);
     byPriority_->addTask(shared_task);
-    storage_.addTask(std::move(shared_task));
+    storage_->addTask(std::move(shared_task));
 
     return operation_result::TaskAddedSuccessful(id);
 }
 
 AddTaskResult TaskService::addSubtask(TaskID taskID, const TaskDTO &subTask){
     auto subtask_result = addTask(subTask);
-    std::optional<std::weak_ptr<FullTask>> ft = storage_.getTask(taskID);
+    std::optional<std::weak_ptr<FullTask>> ft = storage_->getTask(taskID);
 
     if(ft.has_value()) {
         if (subtask_result.id.has_value()) {
-            ft.value().lock()->addSubtask(storage_.getTask(subtask_result.id.value()).value());
+            ft.value().lock()->addSubtask(storage_->getTask(subtask_result.id.value()).value());
             return operation_result::TaskAddedSuccessful(subtask_result.id.value());
         }
         else
@@ -35,7 +35,7 @@ AddTaskResult TaskService::addSubtask(TaskID taskID, const TaskDTO &subTask){
 }
 
 RequstTaskResult TaskService::complete(TaskID id){
-    auto node = storage_.getTask(id);
+    auto node = storage_->getTask(id);
     if(node.has_value()){
         node.value().lock()->complete();
         return operation_result::TaskRequestedSuccessful();
@@ -46,7 +46,7 @@ RequstTaskResult TaskService::complete(TaskID id){
 }
 
 RequstTaskResult TaskService::postponeTask(TaskID id, boost::gregorian::date new_date){
-    auto task = storage_.getTask(id);
+    auto task = storage_->getTask(id);
     if(task.has_value()){
         task.value().lock()->postpone(new_date);
         return operation_result::TaskRequestedSuccessful();
@@ -92,7 +92,7 @@ std::vector<TaskDTO> TaskService::getTasksForWeek(){
 };
 
 RequstTaskResult TaskService::deleteTask(TaskID id){
-    auto task = storage_.getTask(id);
+    auto task = storage_->getTask(id);
 
     if(task.has_value()) {
         RequstTaskResult subtask_results;
@@ -107,7 +107,7 @@ RequstTaskResult TaskService::deleteTask(TaskID id){
         if(!removeTask(task.value().lock()))
             return operation_result::TaskRequestedUnsuccessful("delete of subtasks is failed");
 
-        storage_.deleteTask(task.value().lock()->getId());
+        storage_->deleteTask(task.value().lock()->getId());
         return subtask_results;
     }
     else
@@ -118,11 +118,11 @@ bool TaskService::removeTask(const std::weak_ptr<FullTask> &task){
     return
         byDate_->deleteTask(task) &&
         byPriority_->deleteTask(task) &&
-        storage_.deleteSubtaskInParent(task.lock()->getParent(), task.lock()->getId());
+        storage_->deleteSubtaskInParent(task.lock()->getParent(), task.lock()->getId());
 }
 
 std::optional<TaskDTO> TaskService::getTask(TaskID id){
-    std::optional<std::weak_ptr<FullTask>> ft = storage_.getTask(id);
+    std::optional<std::weak_ptr<FullTask>> ft = storage_->getTask(id);
     if (ft.has_value())
         return std::optional<TaskDTO>(TaskConvertor::transferToTaskDTO(ft.value()));
     else
