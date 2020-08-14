@@ -57,7 +57,7 @@ std::vector<TaskDTO> TaskService::getAllTasksByPriority(){
 std::vector<TaskDTO> TaskService::getTasksForToday(){
     time_t now = time(0);
     auto cur = std::make_unique<tm>(*gmtime(&now));
-    Date date = Date::create(cur->tm_year+1900, cur->tm_mon + 1, cur->tm_mday);
+    BoostDate date(cur->tm_year+1900, cur->tm_mon + 1, cur->tm_mday);
 
     auto v = byDate_->getTasksForToday(date);
     std::vector<TaskDTO> vec;
@@ -70,7 +70,7 @@ std::vector<TaskDTO> TaskService::getTasksForToday(){
 std::vector<TaskDTO> TaskService::getTasksForWeek(){
     time_t now = time(0);
     auto cur = std::make_unique<tm>(*gmtime(&now));
-    Date date = Date::create(cur->tm_year+1900, cur->tm_mon + 1, cur->tm_mday);
+    BoostDate date(cur->tm_year+1900, cur->tm_mon + 1, cur->tm_mday);
 
     auto v = byDate_->getTasksForWeek(date);
     std::vector<TaskDTO> vec;
@@ -114,8 +114,8 @@ std::optional<TaskDTO> TaskService::getTask(TaskID id){
     std::optional<std::weak_ptr<FullTask>> ft = storage_.getTask(id);
     if (ft.has_value())
         return std::optional<TaskDTO>(TaskConvertor::transferToTaskDTO(ft.value()));
-     else
-         return std::nullopt;
+    else
+        return std::nullopt;
 }
 
 

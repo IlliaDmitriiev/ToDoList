@@ -27,12 +27,12 @@ std::vector<std::weak_ptr<FullTask>> ViewByPriority::getAllTasksByPrior(){
     return v;
 }
 
-std::vector<std::weak_ptr<FullTask>> ViewByPriority::getTasksForToday(Date date) {
+std::vector<std::weak_ptr<FullTask>> ViewByPriority::getTasksForToday(BoostDate date) {
     std::vector<std::weak_ptr<FullTask>> v;
     return v;
 }
 
-std::vector<std::weak_ptr<FullTask>> ViewByPriority::getTasksForWeek(Date date){
+std::vector<std::weak_ptr<FullTask>> ViewByPriority::getTasksForWeek(BoostDate date){
     std::vector<std::weak_ptr<FullTask>> v;
     return v;
 }

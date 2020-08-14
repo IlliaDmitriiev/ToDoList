@@ -11,13 +11,13 @@
 class TaskDTO {
 
 public:
-    static TaskDTO create(const TaskID &taskId, const Date &date, const std::string &name, const std::string &label,
+    static TaskDTO create(const TaskID &taskId, const BoostDate &date, const std::string &name, const std::string &label,
                           TaskPriority priority);
-    static TaskDTO create(const Date &date, const std::string &name, const std::string &label,
+    static TaskDTO create(const BoostDate &date, const std::string &name, const std::string &label,
                                    TaskPriority priority);
 public:
 
-    const Date &getDate() const;
+    const BoostDate &getDate() const;
 
     const std::string &getName() const;
 
@@ -30,14 +30,14 @@ public:
     bool isCompleted() const;
 
 private:
-    TaskDTO(const TaskID &taskID, const Date &date, const std::string &name, const std::string &label,
+    TaskDTO(const TaskID &taskID, const BoostDate &date, const std::string &name, const std::string &label,
             TaskPriority priority);
-    TaskDTO(const Date &date, const std::string &name, const std::string &label,
+    TaskDTO(const BoostDate &date, const std::string &name, const std::string &label,
             TaskPriority priority);
 
 private:
     TaskID id_;
-    Date date_;
+    BoostDate date_;
     std::string name_;
     std::string label_;
     TaskPriority priority_;
