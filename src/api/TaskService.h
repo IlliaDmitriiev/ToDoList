@@ -28,6 +28,7 @@ public:
     AddTaskResult addTask(const TaskDTO &taskDto);
     AddTaskResult addSubtask(TaskID taskID, const TaskDTO &subTask);
     RequstTaskResult deleteTask(TaskID id);
+    RequstTaskResult complete(TaskID id);
 
 public:
     std::vector<TaskDTO> getAllTasksByPriority();

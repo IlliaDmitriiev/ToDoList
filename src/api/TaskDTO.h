@@ -16,7 +16,6 @@ public:
     static TaskDTO create(const Date &date, const std::string &name, const std::string &label,
                                    TaskPriority priority);
 public:
-    const TaskID &getTaskId() const;
 
     const Date &getDate() const;
 
@@ -25,6 +24,10 @@ public:
     const std::string &getLabel() const;
 
     TaskPriority getPriority() const;
+
+    const TaskID &getId() const;
+
+    bool isCompleted() const;
 
 private:
     TaskDTO(const TaskID &taskID, const Date &date, const std::string &name, const std::string &label,
@@ -38,6 +41,7 @@ private:
     std::string name_;
     std::string label_;
     TaskPriority priority_;
+    bool completed_;
 };
 
 #endif //TODOLIST_TASKDTO_H

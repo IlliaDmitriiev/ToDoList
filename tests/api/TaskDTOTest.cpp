@@ -16,17 +16,18 @@ TEST_F(TaskDTOTest, shouldCreate) {
             "name",
             "label",
             TaskPriority::None);
-    ASSERT_EQ(47, dto.getTaskId().getId());
-    ASSERT_EQ(2020, dto.getDate().getYear());
-    ASSERT_EQ(7, dto.getDate().getMounth());
-    ASSERT_EQ(30, dto.getDate().getDay());
-    ASSERT_EQ("name", dto.getName());
-    ASSERT_EQ("label", dto.getLabel());
-    ASSERT_EQ(TaskPriority::None, dto.getPriority());
+    EXPECT_EQ(47, dto.getId().getId());
+    EXPECT_EQ(2020, dto.getDate().getYear());
+    EXPECT_EQ(7, dto.getDate().getMounth());
+    EXPECT_EQ(30, dto.getDate().getDay());
+    EXPECT_EQ("name", dto.getName());
+    EXPECT_EQ("label", dto.getLabel());
+    EXPECT_EQ(TaskPriority::None, dto.getPriority());
+    EXPECT_EQ(false, dto.isCompleted());
 }
 
 TEST_F(TaskDTOTest, shouldThrowExeption_1) {
-    ASSERT_ANY_THROW(TaskDTO::create(
+    EXPECT_ANY_THROW(TaskDTO::create(
             TaskID::create(47),
             Date::create(2020, 7, 32),
             "name",
@@ -37,7 +38,7 @@ TEST_F(TaskDTOTest, shouldThrowExeption_1) {
 }
 
 TEST_F(TaskDTOTest, shouldThrowExeption_2) {
-    ASSERT_ANY_THROW(TaskDTO::create(
+    EXPECT_ANY_THROW(TaskDTO::create(
             TaskID::create(47),
             Date::create(2015, 2, 29),
             "name",

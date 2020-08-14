@@ -17,15 +17,12 @@ TaskDTO TaskDTO::create(const Date &date, const std::string &name, const std::st
 }
 
 TaskDTO::TaskDTO(const TaskID &taskID, const Date &date, const std::string &name, const std::string &label,
-        TaskPriority priority) : id_(taskID), date_(date), name_(name), label_(label), priority_(priority) {}
+        TaskPriority priority) : id_(taskID), date_(date), name_(name), label_(label), priority_(priority), completed_(false){}
 
 TaskDTO::TaskDTO(const Date &date, const std::string &name, const std::string &label,
                  TaskPriority priority) : id_(TaskID::create(0)), date_(date),
-                                        name_(name), label_(label), priority_(priority) {}
+                                        name_(name), label_(label), priority_(priority), completed_(false) {}
 
-const TaskID &TaskDTO::getTaskId() const {
-    return id_;
-}
 
 const Date &TaskDTO::getDate() const {
     return date_;
@@ -41,4 +38,12 @@ const std::string &TaskDTO::getLabel() const {
 
 TaskPriority TaskDTO::getPriority() const {
     return priority_;
+}
+
+const TaskID &TaskDTO::getId() const {
+    return id_;
+}
+
+bool TaskDTO::isCompleted() const {
+    return completed_;
 }
