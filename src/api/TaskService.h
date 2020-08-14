@@ -18,10 +18,12 @@ class TaskService {
 public:
     TaskService(
         std::unique_ptr<ViewInterface> byPriority,
-        std::unique_ptr<ViewInterface> byDate)
+        std::unique_ptr<ViewInterface> byDate,
+        std::unique_ptr<TaskStorageInterface> storage)
     :
     byPriority_(std::move(byPriority)),
-    byDate_(std::move(byDate))
+    byDate_(std::move(byDate)),
+    storage_(std::move(storage))
     {}
 
 public:
@@ -42,9 +44,7 @@ private:
 
 private:
     IDGenerator generator_;
-    TaskStorage storage_;
-
-private:
+    std::unique_ptr<TaskStorageInterface> storage_;
     std::unique_ptr<ViewInterface> byPriority_;
     std::unique_ptr<ViewInterface> byDate_;
 };

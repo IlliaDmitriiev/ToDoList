@@ -5,18 +5,15 @@
 #ifndef TODOLIST_TASKSTORAGE_H
 #define TODOLIST_TASKSTORAGE_H
 
-#include "FullTask.h"
-#include <unordered_map>
-#include <vector>
-#include <optional>
+#include "TaskStorageInterface.h"
 
-class TaskStorage {
+class TaskStorage: public TaskStorageInterface{
 
 public:
-    bool addTask(std::shared_ptr<FullTask> sft);
-    std::optional<std::weak_ptr<FullTask>> getTask(TaskID id);
-    bool deleteSubtaskInParent(TaskID ParentID, TaskID taskID);
-    bool deleteTask(TaskID id);
+    bool addTask(std::shared_ptr<FullTask> sft) override;
+    std::optional<std::weak_ptr<FullTask>> getTask(TaskID id)override;
+    bool deleteSubtaskInParent(TaskID ParentID, TaskID taskID)override;
+    bool deleteTask(TaskID id) override;
 
 
 private:

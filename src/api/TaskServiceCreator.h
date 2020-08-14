@@ -12,7 +12,8 @@ namespace todo_list{
     TaskService createService() {
         auto viewByPriority = std::make_unique<ViewByPriority>();
         auto viewByDate = std::make_unique<ViewByDate>();
-        return TaskService(std::move(viewByPriority), std::move(viewByDate));
+        auto storage = std::make_unique<TaskStorage>();
+        return TaskService(std::move(viewByPriority), std::move(viewByDate), std::move(storage));
     }
 
 }

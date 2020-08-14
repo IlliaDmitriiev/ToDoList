@@ -66,7 +66,7 @@ add_executable(TestsExecutable
         src/model/TaskStorage.cpp
         src/model/FullTask.cpp
         src/logic/TaskConvertor.cpp
-        )
+        src/model/TaskStorageInterface.h)
 
 target_link_libraries(TestsExecutable GTest::GTest GTest::Main)
 
