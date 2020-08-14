@@ -26,6 +26,10 @@ const Task &FullTask::getTask() const {
     return task_;
 }
 
+void FullTask::complete(){
+    complete_ = true;
+}
+
 FullTask::FullTask(TaskID id, const Task &t) : id_(id), task_(t), parent_(id){}
 
 const TaskID &FullTask::getId() const {
@@ -34,6 +38,10 @@ const TaskID &FullTask::getId() const {
 
 const TaskID &FullTask::getParent() const {
     return parent_;
+}
+
+const bool FullTask::isComplete() const{
+    return complete_;
 }
 
 std::vector<TaskID> FullTask::getSubtasks() const {

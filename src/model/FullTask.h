@@ -23,17 +23,20 @@ public:
     void addSubtask( const std::weak_ptr<FullTask>& ft);
     void deleteSubtask(TaskID id);
     void setParent(TaskID id);
+    void complete();
 
 public:
     const Task &getTask() const;
     const TaskID &getId() const;
     const TaskID &getParent() const;
+    const bool isComplete() const;
     std::vector<TaskID> getSubtasks() const;
 
 private:
     TaskID id_;
     TaskID parent_;
     Task task_;
+    bool complete_;
     std::unordered_map<TaskID, std::weak_ptr<FullTask>,
             TaskID::Hasher, TaskID::Comparator> subTasks_;
 };
