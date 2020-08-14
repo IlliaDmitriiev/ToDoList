@@ -10,7 +10,7 @@ class TaskTest : public ::testing::Test {
 };
 
 TEST_F(TaskTest, shouldCreateTask) {
-    Date date = Date::create(2020,7,23);
+    boost::gregorian::date date(2020,7,23);
     std::string name = "name";
     std::string label = "label";
     TaskPriority tp = TaskPriority::Second;
@@ -23,7 +23,7 @@ TEST_F(TaskTest, shouldCreateTask) {
 
 TEST_F(TaskTest, shouldThrowExpception_1) {
     ASSERT_ANY_THROW(Task::create(
-        Date::create(1855, 14, 14),
+        boost::gregorian::date(1855, 14, 14),
         "dsfdgfhg",
         "aertys4gb5",
         TaskPriority::None)
@@ -32,7 +32,7 @@ TEST_F(TaskTest, shouldThrowExpception_1) {
 
 TEST_F(TaskTest, shouldThrowExpception_2) {
     ASSERT_ANY_THROW(Task::create(
-        Date::create(2100, 2, 29),
+        boost::gregorian::date(2100, 2, 29),
         "name",
         "label",
         TaskPriority::Third)
@@ -42,12 +42,12 @@ TEST_F(TaskTest, shouldThrowExpception_2) {
 TEST_F(TaskTest, sholdCompare_1) {
     ASSERT_FALSE(Task::Compare(
                 Task::create(
-                Date::create(2100, 2, 27),
+                boost::gregorian::date(2100, 2, 27),
                 "name",
                 "label",
                 TaskPriority::Third),
                 Task::create(
-                Date::create(2100, 2, 28),
+                boost::gregorian::date(2100, 2, 28),
                 "name",
                 "label",
                 TaskPriority::Third)
@@ -58,12 +58,12 @@ TEST_F(TaskTest, sholdCompare_1) {
 TEST_F(TaskTest, sholdCompare_2) {
     ASSERT_FALSE(Task::Compare(
             Task::create(
-                    Date::create(1500, 4, 27),
+                    boost::gregorian::date(1500, 4, 27),
                     "name",
                     "label",
                     TaskPriority::Third),
             Task::create(
-                    Date::create(2178, 2, 27),
+                    boost::gregorian::date(2178, 2, 27),
                     "name",
                     "LABEL",
                     TaskPriority::Third)
@@ -74,12 +74,12 @@ TEST_F(TaskTest, sholdCompare_2) {
 TEST_F(TaskTest, sholdCompare_3) {
     ASSERT_TRUE(Task::Compare(
             Task::create(
-                    Date::create(2000, 3, 31),
+                    boost::gregorian::date(2000, 3, 31),
                     "name",
                     "label",
                     TaskPriority::None),
             Task::create(
-                    Date::create(2000, 3, 31),
+                    boost::gregorian::date(2000, 3, 31),
                     "name",
                     "label",
                     TaskPriority::None)

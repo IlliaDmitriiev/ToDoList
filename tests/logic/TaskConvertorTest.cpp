@@ -16,7 +16,7 @@ TEST_F(TaskConvertorTest, shouldConvertFullTaskIntoDTO) {
     TaskConvertor con;
 
     Task t = Task::create(
-            Date::create(2020, 7, 31),
+            boost::gregorian::date(2020, 7, 31),
             "name1",
             "",
             TaskPriority::None);
@@ -28,16 +28,16 @@ TEST_F(TaskConvertorTest, shouldConvertFullTaskIntoDTO) {
     EXPECT_EQ(td.getPriority(), TaskPriority::None);
     EXPECT_EQ(td.getLabel(), "");
     EXPECT_EQ(td.getName(), "name1");
-    EXPECT_EQ(td.getDate().getYear(), 2020);
-    EXPECT_EQ(td.getDate().getMounth(), 7);
-    EXPECT_EQ(td.getDate().getDay(), 31);
+    EXPECT_EQ(td.getDate().year(), 2020);
+    EXPECT_EQ(td.getDate().month(), 7);
+    EXPECT_EQ(td.getDate().day(), 31);
 }
 
 TEST_F(TaskConvertorTest, shouldConvertTaskDTOIntoTask) {
     IDGenerator gen;
     TaskConvertor con;
     TaskDTO td = TaskDTO::create(
-            Date::create(2020, 7, 31),
+            boost::gregorian::date(2020, 7, 31),
             "name1",
             "",
             TaskPriority::None
@@ -49,7 +49,7 @@ TEST_F(TaskConvertorTest, shouldConvertTaskDTOIntoTask) {
     EXPECT_EQ(td.getPriority(), TaskPriority::None);
     EXPECT_EQ(td.getLabel(), "");
     EXPECT_EQ(td.getName(), "name1");
-    EXPECT_EQ(td.getDate().getYear(), 2020);
-    EXPECT_EQ(td.getDate().getMounth(), 7);
-    EXPECT_EQ(td.getDate().getDay(), 31);
+    EXPECT_EQ(td.getDate().year(), 2020);
+    EXPECT_EQ(td.getDate().month(), 7);
+    EXPECT_EQ(td.getDate().day(), 31);
 }
