@@ -28,7 +28,7 @@ const Task &FullTask::getTask() const {
 
 void FullTask::complete(){
     complete_ = true;
-    for(auto i: subTasks_)
+    for(auto &i: subTasks_)
         i.second.lock()->complete();
 }
 
