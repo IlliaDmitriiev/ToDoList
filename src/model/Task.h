@@ -8,20 +8,19 @@
 #include <iostream>
 #include <string>
 #include <ctime>
-#include "Date.h"
+#include "boost/date_time/gregorian/gregorian.hpp"
 #include "api/TaskPriority.h"
-
 
 class Task{
 
 public:
-    static Task create(const Date &date, const std::string &name, const std::string &label, TaskPriority prior){
+    static Task create(const boost::gregorian::date &date, const std::string &name, const std::string &label, TaskPriority prior){
         Task task(date, name, label, prior);
         return task;
     }
 
 public:
-    Date getDate() const {
+    boost::gregorian::date getDate() const {
         return date_;
     }
 
@@ -40,20 +39,20 @@ public:
 public:
     static bool Compare(const Task &t1, const Task &t2){
         return
-                t1.getDate().getYear() == t2.getDate().getYear() &&
-                t1.getDate().getMounth() == t2.getDate().getMounth() &&
-                t1.getDate().getDay() == t2.getDate().getDay() &&
+                t1.getDate().year() == t2.getDate().year() &&
+                t1.getDate().month() == t2.getDate().month() &&
+                t1.getDate().day() == t2.getDate().day() &&
                 t1.getName() == t2.getName() &&
                 t1.getLabel() == t2.getLabel() &&
                 t1.getPriority() == t2.getPriority();
     }
 
 private:
-    Task(const Date &date, const std::string &name, const std::string &label, TaskPriority priority)
+    Task(const boost::gregorian::date &date, const std::string &name, const std::string &label, TaskPriority priority)
             : date_(date), name_(name), label_(label), priority_(priority) {}
 
 private:
-    Date date_;
+    boost::gregorian::date date_;
     std::string name_;
     std::string label_;
     TaskPriority priority_;

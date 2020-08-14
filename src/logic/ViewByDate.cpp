@@ -9,7 +9,7 @@ std::vector<std::weak_ptr<FullTask>> ViewByDate::getAllTasksByPrior() {
     return v;
 }
 
-std::vector<std::weak_ptr<FullTask>> ViewByDate::getTasksForToday(Date date){
+std::vector<std::weak_ptr<FullTask>> ViewByDate::getTasksForToday(boost::gregorian::date date){
 
     const auto& Node = map_.find(date);
     std::vector<std::weak_ptr<FullTask>> v;
@@ -28,18 +28,23 @@ std::vector<std::weak_ptr<FullTask>> ViewByDate::getTasksForToday(Date date){
     return v;
 }
 
-std::vector<std::weak_ptr<FullTask>>  ViewByDate::getTasksForWeek(Date date){
+std::vector<std::weak_ptr<FullTask>>  ViewByDate::getTasksForWeek(boost::gregorian::date current_date){
 
     std::vector<std::weak_ptr<FullTask>> v;
 
-    for (int j = 1; j<=7; ++j) {
-        int WeekDay = date.getWday();
-        if (WeekDay == 0) WeekDay = 7;
-        date.moveWithinTheWeek(j - WeekDay);
+    boost::gregorian::date date = current_date;
+    int days_count = current_date.day_number();
 
-        const auto& NeedData = map_.find(date);
+    for(int i = 0; i<=6; ++i){
+        boost::gregorian::date date1(days_count - i);
+        if((int)date1.day_of_week() == 1) date = date1;
+    }
+
+    for (int j = 0; j<=6; ++j) {
+        boost::gregorian::date date1(date.day_number() + j);
+        const auto& NeedData = map_.find(date1);
+
         if (NeedData != map_.end()) {
-
             for( auto &i: NeedData->second.at(TaskPriority::First))
                 v.push_back(i.second);
             for( auto &i: NeedData->second.at(TaskPriority::Second))
@@ -54,7 +59,7 @@ std::vector<std::weak_ptr<FullTask>>  ViewByDate::getTasksForWeek(Date date){
 }
 
 bool ViewByDate::addTask(const std::weak_ptr<FullTask>& ft){
-    Date date = ft.lock()->getTask().getDate();
+    boost::gregorian::date date = ft.lock()->getTask().getDate();
     auto foundDate = map_.find(date);
 
     if (foundDate != map_.end()) {
@@ -80,7 +85,7 @@ bool ViewByDate::addTask(const std::weak_ptr<FullTask>& ft){
 }
 
 bool ViewByDate::deleteTask(const std::weak_ptr<FullTask>& ft){
-    Date date = ft.lock()->getTask().getDate();
+    boost::gregorian::date date = ft.lock()->getTask().getDate();
     TaskPriority priority = ft.lock()->getTask().getPriority();
     TaskID id = ft.lock()->getId();
 
