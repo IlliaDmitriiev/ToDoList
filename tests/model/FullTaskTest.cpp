@@ -12,7 +12,7 @@ class FullTaskTest : public ::testing::Test {
 TEST_F(FullTaskTest, shouldCreate) {
     IDGenerator gen;
     Task t = Task::create(
-            Date::create(2020, 7, 31),
+            boost::gregorian::date(2020, 7, 31),
             "name1",
             "",
             TaskPriority::None);
@@ -22,7 +22,7 @@ TEST_F(FullTaskTest, shouldCreate) {
 
 TEST_F(FullTaskTest, shouldGetTask) {
     Task t = Task::create(
-            Date::create(2020, 7, 31),
+            boost::gregorian::date(2020, 7, 31),
             "",
             "",
             TaskPriority::First);
@@ -34,7 +34,7 @@ TEST_F(FullTaskTest, shouldGetTask) {
 TEST_F(FullTaskTest, shouldGetId) {
     IDGenerator gen;
     Task t = Task::create(
-            Date::create(2020, 7, 31),
+            boost::gregorian::date(2020, 7, 31),
             "name1",
             "",
             TaskPriority::None);
@@ -44,7 +44,7 @@ TEST_F(FullTaskTest, shouldGetId) {
 
 TEST_F(FullTaskTest, shouldBeCompleted) {
     Task t = Task::create(
-            Date::create(20, 8, 1),
+            boost::gregorian::date(1782, 8, 1),
             "",
             "",
             TaskPriority::Second);
@@ -53,19 +53,31 @@ TEST_F(FullTaskTest, shouldBeCompleted) {
     EXPECT_TRUE(ft.isComplete());
 }
 
+TEST_F(FullTaskTest, shouldPostponeTask) {
+    Task t = Task::create(
+            boost::gregorian::date(1782, 8, 1),
+            "",
+            "",
+            TaskPriority::Second);
+    FullTask task = FullTask::create(TaskID::create(8), t);
+    boost::gregorian::date date(2000, 1, 1);
+    task.postpone( date);
+    EXPECT_EQ(task.getTask().getDate(), date);
+}
+
 TEST_F(FullTaskTest, shouldCompletesAllSubtasks) {
     Task t1 = Task::create(
-            Date::create(20, 7, 31),
+            boost::gregorian::date(1420, 7, 31),
             "name1",
             "",
             TaskPriority::None);
     Task t2 = Task::create(
-            Date::create(2485, 3, 5),
+            boost::gregorian::date(2485, 3, 5),
             "name2",
             "label",
             TaskPriority::Second);
     Task t3 = Task::create(
-            Date::create(3000, 12, 10),
+            boost::gregorian::date(3000, 12, 10),
             "name3",
             "l",
             TaskPriority::Third);
@@ -85,12 +97,12 @@ TEST_F(FullTaskTest, shouldCompletesAllSubtasks) {
 TEST_F(FullTaskTest, shouldCreateParent) {
     IDGenerator gen;
     Task t1 = Task::create(
-            Date::create(2020, 7, 31),
+            boost::gregorian::date(2020, 7, 31),
             "name1",
             "",
             TaskPriority::None);
     Task t2 = Task::create(
-            Date::create(2485, 3, 5),
+            boost::gregorian::date(2485, 3, 5),
             "name2",
             "label",
             TaskPriority::Second);
@@ -102,14 +114,15 @@ TEST_F(FullTaskTest, shouldCreateParent) {
     EXPECT_EQ(sft->getParent().getId(), 0);
     EXPECT_EQ(sft->getId().getId(), 1);
 }
+
 TEST_F(FullTaskTest, shouldGetSubtasks) {
     Task t1 = Task::create(
-            Date::create(2020, 7, 31),
+            boost::gregorian::date(2020, 7, 31),
             "name1",
             "",
             TaskPriority::None);
     Task t2 = Task::create(
-            Date::create(2485, 3, 5),
+            boost::gregorian::date(2485, 3, 5),
             "name2",
             "label",
             TaskPriority::Second);
@@ -125,12 +138,12 @@ TEST_F(FullTaskTest, shouldGetSubtasks) {
 TEST_F(FullTaskTest, shouldEraseSubTask) {
     IDGenerator gen;
     Task t1 = Task::create(
-            Date::create(2020, 7, 31),
+            boost::gregorian::date(2020, 7, 31),
             "name1",
             "",
             TaskPriority::None);
     Task t2 = Task::create(
-            Date::create(2485, 3, 5),
+            boost::gregorian::date(2485, 3, 5),
             "name2",
             "label",
             TaskPriority::Second);

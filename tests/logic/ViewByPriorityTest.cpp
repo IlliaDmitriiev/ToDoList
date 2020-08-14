@@ -6,32 +6,32 @@
 #include "logic/ViewByPriority.h"
 
 const Task t1 = Task::create(
-        Date::create(2020, 7, 31),
+        boost::gregorian::date(2020, 7, 31),
         "name1",
         "",
         TaskPriority::None);
 
 const Task t2 = Task::create(
-        Date::create(2020, 7, 31),
+        boost::gregorian::date(2020, 7, 31),
         "name2",
         "456578y&#&@)(#$?><</*-+fdg",
         TaskPriority::Second);
 
 
 const Task t3 = Task::create(
-        Date::create(1500, 2, 26),
+        boost::gregorian::date(1500, 2, 26),
         "name3",
         "label3",
         TaskPriority::Third);
 
 const Task t4 = Task::create(
-        Date::create(1500, 3, 4),
+        boost::gregorian::date(1500, 3, 4),
         "name4",
         "",
         TaskPriority::First);
 
 const Task t5 = Task::create(
-        Date::create(1500, 2, 28),
+        boost::gregorian::date(1500, 2, 28),
         "",
         "",
         TaskPriority::None);
@@ -117,7 +117,7 @@ TEST_F(ViewByPriorTest, shouldGetEmptyVector) {
 TEST_F(ViewByPriorTest, shouldGenerateEmptyVectorOfTasksForToday) {
     time_t now = time(0);
     auto cur = std::make_unique<tm>(*gmtime(&now));
-    Date date = Date::create(cur->tm_year+1900, cur->tm_mon + 1, cur->tm_mday);
+   boost::gregorian::date date(cur->tm_year+1900, cur->tm_mon + 1, cur->tm_mday);
 
     EXPECT_TRUE(viewByPriority.getTasksForToday(date).empty());
 }
@@ -125,7 +125,7 @@ TEST_F(ViewByPriorTest, shouldGenerateEmptyVectorOfTasksForToday) {
 TEST_F(ViewByPriorTest, shouldGenerateEmptyVectorOfTasksForWeek) {
     time_t now = time(0);
     auto cur = std::make_unique<tm>(*gmtime(&now));
-    Date date = Date::create(cur->tm_year+1900, cur->tm_mon + 1, cur->tm_mday);
+    boost::gregorian::date date(cur->tm_year+1900, cur->tm_mon + 1, cur->tm_mday);
 
     EXPECT_TRUE(viewByPriority.getTasksForWeek(date).empty());
 }
