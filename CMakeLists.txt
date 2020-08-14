@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.16)
 project(ToDoList)
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+include_directories(src)
 
 add_executable(ToDoList
         src/main.cpp
@@ -18,8 +21,7 @@ add_executable(ToDoList
         src/api/TaskService.h
         src/api/TaskDTO.cpp
         src/api/TaskDTO.h
-        src/api/TaskCreationResult.cpp
-        src/api/TaskCreationResult.h
+        src/api/ReturnType.h
         src/logic/ViewByDate.cpp
         src/logic/ViewByDate.h
         src/logic/ViewByPriority.cpp
@@ -29,11 +31,20 @@ add_executable(ToDoList
         src/logic/TaskConvertor.h
         src/model/TaskStorage.cpp
         src/model/TaskStorage.h
-        src/api/Creator.h
-        src/api/TaskPriority.h)
+        src/api/TaskServiceCreator.h
+        src/api/TaskPriority.h src/api/ReturnTypeCreator.h)
 
-include_directories(src)
 
+set(Boost_USE_STATIC_LIBS        ON)  # only find static libs
+set(Boost_USE_DEBUG_LIBS         OFF) # ignore debug libs and
+set(Boost_USE_RELEASE_LIBS       ON)  # only find release libs
+set(Boost_USE_MULTITHREADED      ON)
+set(Boost_USE_STATIC_RUNTIME    OFF)
+
+find_package(Boost 1.74.0 REQUIRED COMPONENTS)
+if(Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS})
+endif()
 
 include(GoogleTest)
 find_package(GTest REQUIRED)
@@ -52,10 +63,8 @@ add_executable(TestsExecutable
         tests/logic/TaskConvertorTest.cpp
         tests/model/TaskStorageTest.cpp
         tests/model/FullTaskTest.cpp
-        tests/api/TaskCreationResultTest.cpp
         src/logic/IDGenerator.cpp
         src/api/TaskDTO.cpp
-        src/api/TaskCreationResult.cpp
         src/logic/ViewByDate.cpp
         src/logic/ViewByPriority.cpp
         src/model/TaskStorage.cpp
