@@ -24,7 +24,7 @@ TEST_F(TaskConvertorTest, shouldConvertFullTaskIntoDTO) {
     auto sft = std::make_shared<FullTask>(ft);
     TaskDTO td = con.transferToTaskDTO(sft);
 
-    EXPECT_EQ(td.getTaskId().getId(), 0);
+    EXPECT_EQ(td.getId().getId(), 0);
     EXPECT_EQ(td.getPriority(), TaskPriority::None);
     EXPECT_EQ(td.getLabel(), "");
     EXPECT_EQ(td.getName(), "name1");
@@ -45,7 +45,7 @@ TEST_F(TaskConvertorTest, shouldConvertTaskDTOIntoTask) {
 
     Task t = con.transferToTask(td);
 
-    EXPECT_EQ(td.getTaskId().getId(), 0);
+    EXPECT_EQ(td.getId().getId(), 0);
     EXPECT_EQ(td.getPriority(), TaskPriority::None);
     EXPECT_EQ(td.getLabel(), "");
     EXPECT_EQ(td.getName(), "name1");
