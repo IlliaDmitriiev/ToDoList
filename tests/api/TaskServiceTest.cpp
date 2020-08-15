@@ -83,15 +83,15 @@ public:
     MOCK_METHOD(TaskID, generateId, (), (override));
 };
 
-bool operator == (const TaskID id1, const TaskID id2){
+bool operator == (const TaskID &id1, const TaskID &id2){
     return id1.getId() == id2.getId();
 }
 
-bool operator == (const std::weak_ptr<FullTask> task1, const std::weak_ptr<FullTask> task2){
+bool operator == (const std::weak_ptr<FullTask> &task1, const std::weak_ptr<FullTask> &task2){
     return task1.lock()->getId()== task2.lock()->getId();
 }
 
-bool operator == (const std::shared_ptr<FullTask> task1, const std::shared_ptr<FullTask> task2){
+bool operator == (const std::shared_ptr<FullTask> &task1, const std::shared_ptr<FullTask> &task2){
     return task1->getId()== task2->getId();
 }
 
