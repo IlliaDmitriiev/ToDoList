@@ -5,12 +5,12 @@
 #ifndef TODOLIST_IDGENERATOR_H
 #define TODOLIST_IDGENERATOR_H
 
-#include "api/TaskID.h"
+#include "IDGeneratorInterface.h"
 
-class IDGenerator {
+class IDGenerator: public IDGeneratorInterface{
 
 public:
-    TaskID generateId();
+    TaskID generateId() override;
 
     IDGenerator();
 private:
