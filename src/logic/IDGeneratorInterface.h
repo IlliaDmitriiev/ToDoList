@@ -10,6 +10,7 @@
 class IDGeneratorInterface{
 public:
     virtual TaskID generateId() = 0;
+    virtual ~IDGeneratorInterface() = default;
 };
 
 #endif //TODOLIST_IDGENERATORINTERFACE_H
