@@ -19,10 +19,11 @@ AddTaskResult TaskService::addTask(const TaskDTO &taskDTO){
 }
 
 AddTaskResult TaskService::addSubtask(TaskID taskID, const TaskDTO &subTask){
-    auto subtask_result = addTask(subTask);
     std::optional<std::weak_ptr<FullTask>> ft = storage_->getTask(taskID);
 
     if(ft.has_value()) {
+        auto subtask_result = addTask(subTask);
+
         if (subtask_result.id.has_value()) {
             ft.value().lock()->addSubtask(storage_->getTask(subtask_result.id.value()).value());
             return operation_result::TaskAddedSuccessful(subtask_result.id.value());
@@ -32,7 +33,6 @@ AddTaskResult TaskService::addSubtask(TaskID taskID, const TaskDTO &subTask){
     }
     else
         return operation_result::TaskAddedUnsuccessful("task not found");
-
 }
 
 RequstTaskResult TaskService::complete(TaskID id){
