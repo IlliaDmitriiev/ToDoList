@@ -10,11 +10,12 @@ AddTaskResult TaskService::addTask(const TaskDTO &taskDTO){
     TaskID id = generator_.generateId();
     auto shared_task = std::make_shared<FullTask>(FullTask::create(id, TaskConvertor::transferToTask(taskDTO)));
 
-    byDate_->addTask(shared_task);
-    byPriority_->addTask(shared_task);
-    storage_->addTask(std::move(shared_task));
-
-    return operation_result::TaskAddedSuccessful(id);
+    if (byDate_->addTask(shared_task) &&
+    byPriority_->addTask(shared_task) &&
+    storage_->addTask(std::move(shared_task)))
+        return operation_result::TaskAddedSuccessful(id);
+    else
+        return operation_result::TaskAddedUnsuccessful("can't put task in storage");
 }
 
 AddTaskResult TaskService::addSubtask(TaskID taskID, const TaskDTO &subTask){

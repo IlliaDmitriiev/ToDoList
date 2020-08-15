@@ -22,7 +22,7 @@ public:
         time_t now = time(0);
         auto cur = std::make_unique<tm>(*gmtime(&now));
         boost::gregorian::date date1(cur->tm_year+1900, cur->tm_mon + 1, cur->tm_mday);
-        boost::gregorian::date date2(date1.day_number() + 7 - (date1.week_number() + 7) % 7);
+        boost::gregorian::date date2(date1.day_number() + 7 - (date1.day_of_week() + 7) % 7);
 
         const Task t1 = Task::create(
                 date1,
