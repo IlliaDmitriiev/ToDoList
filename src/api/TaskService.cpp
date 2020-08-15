@@ -7,7 +7,7 @@
 
 AddTaskResult TaskService::addTask(const TaskDTO &taskDTO){
 
-    TaskID id = generator_.generateId();
+    TaskID id = generator_->generateId();
     auto shared_task = std::make_shared<FullTask>(FullTask::create(id, TaskConvertor::transferToTask(taskDTO)));
 
     if (byDate_->addTask(shared_task) &&
