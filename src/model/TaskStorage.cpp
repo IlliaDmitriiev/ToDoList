@@ -6,6 +6,7 @@
 
 bool TaskStorage::addTask(std::shared_ptr<FullTask> sft){
     allTasks_.insert({sft->getId(), std::move(sft)});
+    return true;
 }
 
 std::optional<std::weak_ptr<FullTask>> TaskStorage::getTask(TaskID id){
