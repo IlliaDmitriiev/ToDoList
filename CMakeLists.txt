@@ -30,7 +30,10 @@ add_executable(ToDoList
         src/model/TaskStorage.cpp
         src/model/TaskStorage.h
         src/api/TaskServiceCreator.h
-        src/api/TaskPriority.h src/api/ReturnTypeCreator.h)
+        src/api/TaskPriority.h
+        src/api/ReturnTypeCreator.h
+        src/logic/IDGeneratorInterface.h
+        )
 
 
 set(Boost_USE_STATIC_LIBS        ON)  # only find static libs

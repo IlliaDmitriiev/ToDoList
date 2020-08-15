@@ -1,8 +1,9 @@
 
 #include "api/TaskService.h"
-#include "api/Creator.h"
+#include "api/TaskServiceCreator.h"
 
 int main() {
-    TaskService ts = Creator::createService();
-    return 0;
+   TaskService ts = todo_list::createService();
+
+   return 0;
 }
