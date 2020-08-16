@@ -94,18 +94,24 @@ public:
      * Gives all tasks already sorted by priority.
      *
      * @return vector of TaskDTO
+     *
+     * @note if there isn't any required task, function will return empty vector
      */
     std::vector<TaskDTO> getAllTasksByPriority();
     /*
      * Gives all tasks for today already sorted by priority.
      *
      * @return vector of TaskDTO
+     *
+     * @note if there isn't any required task, function will return empty vector
      */
     std::vector<TaskDTO> getTasksForToday();
     /*
      * Gives all tasks for this week already sorted by priority.
      *
      * @return vector of TaskDTO
+     *
+     * @note if there isn't any required task, function will return empty vector
      */
     std::vector<TaskDTO> getTasksForWeek();
     /*
