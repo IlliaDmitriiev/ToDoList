@@ -7,7 +7,11 @@
 
 #include "model/FullTask.h"
 #include "api/TaskDTO.h"
-
+/*
+ *  Class-convertor
+ *
+ *  @author: Ilya Dmitriev
+ */
 class TaskConvertor{
 
 public:

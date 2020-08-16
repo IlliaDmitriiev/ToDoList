@@ -8,6 +8,11 @@
 #include <api/TaskID.h>
 #include "model/Task.h"
 
+/*
+ * Data Transfer Object containing fields representing task.
+ *
+ * @author Ilya Dmitriev
+ */
 class TaskDTO {
 
 public:

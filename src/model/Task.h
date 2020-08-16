@@ -11,6 +11,13 @@
 #include "boost/date_time/gregorian/gregorian.hpp"
 #include "api/TaskPriority.h"
 
+/*'
+ * class which holds data
+ *
+ * @note read only
+ *
+ * @author: Ilya Dmitriev
+ */
 class Task{
 
 public:

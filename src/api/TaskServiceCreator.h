@@ -7,8 +7,18 @@
 
 #include "TaskService.h"
 
-namespace todo_list{
+/*
+ *  TaskService injector
+ *
+ *  @author: Ilya Dmitriev
+ */
 
+namespace todo_list{
+    /*
+     * Generates TaskService
+     *
+     * @return instance of  TaskService.
+     */
     TaskService createService() {
         auto generator = std::make_unique<IDGenerator>();
         auto viewByPriority = std::make_unique<ViewByPriority>();

@@ -5,6 +5,11 @@
 #ifndef TODOLIST_TASKPRIORITY_H
 #define TODOLIST_TASKPRIORITY_H
 
+/*
+ * Priorities of Task
+ *
+ * @author: Ilya Dmitriev
+ */
 enum class TaskPriority{
     None,
     First,

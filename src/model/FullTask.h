@@ -10,7 +10,13 @@
 #include <memory>
 #include <unordered_map>
 #include <vector>
-
+/*
+ * class-holder of tasks
+ *
+ * @see Task
+ *
+ * @author:Ilya Dmitriev
+ */
 class FullTask {
 
 public:
@@ -23,7 +29,19 @@ public:
     void addSubtask( const std::weak_ptr<FullTask>& ft);
     void deleteSubtask(TaskID id);
     void setParent(TaskID id);
+    /*
+     * set status complete true
+     *
+     * @note: All subtasks will be completed recursively.
+     */
     void complete();
+    /*
+     * Changing task date to the given.
+     *
+     * @param: [date] It needs to change task date with this date.
+     *
+     * @note: All subtasks will NOT be postponed recursively.
+     */
     void postpone(boost::gregorian::date new_date);
 
 public:
