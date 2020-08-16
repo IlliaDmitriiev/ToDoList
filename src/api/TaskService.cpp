@@ -19,12 +19,15 @@ AddTaskResult TaskService::addTask(const TaskDTO &taskDTO){
 }
 
 AddTaskResult TaskService::addSubtask(TaskID taskID, const TaskDTO &subTask){
-    auto subtask_result = addTask(subTask);
-    std::optional<std::weak_ptr<FullTask>> ft = storage_->getTask(taskID);
+    std::optional<std::weak_ptr<FullTask>> weak_task = storage_->getTask(taskID);
 
-    if(ft.has_value()) {
+    if(weak_task.has_value()) {
+        auto subtask_result = addTask(subTask);
+
         if (subtask_result.id.has_value()) {
-            ft.value().lock()->addSubtask(storage_->getTask(subtask_result.id.value()).value());
+            auto subtask = storage_->getTask(subtask_result.id.value());
+            weak_task.value().lock()->addSubtask(subtask.value());
+
             return operation_result::TaskAddedSuccessful(subtask_result.id.value());
         }
         else
@@ -32,7 +35,6 @@ AddTaskResult TaskService::addSubtask(TaskID taskID, const TaskDTO &subTask){
     }
     else
         return operation_result::TaskAddedUnsuccessful("task not found");
-
 }
 
 RequstTaskResult TaskService::complete(TaskID id){
@@ -67,9 +69,7 @@ std::vector<TaskDTO> TaskService::getAllTasksByPriority(){
 }
 
 std::vector<TaskDTO> TaskService::getTasksForToday(){
-    time_t now = time(0);
-    auto cur = std::make_unique<tm>(*gmtime(&now));
-    boost::gregorian::date date(cur->tm_year+1900, cur->tm_mon + 1, cur->tm_mday);
+    boost::gregorian::date date{boost::gregorian::day_clock::local_day()};
 
     auto v = byDate_->getTasksForToday(date);
     std::vector<TaskDTO> vec;
@@ -80,9 +80,7 @@ std::vector<TaskDTO> TaskService::getTasksForToday(){
 }
 
 std::vector<TaskDTO> TaskService::getTasksForWeek(){
-    time_t now = time(0);
-    auto cur = std::make_unique<tm>(*gmtime(&now));
-    boost::gregorian::date date(cur->tm_year+1900, cur->tm_mon + 1, cur->tm_mday);
+    boost::gregorian::date date{boost::gregorian::day_clock::local_day()};
 
     auto v = byDate_->getTasksForWeek(date);
     std::vector<TaskDTO> vec;

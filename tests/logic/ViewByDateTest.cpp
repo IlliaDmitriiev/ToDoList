@@ -19,10 +19,12 @@ public:
 
 
     void SetUp() override {
-        time_t now = time(0);
-        auto cur = std::make_unique<tm>(*gmtime(&now));
-        boost::gregorian::date date1(cur->tm_year+1900, cur->tm_mon + 1, cur->tm_mday);
-        boost::gregorian::date date2(date1.day_number() + 7 - (date1.day_of_week() + 7) % 7);
+        boost::gregorian::date date1{boost::gregorian::day_clock::local_day()};
+        boost::gregorian::date date2;
+        if (date1.day_of_week() == 0)
+            date2 = boost::gregorian::date{date1.day_number()};
+        else
+            date2 = boost::gregorian::date{date1.day_number() + 7 - date1.day_of_week()};
 
         const Task t1 = Task::create(
                 date1,
@@ -103,12 +105,9 @@ TEST_F(ViewByDateTest, shouldGetEmptyVector) {
 }
 
 TEST_F(ViewByDateTest, shouldGetAllTasksForToday1) {
-    time_t now = time(0);
-    auto cur = std::make_unique<tm>(*gmtime(&now));
-    boost::gregorian::date date(cur->tm_year+1900, cur->tm_mon + 1, cur->tm_mday);
+    boost::gregorian::date date{boost::gregorian::day_clock::local_day()};
 
     EXPECT_TRUE(viewByDate.addTask(sft1));
-    EXPECT_TRUE(viewByDate.addTask(sft2));
     EXPECT_TRUE(viewByDate.addTask(sft3));
     EXPECT_TRUE(viewByDate.addTask(sft4));
 
@@ -116,9 +115,7 @@ TEST_F(ViewByDateTest, shouldGetAllTasksForToday1) {
 }
 
 TEST_F(ViewByDateTest, shouldGetAllTasksForToday2) {
-    time_t now = time(0);
-    auto cur = std::make_unique<tm>(*gmtime(&now));
-    boost::gregorian::date date(cur->tm_year+1900, cur->tm_mon + 1, cur->tm_mday);
+    boost::gregorian::date date{boost::gregorian::day_clock::local_day()};
 
     EXPECT_TRUE(viewByDate.addTask(sft5));
     EXPECT_TRUE(viewByDate.addTask(sft6));
@@ -127,9 +124,7 @@ TEST_F(ViewByDateTest, shouldGetAllTasksForToday2) {
 }
 
 TEST_F(ViewByDateTest, shouldGetAllTasksForWeek1) {
-    time_t now = time(0);
-    auto cur = std::make_unique<tm>(*gmtime(&now));
-    boost::gregorian::date date(cur->tm_year+1900, cur->tm_mon + 1, cur->tm_mday);
+    boost::gregorian::date date{boost::gregorian::day_clock::local_day()};
 
     EXPECT_TRUE(viewByDate.addTask(sft1));
     EXPECT_TRUE(viewByDate.addTask(sft2));
@@ -150,9 +145,7 @@ TEST_F(ViewByDateTest, shouldGetAllTasksForWeek2) {
 }
 
 TEST_F(ViewByDateTest, shouldGetAllTasksForWeek3) {
-    time_t now = time(0);
-    auto cur = std::make_unique<tm>(*gmtime(&now));
-    boost::gregorian::date date(cur->tm_year+1900, cur->tm_mon + 1, cur->tm_mday);
+    boost::gregorian::date date{boost::gregorian::day_clock::local_day()};
 
     EXPECT_TRUE(viewByDate.getTasksForWeek(date).empty());
 }
