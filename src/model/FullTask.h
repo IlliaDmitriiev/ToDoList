@@ -10,7 +10,13 @@
 #include <memory>
 #include <unordered_map>
 #include <vector>
-
+/*
+ * class-holder of tasks
+ *
+ * @see Task
+ *
+ * @author:Ilya Dmitriev
+ */
 class FullTask {
 
 public:

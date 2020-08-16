@@ -10,7 +10,8 @@
 #include <vector>
 
 /*
- *  Class w
+ *  Class which gets tasks in right order
+ *  and has ability to update views
  *
  *  @author: Ilya Dmitriev
  */
@@ -48,7 +49,7 @@ public:
      *
      * @param: task link
      *
-     * @return true if operation was successful, otherwise false
+     * @return true if operation is successful, otherwise false
      */
     virtual bool addTask(const std::weak_ptr<FullTask>& ft)= 0;
     /*
@@ -56,7 +57,7 @@ public:
      *
      * @param: task link
      *
-     * @return true if operation was successful, otherwise false
+     * @return true if operation is successful, otherwise false
      */
     virtual bool deleteTask(const std::weak_ptr<FullTask>& ft)= 0;
 

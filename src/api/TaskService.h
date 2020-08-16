@@ -60,7 +60,7 @@ public:
      * @param: [TaskID] It needs to delete task by this id.
      *
      * @return object containing info about possible error occurred
-     * or info that operation completed successfully.
+     * or info that operation is successful.
      *
      * @note: All subtasks will be deleted recursively.
      */
@@ -71,7 +71,7 @@ public:
      * @param: [TaskID] It needs to complete task by this id.
      *
      * @return object containing info about possible error occurred
-     * or info that operation completed successfully.
+     * or info that operation is successful.
      *
      * @note: All subtasks will be completed recursively.
      */
@@ -83,7 +83,7 @@ public:
      * @param: [date] It needs to change task date with this date.
      *
      * @return object containing info about possible error occurred
-     * or info that operation completed successfully.
+     * or info that operation is successful.
      *
      * @note: All subtasks will NOT be postponed recursively.
      */
@@ -129,7 +129,7 @@ private:
      *
      * @param: [task link].
      *
-     * @return true if removing was successful otherwise false
+     * @return true if removing is successful otherwise false
      */
     bool removeTask(const std::weak_ptr<FullTask> &task);
 
