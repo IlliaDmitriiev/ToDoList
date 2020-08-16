@@ -13,6 +13,14 @@
 #include "model/TaskStorage.h"
 #include "ReturnType.h"
 
+/*
+ *  Enter point to the program.
+ *
+ *  All requests to the system starts here.
+ *
+ *  @author: Ilya Dmitriev
+ */
+
 class TaskService {
 
 public:
@@ -29,19 +37,94 @@ public:
     {}
 
 public:
+    /*
+     * Adds given task to system.
+     *
+     * @param: TaskDTO without TaskID.
+     *
+     * @return object containing id of new created task or info about possible errors.
+     */
     AddTaskResult addTask(const TaskDTO &taskDto);
+    /*
+     * Adds subtask to the task with given TaskID.
+     *
+     * @param: [TaskID] It needs to add subtask to task by this id.
+     * @param: TaskDTO without TaskID.
+     *
+     * @return object containing id of new created task or info about possible errors.
+     */
     AddTaskResult addSubtask(TaskID taskID, const TaskDTO &subtask);
+    /*
+     * Deletes task from system.
+     *
+     * @param: [TaskID] It needs to delete task by this id.
+     *
+     * @return object containing info about possible error occurred
+     * or info that operation completed successfully.
+     *
+     * @note: All subtasks will be deleted recursively.
+     */
     RequstTaskResult deleteTask(TaskID id);
+    /*
+     * Completes task.
+     *
+     * @param: [TaskID] It needs to complete task by this id.
+     *
+     * @return object containing info about possible error occurred
+     * or info that operation completed successfully.
+     *
+     * @note: All subtasks will be completed recursively.
+     */
     RequstTaskResult complete(TaskID id);
+    /*
+     * Changing task date to the given.
+     *
+     * @param: [TaskID] It needs to find task by this id.
+     * @param: [date] It needs to change task date with this date.
+     *
+     * @return object containing info about possible error occurred
+     * or info that operation completed successfully.
+     *
+     * @note: All subtasks will NOT be postponed recursively.
+     */
     RequstTaskResult postponeTask(TaskID id, boost::gregorian::date new_date);
 
 public:
+    /*
+     * Gives all tasks already sorted by priority.
+     *
+     * @return vector of TaskDTO
+     */
     std::vector<TaskDTO> getAllTasksByPriority();
+    /*
+     * Gives all tasks for today already sorted by priority.
+     *
+     * @return vector of TaskDTO
+     */
     std::vector<TaskDTO> getTasksForToday();
+    /*
+     * Gives all tasks for this week already sorted by priority.
+     *
+     * @return vector of TaskDTO
+     */
     std::vector<TaskDTO> getTasksForWeek();
+    /*
+     * Gives task with given id if such exists in system.
+     *
+     * @param: [taskID].
+     *
+     * @return taskDTO if such task exists otherwise nullopt.
+     */
     std::optional<TaskDTO> getTask(TaskID id);
 
 private:
+    /*
+     * Deletes task from system.
+     *
+     * @param: [task link].
+     *
+     * @return true if removing was successful otherwise false
+     */
     bool removeTask(const std::weak_ptr<FullTask> &task);
 
 private:
