@@ -20,19 +20,25 @@ public:
     /*
      * Gives all tasks already sorted by priority.
      *
-     * @return vector of TaskDTO
+     * @return collection of links to tasks
+     *
+     * @note if there isn't any required task, function will return empty vector
      */
     virtual std::vector<std::weak_ptr<FullTask>> getAllTasksByPrior() = 0;
     /*
      * Gives all tasks for today already sorted by priority.
      *
-     * @return vector of TaskDTO
+     * @return collection of links to tasks
+     *
+     * @note if there isn't any required task, function will return empty vector
      */
     virtual std::vector<std::weak_ptr<FullTask>> getTasksForToday(boost::gregorian::date date) = 0;
     /*
      * Gives all tasks for this week already sorted by priority.
      *
-     * @return vector of TaskDTO
+     * @return collection of links to tasks
+     *
+     * @note if there isn't any required task, function will return empty vector
      */
     virtual std::vector<std::weak_ptr<FullTask>> getTasksForWeek(boost::gregorian::date date)= 0;
 
