@@ -8,6 +8,11 @@
 #include "TaskID.h"
 #include <string>
 
+/*
+ * Structures containing info about the result of executing service request.
+ *
+ * @author Ilya Dmitriev
+ */
 enum class ResultType{
     SUCCESS,
     FAILURE
