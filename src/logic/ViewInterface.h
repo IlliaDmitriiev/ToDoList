@@ -9,16 +9,51 @@
 #include <map>
 #include <vector>
 
+/*
+ *  Class w
+ *
+ *  @author: Ilya Dmitriev
+ */
 class ViewInterface {
 
 public:
+    /*
+     * Gives all tasks already sorted by priority.
+     *
+     * @return vector of TaskDTO
+     */
     virtual std::vector<std::weak_ptr<FullTask>> getAllTasksByPrior() = 0;
+    /*
+     * Gives all tasks for today already sorted by priority.
+     *
+     * @return vector of TaskDTO
+     */
     virtual std::vector<std::weak_ptr<FullTask>> getTasksForToday(boost::gregorian::date date) = 0;
+    /*
+     * Gives all tasks for this week already sorted by priority.
+     *
+     * @return vector of TaskDTO
+     */
     virtual std::vector<std::weak_ptr<FullTask>> getTasksForWeek(boost::gregorian::date date)= 0;
 
 public:
+    /*
+     * adds task to view
+     *
+     * @param: task link
+     *
+     * @return true if operation was successful, otherwise false
+     */
     virtual bool addTask(const std::weak_ptr<FullTask>& ft)= 0;
+    /*
+     * deletes task from view
+     *
+     * @param: task link
+     *
+     * @return true if operation was successful, otherwise false
+     */
     virtual bool deleteTask(const std::weak_ptr<FullTask>& ft)= 0;
+
     virtual ~ViewInterface() = default;
 };
 

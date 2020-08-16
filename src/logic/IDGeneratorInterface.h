@@ -7,8 +7,20 @@
 
 #include "api/TaskID.h"
 
+/*
+ *  Class-generator of ID
+ *
+ *  @author: Ilya Dmitriev
+ */
 class IDGeneratorInterface{
 public:
+   /*
+    * Generates id.
+    *
+    * @return TaskID
+    *
+    * @note: TaskID is unique.
+    */
     virtual TaskID generateId() = 0;
     virtual ~IDGeneratorInterface() = default;
 };
