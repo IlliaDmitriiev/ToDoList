@@ -7,14 +7,6 @@
 
 #include "TaskServiceInterface.h"
 
-/*
- *  Enter point to the program.
- *
- *  All requests to the system starts here.
- *
- *  @author: Ilya Dmitriev
- */
-
 class TaskService: public TaskServiceInterface {
 
 public:
@@ -31,100 +23,29 @@ public:
     {}
 
 public:
-    /*
-     * Adds given task to system.
-     *
-     * @param: TaskDTO without TaskID.
-     *
-     * @return object containing id of new created task or info about possible errors.
-     */
+
     AddTaskResult addTask(const TaskDTO &taskDto) override;
-    /*
-     * Adds subtask to the task with given TaskID.
-     *
-     * @param: [TaskID] It needs to add subtask to task by this id.
-     * @param: TaskDTO without TaskID.
-     *
-     * @return object containing id of new created task or info about possible errors.
-     */
+
     AddTaskResult addSubtask(TaskID taskID, const TaskDTO &subtask) override;
-    /*
-     * Deletes task from system.
-     *
-     * @param: [TaskID] It needs to delete task by this id.
-     *
-     * @return object containing info about possible error occurred
-     * or info that operation is successful.
-     *
-     * @note: All subtasks will be deleted recursively.
-     */
+
     RequstTaskResult deleteTask(TaskID id) override;
-    /*
-     * Completes task.
-     *
-     * @param: [TaskID] It needs to complete task by this id.
-     *
-     * @return object containing info about possible error occurred
-     * or info that operation is successful.
-     *
-     * @note: All subtasks will be completed recursively.
-     */
+
     RequstTaskResult complete(TaskID id) override;
-    /*
-     * Changing task date to the given.
-     *
-     * @param: [TaskID] It needs to find task by this id.
-     * @param: [date] It needs to change task date with this date.
-     *
-     * @return object containing info about possible error occurred
-     * or info that operation is successful.
-     *
-     * @note: All subtasks will NOT be postponed recursively.
-     */
+
     RequstTaskResult postponeTask(TaskID id, boost::gregorian::date new_date) override;
 
 public:
-    /*
-     * Gives all tasks already sorted by priority.
-     *
-     * @return vector of TaskDTO
-     *
-     * @note if there isn't any required task, function will return empty vector
-     */
+
     std::vector<TaskDTO> getAllTasksByPriority() override;
-    /*
-     * Gives all tasks for today already sorted by priority.
-     *
-     * @return vector of TaskDTO
-     *
-     * @note if there isn't any required task, function will return empty vector
-     */
+
     std::vector<TaskDTO> getTasksForToday() override;
-    /*
-     * Gives all tasks for this week already sorted by priority.
-     *
-     * @return vector of TaskDTO
-     *
-     * @note if there isn't any required task, function will return empty vector
-     */
+
     std::vector<TaskDTO> getTasksForWeek() override;
-    /*
-     * Gives task with given id if such exists in system.
-     *
-     * @param: [taskID].
-     *
-     * @return taskDTO if such task exists otherwise nullopt.
-     */
+
     std::optional<TaskDTO> getTask(TaskID id) override;
 
 private:
-    /*
-     * Deletes task from system.
-     *
-     * @param: [task link].
-     *
-     * @return true if removing is successful otherwise false
-     */
+
     bool removeTask(const std::weak_ptr<FullTask> &task) override;
 
 private:
