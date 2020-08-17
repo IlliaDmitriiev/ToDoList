@@ -83,35 +83,22 @@ public:
     MOCK_METHOD(TaskID, generateId, (), (override));
 };
 
-bool operator == (const TaskID &id1, const TaskID &id2){
-    return id1.getId() == id2.getId();
-}
-
-bool operator == (const std::weak_ptr<FullTask> &task1, const std::weak_ptr<FullTask> &task2){
-    return task1.lock()->getId()== task2.lock()->getId();
-}
-
-bool operator == (const std::shared_ptr<FullTask> &task1, const std::shared_ptr<FullTask> &task2){
-    return task1->getId()== task2->getId();
-}
-
 TEST_F(TaskServiceTest, shouldAddTaskSuccessfully) {
     auto viewByPriority = std::make_unique<MockView>();
     auto viewByDate = std::make_unique<MockView>();
     auto storage = std::make_unique<MockStorage>();
     auto generator = std::make_unique<MockGenerator>();
-    std::weak_ptr<FullTask> weak1;
-    weak1 = shared_task1;
-    EXPECT_CALL(*generator, generateId())
+
+    EXPECT_CALL(*generator, generateId)
     .Times(1)
     .WillOnce(Return(TaskID::create(47)));
-    EXPECT_CALL(*viewByPriority, addTask(weak1))
+    EXPECT_CALL(*viewByPriority, addTask)
     .Times(1)
     .WillOnce(Return(true));
-    EXPECT_CALL(*viewByDate, addTask(weak1))
+    EXPECT_CALL(*viewByDate, addTask)
     .Times(1)
     .WillOnce(Return(true));
-    EXPECT_CALL(*storage, addTask(std::move(shared_task1)))
+    EXPECT_CALL(*storage, addTask)
     .Times(1)
     .WillOnce(Return(true));
 
@@ -130,24 +117,23 @@ TEST_F(TaskServiceTest, shouldAddTaskUnsuccessfully1) {
     auto viewByDate = std::make_unique<MockView>();
     auto storage = std::make_unique<MockStorage>();
     auto generator = std::make_unique<MockGenerator>();
-    std::weak_ptr<FullTask> weak1;
-    weak1 = shared_task3;
-    EXPECT_CALL(*generator, generateId())
+
+    EXPECT_CALL(*generator, generateId)
             .Times(1)
             .WillOnce(Return(TaskID::create(123)));
-    EXPECT_CALL(*viewByPriority, addTask(weak1))
+    EXPECT_CALL(*viewByPriority, addTask)
             .Times(1)
             .WillOnce(Return(false));
-    EXPECT_CALL(*viewByDate, addTask(weak1))
+    EXPECT_CALL(*viewByDate, addTask)
             .Times(1)
             .WillOnce(Return(true));
 
     boost::gregorian::date date{1500, 2, 26};
-
     TaskService ts(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
-    TaskDTO task = TaskDTO::create(date, "name3", "label3", TaskPriority::Third);
 
+    TaskDTO task = TaskDTO::create(date, "name3", "label3", TaskPriority::Third);
     AddTaskResult outcome  = ts.addTask(task);
+
     EXPECT_EQ(outcome.result, ResultType::FAILURE);
     EXPECT_FALSE(outcome.id.has_value());
 }
@@ -158,20 +144,17 @@ TEST_F(TaskServiceTest, shouldAddTaskUnsuccessfully2) {
     auto storage = std::make_unique<MockStorage>();
     auto generator = std::make_unique<MockGenerator>();
 
-    std::weak_ptr<FullTask> weak1;
-    weak1 = shared_task2;
-
-    EXPECT_CALL(*generator, generateId())
+    EXPECT_CALL(*generator, generateId)
             .Times(1)
             .WillOnce(Return(TaskID::create(69)));
 
-    EXPECT_CALL(*viewByDate, addTask(weak1))
+    EXPECT_CALL(*viewByDate, addTask)
             .Times(1)
             .WillOnce(Return(false));
 
     boost::gregorian::date date{boost::gregorian::day_clock::local_day()};
-
     TaskService ts(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
+
     TaskDTO task = TaskDTO::create(date, "name2", "456578y&#&@)(#$?><</*-+fdg", TaskPriority::Second);
     AddTaskResult outcome  = ts.addTask(task);
 
@@ -185,7 +168,7 @@ TEST_F(TaskServiceTest, shouldNotFindTaskWhileAddSubtask) {
     auto storage = std::make_unique<MockStorage>();
     auto generator = std::make_unique<MockGenerator>();
 
-    EXPECT_CALL(*storage, getTask(TaskID::create(47)))
+    EXPECT_CALL(*storage, getTask)
             .Times(1)
             .WillOnce(Return(std::nullopt));
 
@@ -207,21 +190,19 @@ TEST_F(TaskServiceTest, shouldNotAddSubtask) {
     auto generator = std::make_unique<MockGenerator>();
 
     std::weak_ptr<FullTask> weak2;
-    std::weak_ptr<FullTask> weak3;
-    weak3 = shared_task3;
     weak2 = shared_task2;
 
-    EXPECT_CALL(*storage, getTask(TaskID::create(69)))
+    EXPECT_CALL(*storage, getTask)
             .Times(1)
             .WillOnce(Return(weak2));
 
-    EXPECT_CALL(*generator, generateId())
+    EXPECT_CALL(*generator, generateId)
             .Times(1)
             .WillOnce(Return(TaskID::create(123)));
-    EXPECT_CALL(*viewByPriority, addTask(weak3))
+    EXPECT_CALL(*viewByPriority, addTask)
             .Times(1)
             .WillOnce(Return(false));
-    EXPECT_CALL(*viewByDate, addTask(weak3))
+    EXPECT_CALL(*viewByDate, addTask)
             .Times(1)
             .WillOnce(Return(true));
 
@@ -251,23 +232,20 @@ TEST_F(TaskServiceTest, shouldAddSubtaskSuccessfully) {
     std::optional<std::weak_ptr<FullTask>> opt4 = weak4;
 
 
-    EXPECT_CALL(*storage, getTask(TaskID::create(123)))
-            .Times(1)
-            .WillOnce(Return(opt3));
-    EXPECT_CALL(*storage, getTask(TaskID::create(8)))
-            .Times(1)
+    EXPECT_CALL(*storage, getTask)
+            .Times(2)
+            .WillOnce(Return(opt3))
             .WillOnce(Return(opt4));
-
-    EXPECT_CALL(*generator, generateId())
+    EXPECT_CALL(*generator, generateId)
             .Times(1)
             .WillOnce(Return(TaskID::create(8)));
-    EXPECT_CALL(*viewByPriority, addTask(weak4))
+    EXPECT_CALL(*viewByPriority, addTask)
             .Times(1)
             .WillOnce(Return(true));
-    EXPECT_CALL(*viewByDate, addTask(weak4))
+    EXPECT_CALL(*viewByDate, addTask)
             .Times(1)
             .WillOnce(Return(true));
-    EXPECT_CALL(*storage, addTask(std::move(shared_task4)))
+    EXPECT_CALL(*storage, addTask)
             .Times(1)
             .WillOnce(Return(true));
 
@@ -306,7 +284,7 @@ TEST_F(TaskServiceTest, shouldGetAllTasksByPriority2) {
     auto storage = std::make_unique<MockStorage>();
     auto generator = std::make_unique<MockGenerator>();
 
-    EXPECT_CALL(*viewByPriority, getAllTasksByPrior())
+    EXPECT_CALL(*viewByPriority, getAllTasksByPrior)
     .Times(1)
     .WillOnce(Return(weak));
 
@@ -315,3 +293,256 @@ TEST_F(TaskServiceTest, shouldGetAllTasksByPriority2) {
     auto vec = ts.getAllTasksByPriority();
     EXPECT_TRUE(vec.empty());
 }
+
+TEST_F(TaskServiceTest, shouldNotFindTaskWhileDeletingTask) {
+    auto viewByPriority = std::make_unique<MockView>();
+    auto viewByDate = std::make_unique<MockView>();
+    auto storage = std::make_unique<MockStorage>();
+    auto generator = std::make_unique<MockGenerator>();
+
+    EXPECT_CALL(*storage, getTask)
+            .Times(1)
+            .WillOnce(Return(std::nullopt));
+
+
+    TaskService ts(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
+    RequstTaskResult outcome  = ts.deleteTask(TaskID::create(47));
+
+    EXPECT_EQ(outcome.result, ResultType::FAILURE);
+    EXPECT_EQ(outcome.error_message, "task not found");
+}
+
+TEST_F(TaskServiceTest, shouldNotRemoveWhileDeletingTask) {
+    auto viewByPriority = std::make_unique<MockView>();
+    auto viewByDate = std::make_unique<MockView>();
+    auto storage = std::make_unique<MockStorage>();
+    auto generator = std::make_unique<MockGenerator>();
+
+    std::weak_ptr<FullTask> weak2;
+    weak2 = shared_task2;
+
+    EXPECT_CALL(*storage, getTask)
+            .Times(1)
+            .WillOnce(Return(weak2));
+    EXPECT_CALL(*viewByDate, deleteTask)
+            .Times(1)
+            .WillOnce(Return(false));
+
+    TaskService ts(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
+    RequstTaskResult outcome  = ts.deleteTask(TaskID::create(69));
+
+    EXPECT_EQ(outcome.result, ResultType::FAILURE);
+    EXPECT_EQ(outcome.error_message, "deleting is failed");
+}
+
+TEST_F(TaskServiceTest, shouldNotGetTaskWhileDeletingTask) {
+    auto viewByPriority = std::make_unique<MockView>();
+    auto viewByDate = std::make_unique<MockView>();
+    auto storage = std::make_unique<MockStorage>();
+    auto generator = std::make_unique<MockGenerator>();
+
+    std::weak_ptr<FullTask> weak2;
+    weak2 = shared_task2;
+
+    EXPECT_CALL(*storage, getTask)
+            .Times(1)
+            .WillOnce(Return(weak2));
+    EXPECT_CALL(*storage, deleteTask)
+            .Times(1)
+            .WillOnce(Return(false));
+    EXPECT_CALL(*storage, deleteSubtaskInParent)
+            .Times(1)
+            .WillOnce(Return(true));
+    EXPECT_CALL(*viewByPriority, deleteTask)
+            .Times(1)
+            .WillOnce(Return(true));
+    EXPECT_CALL(*viewByDate, deleteTask)
+            .Times(1)
+            .WillOnce(Return(true));
+
+    TaskService ts(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
+    RequstTaskResult outcome  = ts.deleteTask(TaskID::create(69));
+
+    EXPECT_EQ(outcome.result, ResultType::FAILURE);
+    EXPECT_EQ(outcome.error_message, "can't get task from storage");
+}
+
+TEST_F(TaskServiceTest, shouldDeleteTaskSuccessfully) {
+    auto viewByPriority = std::make_unique<MockView>();
+    auto viewByDate = std::make_unique<MockView>();
+    auto storage = std::make_unique<MockStorage>();
+    auto generator = std::make_unique<MockGenerator>();
+
+    std::weak_ptr<FullTask> weak2;
+    weak2 = shared_task2;
+
+    EXPECT_CALL(*storage, getTask)
+            .Times(1)
+            .WillOnce(Return(weak2));
+    EXPECT_CALL(*storage, deleteTask)
+            .Times(1)
+            .WillOnce(Return(true));
+    EXPECT_CALL(*storage, deleteSubtaskInParent)
+            .Times(1)
+            .WillOnce(Return(true));
+    EXPECT_CALL(*viewByPriority, deleteTask)
+            .Times(1)
+            .WillOnce(Return(true));
+    EXPECT_CALL(*viewByDate, deleteTask)
+            .Times(1)
+            .WillOnce(Return(true));
+
+    TaskService ts(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
+    RequstTaskResult outcome  = ts.deleteTask(TaskID::create(69));
+
+    EXPECT_EQ(outcome.result, ResultType::SUCCESS);
+}
+
+TEST_F(TaskServiceTest, shouldNotFindTaskWhileCompleteTask) {
+    auto viewByPriority = std::make_unique<MockView>();
+    auto viewByDate = std::make_unique<MockView>();
+    auto storage = std::make_unique<MockStorage>();
+    auto generator = std::make_unique<MockGenerator>();
+
+    EXPECT_CALL(*storage, getTask)
+            .Times(1)
+            .WillOnce(Return(std::nullopt));
+
+    TaskService ts(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
+    RequstTaskResult outcome  = ts.complete(TaskID::create(69));
+
+    EXPECT_EQ(outcome.result, ResultType::FAILURE);
+    EXPECT_EQ(outcome.error_message, "task not found");
+}
+
+TEST_F(TaskServiceTest, shouldCompleteTask) {
+    auto viewByPriority = std::make_unique<MockView>();
+    auto viewByDate = std::make_unique<MockView>();
+    auto storage = std::make_unique<MockStorage>();
+    auto generator = std::make_unique<MockGenerator>();
+
+    std::weak_ptr<FullTask> weak2 = shared_task2;
+
+    EXPECT_CALL(*storage, getTask)
+            .Times(1)
+            .WillOnce(Return(weak2));
+
+    TaskService ts(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
+    RequstTaskResult outcome  = ts.complete(TaskID::create(454896));
+
+    EXPECT_EQ(outcome.result, ResultType::SUCCESS);
+}
+
+TEST_F(TaskServiceTest, shouldNotFindTaskWhilePostponeTask) {
+    auto viewByPriority = std::make_unique<MockView>();
+    auto viewByDate = std::make_unique<MockView>();
+    auto storage = std::make_unique<MockStorage>();
+    auto generator = std::make_unique<MockGenerator>();
+
+    EXPECT_CALL(*storage, getTask)
+            .Times(1)
+            .WillOnce(Return(std::nullopt));
+
+    boost::gregorian::date date{boost::gregorian::day_clock::local_day()};
+    TaskService ts(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
+    RequstTaskResult outcome  = ts.postponeTask(TaskID::create(69), date);
+
+    EXPECT_EQ(outcome.result, ResultType::FAILURE);
+    EXPECT_EQ(outcome.error_message, "task not found");
+}
+
+TEST_F(TaskServiceTest, shouldPostponeTask) {
+    auto viewByPriority = std::make_unique<MockView>();
+    auto viewByDate = std::make_unique<MockView>();
+    auto storage = std::make_unique<MockStorage>();
+    auto generator = std::make_unique<MockGenerator>();
+
+    std::weak_ptr<FullTask> weak2 = shared_task2;
+
+    EXPECT_CALL(*storage, getTask)
+            .Times(1)
+            .WillOnce(Return(weak2));
+
+    boost::gregorian::date date{boost::gregorian::day_clock::local_day()};
+    TaskService ts(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
+    RequstTaskResult outcome  = ts.postponeTask(TaskID::create(454896), date);
+
+    EXPECT_EQ(outcome.result, ResultType::SUCCESS);
+}
+
+TEST_F(TaskServiceTest, shouldGetTaskForToday) {
+    auto viewByPriority = std::make_unique<MockView>();
+    auto viewByDate = std::make_unique<MockView>();
+    auto storage = std::make_unique<MockStorage>();
+    auto generator = std::make_unique<MockGenerator>();
+
+    std::vector< std::weak_ptr<FullTask>>v{shared_task1, shared_task2, shared_task3};
+
+    EXPECT_CALL(*viewByDate, getTasksForToday)
+            .Times(1)
+            .WillOnce(Return(v));
+
+    boost::gregorian::date date{boost::gregorian::day_clock::local_day()};
+    TaskService ts(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
+    auto vec = ts.getTasksForToday();
+    EXPECT_EQ(vec.size(), v.size());
+}
+
+TEST_F(TaskServiceTest, shouldGetEmptyVectorOfTaskForToday) {
+    auto viewByPriority = std::make_unique<MockView>();
+    auto viewByDate = std::make_unique<MockView>();
+    auto storage = std::make_unique<MockStorage>();
+    auto generator = std::make_unique<MockGenerator>();
+
+    std::vector< std::weak_ptr<FullTask>>v{};
+
+    EXPECT_CALL(*viewByDate, getTasksForToday)
+            .Times(1)
+            .WillOnce(Return(v));
+
+    boost::gregorian::date date{boost::gregorian::day_clock::local_day()};
+    TaskService ts(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
+    auto vec = ts.getTasksForToday();
+    EXPECT_TRUE(vec.empty());
+    EXPECT_EQ(vec.size(), v.size());
+}
+
+
+TEST_F(TaskServiceTest, shouldGetTaskForWeek) {
+    auto viewByPriority = std::make_unique<MockView>();
+    auto viewByDate = std::make_unique<MockView>();
+    auto storage = std::make_unique<MockStorage>();
+    auto generator = std::make_unique<MockGenerator>();
+
+    std::vector< std::weak_ptr<FullTask>>v{shared_task1, shared_task2, shared_task3};
+
+    EXPECT_CALL(*viewByDate, getTasksForWeek)
+            .Times(1)
+            .WillOnce(Return(v));
+
+    boost::gregorian::date date{boost::gregorian::day_clock::local_day()};
+    TaskService ts(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
+    auto vec = ts.getTasksForWeek();
+    EXPECT_EQ(vec.size(), v.size());
+}
+
+TEST_F(TaskServiceTest, shouldGetEmptyVectorOfTaskForWeek) {
+    auto viewByPriority = std::make_unique<MockView>();
+    auto viewByDate = std::make_unique<MockView>();
+    auto storage = std::make_unique<MockStorage>();
+    auto generator = std::make_unique<MockGenerator>();
+
+    std::vector< std::weak_ptr<FullTask>>v{};
+
+    EXPECT_CALL(*viewByDate, getTasksForWeek)
+            .Times(1)
+            .WillOnce(Return(v));
+
+    boost::gregorian::date date{boost::gregorian::day_clock::local_day()};
+    TaskService ts(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
+    auto vec = ts.getTasksForWeek();
+    EXPECT_TRUE(vec.empty());
+    EXPECT_EQ(vec.size(), v.size());
+}
+
+
