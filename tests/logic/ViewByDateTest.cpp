@@ -20,11 +20,7 @@ public:
 
     void SetUp() override {
         boost::gregorian::date date1{boost::gregorian::day_clock::local_day()};
-        boost::gregorian::date date2;
-        if (date1.day_of_week() == 0)
-            date2 = boost::gregorian::date{date1.day_number()};
-        else
-            date2 = boost::gregorian::date{date1.day_number() + 7 - date1.day_of_week()};
+        boost::gregorian::date date2{date1.day_number() + (7 - date1.day_of_week())%7};
 
         const Task t1 = Task::create(
                 date1,
