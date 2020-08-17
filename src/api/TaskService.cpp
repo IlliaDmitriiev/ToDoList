@@ -94,20 +94,17 @@ RequstTaskResult TaskService::deleteTask(TaskID id){
     auto task = storage_->getTask(id);
 
     if(task.has_value()) {
-        RequstTaskResult subtask_results;
-        subtask_results.result = ResultType::SUCCESS;
 
-        for(TaskID subtaskID: task.value().lock()->getSubtasks()) {
-            RequstTaskResult subtask_result = deleteTask(subtaskID);
-            if (subtask_result.result == ResultType::FAILURE)
-                subtask_results = subtask_result;
-        }
+        for(TaskID subtaskID: task.value().lock()->getSubtasks())
+             deleteTask(subtaskID);
 
         if(!removeTask(task.value().lock()))
-            return operation_result::TaskRequestedUnsuccessful("delete of subtasks is failed");
+            return operation_result::TaskRequestedUnsuccessful("deleting is failed");
 
-        storage_->deleteTask(task.value().lock()->getId());
-        return subtask_results;
+        if(storage_->deleteTask(task.value().lock()->getId()))
+            return operation_result::TaskRequestedSuccessful();
+        else
+            return operation_result::TaskRequestedUnsuccessful("can't get task from storage");
     }
     else
         return operation_result::TaskRequestedUnsuccessful("task not found");
