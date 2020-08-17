@@ -19,12 +19,17 @@ namespace todo_list{
      *
      * @return instance of  TaskService.
      */
-    TaskService createService() {
+    std::unique_ptr<TaskService> createService() {
         auto generator = std::make_unique<IDGenerator>();
         auto viewByPriority = std::make_unique<ViewByPriority>();
         auto viewByDate = std::make_unique<ViewByDate>();
         auto storage = std::make_unique<TaskStorage>();
-        return TaskService(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
+        return std::make_unique<TaskService>(
+                    std::move(generator),
+                    std::move(viewByPriority),
+                    std::move(viewByDate),
+                    std::move(storage)
+                );
     }
 
 }

@@ -3,7 +3,7 @@
 #include "api/TaskServiceCreator.h"
 
 int main() {
-   TaskService ts = todo_list::createService();
+   auto ts = todo_list::createService();
 
    return 0;
 }

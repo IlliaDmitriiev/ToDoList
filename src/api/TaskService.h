@@ -5,13 +5,7 @@
 #ifndef TODOLIST_TASKSERVICE_H
 #define TODOLIST_TASKSERVICE_H
 
-#include "logic/IDGenerator.h"
-#include "logic/ViewInterface.h"
-#include "logic/ViewByPriority.h"
-#include "logic/ViewByDate.h"
-#include "logic/TaskConvertor.h"
-#include "model/TaskStorage.h"
-#include "ReturnType.h"
+#include "TaskServiceInterface.h"
 
 /*
  *  Enter point to the program.
@@ -21,7 +15,7 @@
  *  @author: Ilya Dmitriev
  */
 
-class TaskService {
+class TaskService: public TaskServiceInterface {
 
 public:
     TaskService(
@@ -44,7 +38,7 @@ public:
      *
      * @return object containing id of new created task or info about possible errors.
      */
-    AddTaskResult addTask(const TaskDTO &taskDto);
+    AddTaskResult addTask(const TaskDTO &taskDto) override;
     /*
      * Adds subtask to the task with given TaskID.
      *
@@ -53,7 +47,7 @@ public:
      *
      * @return object containing id of new created task or info about possible errors.
      */
-    AddTaskResult addSubtask(TaskID taskID, const TaskDTO &subtask);
+    AddTaskResult addSubtask(TaskID taskID, const TaskDTO &subtask) override;
     /*
      * Deletes task from system.
      *
@@ -64,7 +58,7 @@ public:
      *
      * @note: All subtasks will be deleted recursively.
      */
-    RequstTaskResult deleteTask(TaskID id);
+    RequstTaskResult deleteTask(TaskID id) override;
     /*
      * Completes task.
      *
@@ -75,7 +69,7 @@ public:
      *
      * @note: All subtasks will be completed recursively.
      */
-    RequstTaskResult complete(TaskID id);
+    RequstTaskResult complete(TaskID id) override;
     /*
      * Changing task date to the given.
      *
@@ -87,7 +81,7 @@ public:
      *
      * @note: All subtasks will NOT be postponed recursively.
      */
-    RequstTaskResult postponeTask(TaskID id, boost::gregorian::date new_date);
+    RequstTaskResult postponeTask(TaskID id, boost::gregorian::date new_date) override;
 
 public:
     /*
@@ -97,7 +91,7 @@ public:
      *
      * @note if there isn't any required task, function will return empty vector
      */
-    std::vector<TaskDTO> getAllTasksByPriority();
+    std::vector<TaskDTO> getAllTasksByPriority() override;
     /*
      * Gives all tasks for today already sorted by priority.
      *
@@ -105,7 +99,7 @@ public:
      *
      * @note if there isn't any required task, function will return empty vector
      */
-    std::vector<TaskDTO> getTasksForToday();
+    std::vector<TaskDTO> getTasksForToday() override;
     /*
      * Gives all tasks for this week already sorted by priority.
      *
@@ -113,7 +107,7 @@ public:
      *
      * @note if there isn't any required task, function will return empty vector
      */
-    std::vector<TaskDTO> getTasksForWeek();
+    std::vector<TaskDTO> getTasksForWeek() override;
     /*
      * Gives task with given id if such exists in system.
      *
@@ -121,7 +115,7 @@ public:
      *
      * @return taskDTO if such task exists otherwise nullopt.
      */
-    std::optional<TaskDTO> getTask(TaskID id);
+    std::optional<TaskDTO> getTask(TaskID id) override;
 
 private:
     /*
@@ -131,7 +125,7 @@ private:
      *
      * @return true if removing is successful otherwise false
      */
-    bool removeTask(const std::weak_ptr<FullTask> &task);
+    bool removeTask(const std::weak_ptr<FullTask> &task) override;
 
 private:
     std::unique_ptr<IDGeneratorInterface> generator_;
