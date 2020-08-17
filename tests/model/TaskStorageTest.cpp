@@ -64,34 +64,70 @@ public:
 };
 
 TEST_F(StorageForSharedPtrTest, shoulAddFullTask) {
-/*
-   storage.addTask(std::move(sft1));
-   storage.addTask(std::move(sft2));
-   storage.addTask(std::move(sft3));
-   storage.addTask(std::move(sft4));
-   storage.addTask(std::move(sft5));
 
-   ASSERT_TRUE(Task::Compare(storage.getTask(TaskID::create(0)).lock()->getTask(), t1));
-   ASSERT_TRUE(Task::Compare(storage.getTask(TaskID::create(1)).lock()->getTask(), t2));
-   ASSERT_TRUE(Task::Compare(storage.getTask(TaskID::create(2)).lock()->getTask(), t3));
-   ASSERT_TRUE(Task::Compare(storage.getTask(TaskID::create(3)).lock()->getTask(), t4));
-   ASSERT_TRUE(Task::Compare(storage.getTask(TaskID::create(4)).lock()->getTask(), t5));*/
-}
-
-TEST_F(StorageForSharedPtrTest, shoulDelete) {
-/*
     storage.addTask(std::move(sft1));
     storage.addTask(std::move(sft2));
+
+    EXPECT_TRUE(storage.getTask(TaskID::create(0)).has_value());
+    EXPECT_TRUE(storage.getTask(TaskID::create(1)).has_value());
+}
+
+TEST_F(StorageForSharedPtrTest, shouldGetTaskSuccessfully) {
     storage.addTask(std::move(sft3));
     storage.addTask(std::move(sft4));
-    storage.addTask(std::move(sft5));
 
-    storage.deleteTask(TaskID::create(1));
-    storage.deleteTask(TaskID::create(3));
+    EXPECT_TRUE(storage.getTask(TaskID::create(2)).has_value());
+    EXPECT_TRUE(storage.getTask(TaskID::create(3)).has_value());
 
-    ASSERT_TRUE(Task::Compare(storage.getTask(TaskID::create(0)).lock()->getTask(), t1));
-    ASSERT_ANY_THROW(storage.getTask(TaskID::create(1)));
-    ASSERT_TRUE(Task::Compare(storage.getTask(TaskID::create(2)).lock()->getTask(), t3));
-    ASSERT_ANY_THROW(storage.getTask(TaskID::create(3)));
-    ASSERT_TRUE(Task::Compare(storage.getTask(TaskID::create(4)).lock()->getTask(), t5));*/
 }
+
+TEST_F(StorageForSharedPtrTest, shouldGetTaskUnsuccessfully) {
+    EXPECT_FALSE(storage.getTask(TaskID::create(2)).has_value());
+    storage.addTask(std::move(sft3));
+    storage.addTask(std::move(sft4));
+
+    EXPECT_FALSE(storage.getTask(TaskID::create(0)).has_value());
+    EXPECT_FALSE(storage.getTask(TaskID::create(1)).has_value());
+
+}
+
+TEST_F(StorageForSharedPtrTest, shouldNotFindParentTaskWhileDeleteSubtaskInParent) {
+
+    storage.addTask(std::move(sft1));
+    storage.addTask(std::move(sft2));
+
+    EXPECT_FALSE(storage.deleteSubtaskInParent(TaskID::create(47), TaskID::create(47)));
+}
+
+TEST_F(StorageForSharedPtrTest, shouldNotFindSubtaskWhileDeleteSubtaskInParent) {
+
+    storage.addTask(std::move(sft1));
+    storage.addTask(std::move(sft2));
+
+    EXPECT_FALSE(storage.deleteSubtaskInParent(TaskID::create(0), TaskID::create(47)));
+}
+
+TEST_F(StorageForSharedPtrTest, shouldDeleteSubtaskInParent) {
+    sft1->addSubtask(sft2);
+    storage.addTask(std::move(sft1));
+    storage.addTask(std::move(sft2));
+
+    EXPECT_TRUE(storage.deleteSubtaskInParent(TaskID::create(0), TaskID::create(1)));
+}
+
+TEST_F(StorageForSharedPtrTest, shouldDeleteTask) {
+
+    storage.addTask(std::move(sft1));
+    storage.addTask(std::move(sft2));
+
+    EXPECT_TRUE(storage.deleteTask(TaskID::create(1)));
+}
+
+TEST_F(StorageForSharedPtrTest, shouldNotDeleteTask) {
+
+    storage.addTask(std::move(sft1));
+    storage.addTask(std::move(sft2));
+
+    EXPECT_FALSE(storage.deleteTask(TaskID::create(4548)));
+}
+
