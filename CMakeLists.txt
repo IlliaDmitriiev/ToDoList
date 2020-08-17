@@ -74,7 +74,7 @@ add_executable(TestsExecutable
         src/model/TaskStorage.cpp
         src/model/FullTask.cpp
         src/logic/TaskConvertor.cpp
-        tests/api/TaskServiceTest.cpp)
+        tests/api/TaskServiceTest.cpp src/api/TaskServiceInterface.h)
 
 target_link_libraries(TestsExecutable GTest::GTest GTest::Main ${GMOCK_LIBRARY} ${GMOCK_MAIN_LIBRARY})
 
