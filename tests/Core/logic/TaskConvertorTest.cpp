@@ -3,8 +3,8 @@
 //
 
 #include <gtest/gtest.h>
-#include "logic/IDGenerator.h"
-#include "logic/TaskConvertor.h"
+#include "Core/logic/IDGenerator.h"
+#include "Core/logic/TaskConvertor.h"
 
 class TaskConvertorTest : public ::testing::Test {
 

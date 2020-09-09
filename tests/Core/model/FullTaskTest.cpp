@@ -3,7 +3,7 @@
 //
 
 #include <gtest/gtest.h>
-#include "model/FullTask.h"
+#include "Core/model/FullTask.h"
 
 class FullTaskTest : public ::testing::Test {
 

@@ -5,12 +5,12 @@
 #ifndef TODOLIST_TASKSERVICEINTERFACE_H
 #define TODOLIST_TASKSERVICEINTERFACE_H
 
-#include "logic/IDGenerator.h"
-#include "logic/ViewInterface.h"
-#include "logic/ViewByPriority.h"
-#include "logic/ViewByDate.h"
-#include "logic/TaskConvertor.h"
-#include "model/TaskStorage.h"
+#include "Core/logic/IDGenerator.h"
+#include "Core/logic/ViewInterface.h"
+#include "Core/logic/ViewByPriority.h"
+#include "Core/logic/ViewByDate.h"
+#include "Core/logic/TaskConvertor.h"
+#include "Core/model/TaskStorage.h"
 #include "ReturnType.h"
 
 /*

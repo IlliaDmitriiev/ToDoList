@@ -5,7 +5,7 @@
 #ifndef TODOLIST_VIEWINTERFACE_H
 #define TODOLIST_VIEWINTERFACE_H
 
-#include "model/FullTask.h"
+#include "Core/model/FullTask.h"
 #include <map>
 #include <vector>
 

@@ -5,8 +5,8 @@
 #ifndef TODOLIST_TASKDTO_H
 #define TODOLIST_TASKDTO_H
 
-#include <api/TaskID.h>
-#include "model/Task.h"
+#include <Core/api/TaskID.h>
+#include "Core/model/Task.h"
 
 /*
  * Data Transfer Object containing fields representing task.
