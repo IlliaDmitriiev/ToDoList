@@ -13,17 +13,19 @@
  *  @author: Ilya Dmitriev
  */
 
-namespace todo_list{
+namespace todo_list_Core{
     /*
      * Generates TaskService
      *
      * @return instance of  TaskService.
      */
-    std::unique_ptr<TaskService> createService() {
+    static std::unique_ptr<TaskService> createService() {
+
         auto generator = std::make_unique<IDGenerator>();
         auto viewByPriority = std::make_unique<ViewByPriority>();
         auto viewByDate = std::make_unique<ViewByDate>();
         auto storage = std::make_unique<TaskStorage>();
+
         return std::make_unique<TaskService>(
                     std::move(generator),
                     std::move(viewByPriority),

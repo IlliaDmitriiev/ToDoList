@@ -180,7 +180,7 @@ TEST_F(TaskServiceTest, shouldNotFindTaskWhileAddSubtask) {
 
     EXPECT_EQ(outcome.result, ResultType::FAILURE);
     EXPECT_FALSE(outcome.id.has_value());
-    EXPECT_EQ(outcome.error_message, "task not found");
+    EXPECT_EQ(outcome.error_message, "root task with the given id was not found");
 }
 
 TEST_F(TaskServiceTest, shouldNotAddSubtask) {
@@ -506,6 +506,89 @@ TEST_F(TaskServiceTest, shouldPostponeTask) {
     RequstTaskResult outcome  = ts.postponeTask(TaskID::create(454896), date);
 
     EXPECT_EQ(outcome.result, ResultType::SUCCESS);
+}
+
+TEST_F(TaskServiceTest, shouldNotEditTask) {
+    auto viewByPriority = std::make_unique<MockView>();
+    auto viewByDate = std::make_unique<MockView>();
+    auto storage = std::make_unique<MockStorage>();
+    auto generator = std::make_unique<MockGenerator>();
+
+    EXPECT_CALL(*storage, getTask)
+            .Times(1)
+            .WillOnce(Return (std::nullopt));
+
+    TaskService ts(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
+    auto new_task =  TaskConvertor::transferToTaskDTO(shared_task4);
+    RequstTaskResult outcome  = ts.editTask(TaskID::create(454896), new_task);
+
+    EXPECT_EQ(outcome.result, ResultType::FAILURE);
+}
+
+TEST_F(TaskServiceTest, shouldEditTask) {
+    auto viewByPriority = std::make_unique<MockView>();
+    auto viewByDate = std::make_unique<MockView>();
+    auto storage = std::make_unique<MockStorage>();
+    auto generator = std::make_unique<MockGenerator>();
+
+    std::weak_ptr<FullTask> weak2 = shared_task2;
+
+    EXPECT_CALL(*storage, getTask)
+            .Times(1)
+            .WillOnce(Return(weak2));
+
+    TaskService ts(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
+    auto new_task =  TaskConvertor::transferToTaskDTO(shared_task4);
+    RequstTaskResult outcome  = ts.editTask(TaskID::create(454896), new_task);
+
+    EXPECT_EQ(outcome.result, ResultType::SUCCESS);
+    EXPECT_TRUE(Task::Compare(shared_task2->getTask(), shared_task4->getTask()));
+}
+
+TEST_F(TaskServiceTest, shouldGetSubtasks) {
+    auto viewByPriority = std::make_unique<MockView>();
+    auto viewByDate = std::make_unique<MockView>();
+    auto storage = std::make_unique<MockStorage>();
+    auto generator = std::make_unique<MockGenerator>();
+
+
+    EXPECT_CALL(*storage, getTask)
+            .Times(7)
+            .WillOnce(Return(shared_task1))
+            .WillOnce(Return(shared_task2))
+            .WillOnce(Return(shared_task1))
+            .WillOnce(Return(shared_task3))
+            .WillOnce(Return(shared_task1))
+            .WillOnce(Return(shared_task2))
+            .WillOnce(Return(shared_task3));
+
+
+    EXPECT_CALL(*generator, generateId)
+            .Times(2)
+            .WillOnce(Return(TaskID::create(69)))
+            .WillOnce(Return(TaskID::create(10000)));
+    EXPECT_CALL(*viewByPriority, addTask)
+            .Times(2)
+            .WillRepeatedly(Return(true));
+    EXPECT_CALL(*viewByDate, addTask)
+            .Times(2)
+            .WillRepeatedly(Return(true));
+    EXPECT_CALL(*storage, addTask)
+            .Times(2)
+            .WillRepeatedly(Return(true));
+
+    TaskService ts(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
+    std::weak_ptr<FullTask> sub1 = shared_task2;
+    std::weak_ptr<FullTask> sub2 = shared_task3;
+
+    ts.addSubtask(TaskID::create(47), TaskConvertor::transferToTaskDTO(sub1));
+    ts.addSubtask(TaskID::create(47), TaskConvertor::transferToTaskDTO(sub2));
+
+    auto vec = ts.getSubtasks(TaskID::create(47));
+    EXPECT_EQ(vec.size(), 2);
+    EXPECT_EQ(vec[0].getName(), shared_task2->getTask().getName());
+    EXPECT_EQ(vec[1].getDate(), shared_task3->getTask().getDate());
+
 }
 
 TEST_F(TaskServiceTest, shouldGetTaskForToday) {

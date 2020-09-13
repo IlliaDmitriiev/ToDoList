@@ -15,7 +15,6 @@ public:
     bool deleteSubtaskInParent(TaskID ParentID, TaskID taskID)override;
     bool deleteTask(TaskID id) override;
 
-
 private:
     std::unordered_map<TaskID, std::shared_ptr<FullTask>,
             TaskID::Hasher, TaskID::Comparator > allTasks_;
