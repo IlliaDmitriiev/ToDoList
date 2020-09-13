@@ -155,3 +155,21 @@ TEST_F(FullTaskTest, shouldEraseSubTask) {
     auto vec = ft1.getSubtasks();
     EXPECT_EQ(vec.size(), 0);
 }
+
+TEST_F(FullTaskTest, shoudEditTask) {
+    IDGenerator gen;
+    Task t1 = Task::create(
+            boost::gregorian::date(2020, 7, 31),
+            "name1",
+            "",
+            TaskPriority::None);
+    Task t2 = Task::create(
+            boost::gregorian::date(2485, 3, 5),
+            "name2",
+            "label",
+            TaskPriority::Second);
+    FullTask ft1 = FullTask::create(gen.generateId(), t1);
+
+    ft1.change( t2);
+    EXPECT_TRUE(Task::Compare(ft1.getTask(), t2));
+}
