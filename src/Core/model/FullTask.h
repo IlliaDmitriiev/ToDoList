@@ -43,6 +43,12 @@ public:
      * @note: All subtasks will NOT be postponed recursively.
      */
     void postpone(boost::gregorian::date new_date);
+    /*
+     * Changing task to the given.
+     *
+     * @param: [Task] It needs to change task with a new one.
+     */
+    void change(Task);
 
 public:
     const Task &getTask() const;

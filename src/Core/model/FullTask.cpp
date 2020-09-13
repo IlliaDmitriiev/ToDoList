@@ -36,6 +36,10 @@ void FullTask::postpone(boost::gregorian::date new_date){
     task_ = Task::create(new_date, task_.getName(), task_.getLabel(), task_.getPriority());
 }
 
+void FullTask::change(Task task){
+    task_ = Task::create(task.getDate(), task.getName(), task.getLabel(), task.getPriority());
+}
+
 FullTask::FullTask(TaskID id, const Task &t) : id_(id), task_(t), parent_(id){}
 
 const TaskID &FullTask::getId() const {
