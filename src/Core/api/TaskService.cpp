@@ -37,7 +37,7 @@ AddTaskResult TaskService::addSubtask(TaskID taskID, const TaskDTO &subTask){
         }
     }
     else {
-        return operation_result::TaskAddedUnsuccessful("task not found");
+        return operation_result::TaskAddedUnsuccessful("root task with the given id was not found");
     }
 }
 
@@ -63,6 +63,35 @@ RequstTaskResult TaskService::postponeTask(TaskID id, boost::gregorian::date new
         return operation_result::TaskRequestedUnsuccessful("task not found");
     }
 
+}
+
+RequstTaskResult TaskService::editTask(TaskID id, const TaskDTO &subtask) {
+    auto task = storage_->getTask(id);
+    if(task.has_value()){
+        task.value().lock()->change(TaskConvertor::transferToTask(subtask));
+        return operation_result::TaskRequestedSuccessful();
+    }
+    else {
+        return operation_result::TaskRequestedUnsuccessful("task not found");
+    }
+
+}
+
+std::vector<TaskDTO> TaskService::getSubtasks(TaskID id) {
+    std::vector<TaskDTO> vec;
+    auto node = storage_->getTask(id);
+    if(node.has_value()){
+        auto subtasks_id = node.value().lock()->getSubtasks();
+        std::cout<<subtasks_id.size()<<" size\n";
+        for(auto &i: subtasks_id) {
+            auto subtask = storage_->getTask(i);
+            if (subtask.has_value()) {
+                vec.push_back(TaskConvertor::transferToTaskDTO(subtask.value()));
+            }
+        }
+    }
+
+    return vec;
 }
 
 std::vector<TaskDTO> TaskService::getAllTasksByPriority(){

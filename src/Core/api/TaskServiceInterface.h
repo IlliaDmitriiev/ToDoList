@@ -14,9 +14,9 @@
 #include "ReturnType.h"
 
 /*
- *  Enter point to the program.
+ *  Enter point to the Core.
  *
- *  All requests to the system starts here.
+ *  All requests to the system starts executing here.
  *
  *  @author: Ilya Dmitriev
  */
@@ -75,8 +75,30 @@ public:
      * @note: All subtasks will NOT be postponed recursively.
      */
     virtual RequstTaskResult postponeTask(TaskID id, boost::gregorian::date new_date) = 0;
+    /*
+     * Changing task to the given.
+     *
+     * @param: [TaskID] It needs to find task by this id.
+     * @param: [TaskDTO] It needs to change task with a new one.
+     *
+     * @return object containing info about possible error occurred
+     * or info that operation is successful.
+     *
+     * @note: All subtasks will NOT be edited recursively.
+     */
+    virtual RequstTaskResult editTask(TaskID id, const TaskDTO &subtask) = 0;
 
 public:
+    /*
+     * Gives all subtasks by given id.
+     *
+     * @param: [TaskID] It needs to find task by this id.
+     *
+     * @return vector of TaskDTO
+     *
+     * @note if there isn't any required task, function will return empty vector
+     */
+    virtual std::vector<TaskDTO> getSubtasks(TaskID id) = 0;
     /*
      * Gives all tasks already sorted by priority.
      *

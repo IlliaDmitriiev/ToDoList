@@ -34,7 +34,10 @@ public:
 
     RequstTaskResult postponeTask(TaskID id, boost::gregorian::date new_date) override;
 
+    RequstTaskResult editTask(TaskID id, const TaskDTO &subtask) override;
+
 public:
+    std::vector<TaskDTO> getSubtasks(TaskID id) override;
 
     std::vector<TaskDTO> getAllTasksByPriority() override;
 
