@@ -52,6 +52,14 @@ public:
      */
     virtual void print(IO&) = 0;
     /*
+     * Process needed request
+     *
+     * @param: [IO] outputs param.
+     * @param: [Context] gives access to service.
+     *
+     */
+    virtual void execute(IO&, Context&) = 0;
+    /*
      * Returns next command state
      *
      * @param: [CommandState::Type] to make a decision
