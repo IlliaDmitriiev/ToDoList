@@ -5,7 +5,7 @@
 #ifndef TODOLIST_STATEMACHINECREATOR_H
 #define TODOLIST_STATEMACHINECREATOR_H
 
-#include "StateMachine.h"
+#include "CLI/Controller/StateMachine.h"
 #include "CLI/Model/ConsoleContext.h"
 #include "Core/api/TaskServiceCreator.h"
 #include "CLI/States/Command/Option.h"

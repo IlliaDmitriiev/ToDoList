@@ -5,8 +5,8 @@
 #ifndef TODOLIST_VALIDATE_H
 #define TODOLIST_VALIDATE_H
 
-#include "CommandState.h"
-#include "ValidMapCreator.h"
+#include "CLI/States/Command/CommandState.h"
+#include "CLI/Namespaces/ValidMapCreator.h"
 
 /*
  * Namespace which creates type

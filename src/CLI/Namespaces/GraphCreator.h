@@ -74,6 +74,30 @@ namespace transitions_graph{
             return links;
         }
     }
+    namespace edit_task{
+        std::map<Parser::Type, Parser::Type> create(){
+
+            std::map<Parser::Type, Parser::Type> links{
+                    {Parser::Type::ID, Parser::Type::Name},
+                    {Parser::Type::Name, Parser::Type::Label},
+                    {Parser::Type::Label, Parser::Type::Date},
+                    {Parser::Type::Date, Parser::Type::Priority},
+                    {Parser::Type::Priority, Parser::Type::Exit},
+            };
+
+            return links;
+        }
+    }
+    namespace view_task{
+        std::map<Parser::Type, Parser::Type> create(){
+
+            std::map<Parser::Type, Parser::Type> links{
+                    {Parser::Type::ID, Parser::Type::Exit},
+            };
+
+            return links;
+        }
+    }
 }
 
 #endif //TODOLIST_GRAPHCREATOR_H
