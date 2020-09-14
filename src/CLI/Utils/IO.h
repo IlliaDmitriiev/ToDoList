@@ -18,7 +18,10 @@ class IO{
 
 public:
     virtual std::string input() = 0;
+
     virtual void output(std::string) = 0;
+
+    virtual ~IO() = default;
 
 };
 

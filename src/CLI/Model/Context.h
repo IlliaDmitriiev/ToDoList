@@ -31,6 +31,8 @@ public:
      */
     virtual std::vector<TaskDTO>& getTaskList() = 0;
 
+    virtual ~Context() = default;
+
 };
 
 #endif //TODOLIST_CONTEXT_H
