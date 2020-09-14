@@ -82,7 +82,6 @@ std::vector<TaskDTO> TaskService::getSubtasks(TaskID id) {
     auto node = storage_->getTask(id);
     if(node.has_value()){
         auto subtasks_id = node.value().lock()->getSubtasks();
-        std::cout<<subtasks_id.size()<<" size\n";
         for(auto &i: subtasks_id) {
             auto subtask = storage_->getTask(i);
             if (subtask.has_value()) {
