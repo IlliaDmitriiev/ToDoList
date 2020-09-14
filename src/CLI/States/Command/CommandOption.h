@@ -8,11 +8,12 @@
 #include "CommandState.h"
 #include <iostream>
 
-class Option: public CommandState {
+class CommandOption: public CommandState {
 
 public:
     CommandState::Type read(IO&) override;
     void print(IO&) override;
+    void execute(IO&, Context&) override;
     std::unique_ptr<CommandState> change(CommandState::Type) override;
 
 };
