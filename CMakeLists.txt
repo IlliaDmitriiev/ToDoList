@@ -23,7 +23,25 @@ file(GLOB CORE_TEST_SOURCES
         "tests/Core/model/*.cpp"
         )
 
-add_executable(ToDoList ${CORE_HEADERS} ${CORE_CPP_SOURCES}  src/main.cpp)
+file(GLOB CLI_CPP_SOURCES
+        "src/CLI/Controller/*.cpp"
+        "src/CLI/Model/*.cpp"
+        "src/CLI/States/Command/*.cpp"
+        "src/CLI/States/Parse/*.cpp"
+        "src/CLI/utils/*.cpp"
+        )
+
+file(GLOB CLI_HEADERS
+        "src/CLI/Controller/*.h"
+        "src/CLI/Model/*.h"
+        "src/CLI/States/Command/*.h"
+        "src/CLI/States/Parse/*.h"
+        "src/CLI/utils/*.h"
+        )
+
+file(GLOB CLI_TEST_SOURCES "tests/CLI/*.cpp")
+
+add_executable(ToDoList ${CORE_HEADERS} ${CORE_CPP_SOURCES} ${CLI_CPP_SOURCES} ${CLI_HEADERS}  src/main.cpp)
 
 set(Boost_USE_STATIC_LIBS        ON)  # only find static libs
 set(Boost_USE_DEBUG_LIBS         OFF) # ignore debug libs and
@@ -45,8 +63,11 @@ include_directories(${GMOCK_INCLUDE_DIR})
 enable_testing()
 
 
-add_executable(TestsExecutable ${CORE_TEST_SOURCES} ${CORE_CPP_SOURCES} )
+add_executable(TestsExecutableCore ${CORE_TEST_SOURCES} ${CORE_CPP_SOURCES} )
+add_executable(TestsExecutableCLI ${CLI_TEST_SOURCES} ${CLI_CPP_SOURCES}  ${CORE_CPP_SOURCES})
 
-target_link_libraries(TestsExecutable GTest::GTest GTest::Main ${GMOCK_LIBRARY} ${GMOCK_MAIN_LIBRARY})
+target_link_libraries(TestsExecutableCore GTest::GTest GTest::Main ${GMOCK_LIBRARY} ${GMOCK_MAIN_LIBRARY})
+target_link_libraries(TestsExecutableCLI GTest::GTest GTest::Main ${GMOCK_LIBRARY} ${GMOCK_MAIN_LIBRARY})
 
-gtest_discover_tests(TestsExecutable)
+gtest_discover_tests(TestsExecutableCore)
+gtest_discover_tests(TestsExecutableCLI)
