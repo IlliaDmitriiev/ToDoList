@@ -15,10 +15,10 @@
  *
  *  @author: Ilya Dmitriev
  */
+class ParameterStorage{
 
-struct Buffer{
-
-    struct Parametrs{
+public:
+    struct Parameters{
         std::string name_;
         std::string label_;
         boost::gregorian::date date_;
@@ -26,7 +26,18 @@ struct Buffer{
         TaskPriority priority_;
     };
 
-    Parametrs buf_;
+public:
+    static ParameterStorage create(){
+        return ParameterStorage();
+    }
+
+    Parameters &getParameters(){return parameters_;}
+
+private:
+    ParameterStorage() = default;
+
+private:
+    Parameters parameters_;
 };
 
 #endif //TESTCLI_BUFFER_H
