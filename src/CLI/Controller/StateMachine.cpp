@@ -29,7 +29,10 @@ void StateMachine::run(){
         state_->print( *io_);
         auto state_type = state_->read(*io_);
 
-        if (state_type!=CommandState::Type::Option){state_->execute(*io_, *context_);}
+        if (state_type != CommandState::Type::Skip && state_type != CommandState::Type::Error)
+        {
+            state_->execute(*io_, *context_);
+        }
         if (state_type == CommandState::Type::Error) {io_->output("Incorrect input!\n");continue;}
         if (state_type == CommandState::Type::Exit) {break;}
         state_ = state_->change(state_type);

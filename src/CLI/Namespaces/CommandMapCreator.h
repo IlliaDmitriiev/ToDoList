@@ -23,6 +23,7 @@ namespace CommandMap{
 
         std::map<CommandState::Type, std::unique_ptr<CommandState>> links;
         links[CommandState::Type::Option]               = std::make_unique<CommandOption>();
+        links[CommandState::Type::Skip]                 = std::make_unique<CommandOption>();
         links[CommandState::Type::Edit]                 = std::make_unique<EditTaskCommand>();
         links[CommandState::Type::View]                 = std::make_unique<ViewTaskCommand>();
         links[CommandState::Type::AddTask]              = std::make_unique<AddTaskCommand>();

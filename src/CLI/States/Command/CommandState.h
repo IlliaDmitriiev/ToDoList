@@ -31,6 +31,7 @@ public:
         View,
         Edit,
         Exit,
+        Skip,
         Error
     };
 

@@ -28,7 +28,7 @@ namespace ValidMap {
                 {"show all tasks for week", CommandState::Type::ShowAllTasksForWeek},
                 {"view", CommandState::Type::View},
                 {"edit", CommandState::Type::Edit},
-                {"back", CommandState::Type::Option},
+                {"back", CommandState::Type::Skip},
                 {"exit", CommandState::Type::Exit}
         };
 

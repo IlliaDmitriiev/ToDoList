@@ -48,7 +48,7 @@ void ViewTaskCommand::execute(IO& io, Context& context) {
 }
 
 std::unique_ptr<CommandState> ViewTaskCommand::change(CommandState::Type type) {
-    if (type == CommandState::Type::Option){return std::make_unique<CommandOption>();}
-    else if (type == CommandState::Type::View) {return std::make_unique<EditTaskCommand>();}
-    else {return std::make_unique<ViewTaskCommand>();}
+    if (type == CommandState::Type::View) {return std::make_unique<EditTaskCommand>();}
+    else if (type == CommandState::Type::Error){return std::make_unique<ViewTaskCommand>();}
+    else {return std::make_unique<CommandOption>();}
 }
