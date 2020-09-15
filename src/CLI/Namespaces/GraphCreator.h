@@ -17,7 +17,7 @@
 namespace transitions_graph{
 
     namespace add_task{
-        std::map<Parser::Type, Parser::Type> create(){
+        static std::map<Parser::Type, Parser::Type> create(){
 
             std::map<Parser::Type, Parser::Type> links{
                     {Parser::Type::Name, Parser::Type::Label},
@@ -30,7 +30,7 @@ namespace transitions_graph{
         }
     }
     namespace add_subtask{
-        std::map<Parser::Type, Parser::Type> create(){
+        static std::map<Parser::Type, Parser::Type> create(){
 
             std::map<Parser::Type, Parser::Type> links{
                     {Parser::Type::ID, Parser::Type::Name},
@@ -44,7 +44,7 @@ namespace transitions_graph{
         }
     }
     namespace delete_task{
-        std::map<Parser::Type, Parser::Type> create(){
+        static std::map<Parser::Type, Parser::Type> create(){
 
             std::map<Parser::Type, Parser::Type> links{
                     {Parser::Type::ID, Parser::Type::Exit},
@@ -54,7 +54,7 @@ namespace transitions_graph{
         }
     }
     namespace complete_task{
-        std::map<Parser::Type, Parser::Type> create(){
+        static std::map<Parser::Type, Parser::Type> create(){
 
             std::map<Parser::Type, Parser::Type> links{
                     {Parser::Type::ID, Parser::Type::Exit},
@@ -64,7 +64,7 @@ namespace transitions_graph{
         }
     }
     namespace postpone_task{
-        std::map<Parser::Type, Parser::Type> create(){
+        static std::map<Parser::Type, Parser::Type> create(){
 
             std::map<Parser::Type, Parser::Type> links{
                     {Parser::Type::ID, Parser::Type::Date},
@@ -75,7 +75,7 @@ namespace transitions_graph{
         }
     }
     namespace edit_task{
-        std::map<Parser::Type, Parser::Type> create(){
+        static std::map<Parser::Type, Parser::Type> create(){
 
             std::map<Parser::Type, Parser::Type> links{
                     {Parser::Type::ID, Parser::Type::Name},
@@ -89,7 +89,7 @@ namespace transitions_graph{
         }
     }
     namespace view_task{
-        std::map<Parser::Type, Parser::Type> create(){
+        static std::map<Parser::Type, Parser::Type> create(){
 
             std::map<Parser::Type, Parser::Type> links{
                     {Parser::Type::ID, Parser::Type::Exit},

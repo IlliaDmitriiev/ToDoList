@@ -8,7 +8,7 @@
 #include "CLI/Controller/StateMachine.h"
 #include "CLI/Model/ConsoleContext.h"
 #include "Core/api/TaskServiceCreator.h"
-#include "CLI/States/Command/Option.h"
+#include "CLI/States/Command/CommandOption.h"
 
 namespace todo_list_CLI{
     /*
@@ -19,7 +19,7 @@ namespace todo_list_CLI{
     static StateMachine createStateMachine() {
 
         auto ts = todo_list_Core::createService();
-        auto state = std::make_unique<Option>();
+        auto state = std::make_unique<CommandOption>();
         auto io = std::make_unique<ConsoleIO>();
         auto context = std::make_unique<ConsoleContext>(ConsoleContext::create(std::move(ts)));
 

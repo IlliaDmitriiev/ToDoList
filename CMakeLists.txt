@@ -36,6 +36,7 @@ file(GLOB CLI_HEADERS
         "src/CLI/Model/*.h"
         "src/CLI/States/Command/*.h"
         "src/CLI/States/Parse/*.h"
+        "src/CLI/Namespaces/*.h"
         "src/CLI/utils/*.h"
         )
 

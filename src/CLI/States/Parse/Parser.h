@@ -5,7 +5,7 @@
 #ifndef TESTCLI_PARSER_H
 #define TESTCLI_PARSER_H
 
-#include "CLI/Model/Buffer.h"
+#include "CLI/Model/ParameterStorage.h"
 #include "CLI/Utils/ConsoleIO.h"
 
 
@@ -32,19 +32,19 @@ public:
      * Parses input parameters.
      *
      * @param: [IO] inputs param
-     * @param: [Buffer] saves param
+     * @param: [ParameterStorage] saves param
      * @param: [Parser::Type] detects needed function
      *
      * @return true if parse is successful otherwise false.
      */
-    static bool parse        (IO&, Buffer&, Parser::Type);
+    static bool parse        (IO&, ParameterStorage&, Parser::Type);
 
 private:
-    static bool parseName    (IO&, Buffer&);
-    static bool parseLabel   (IO&, Buffer&);
-    static bool parseDate    (IO&, Buffer&);
-    static bool parseID      (IO&, Buffer&);
-    static bool parsePriority(IO&, Buffer&);
+    static bool parseName    (IO&, ParameterStorage&);
+    static bool parseLabel   (IO&, ParameterStorage&);
+    static bool parseDate    (IO&, ParameterStorage&);
+    static bool parseID      (IO&, ParameterStorage&);
+    static bool parsePriority(IO&, ParameterStorage&);
 
 
 };

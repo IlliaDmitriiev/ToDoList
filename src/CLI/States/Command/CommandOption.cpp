@@ -5,6 +5,7 @@
 #include "CommandOption.h"
 #include "ViewTaskCommand.h"
 #include "CLI/Namespaces/Validate.h"
+#include "CLI/Namespaces/CommandMapCreator.h"
 
 CommandState::Type CommandOption::read(IO& io) {
     return validate::make(io.input());
@@ -21,9 +22,11 @@ void CommandOption::execute(IO&, Context&) {
 }
 
 std::unique_ptr<CommandState> CommandOption::change(CommandState::Type type){
+    auto command_map = CommandMap::create();
+
     if (type == CommandState::Type::ShowAllTasks
      || type == CommandState::Type::ShowAllTasksForToday
      || type == CommandState::Type::ShowAllTasksForWeek) {return std::make_unique<ViewTaskCommand>();}
-    else {return std::make_unique<CommandOption>();}
+    else { return std::move(command_map[type]);}
 }
 

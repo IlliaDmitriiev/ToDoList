@@ -1,8 +1,7 @@
-#include <iostream>
-#include "CLI/Controller/StateMachineCreator.h"
+#include "CLI/Namespaces/StateMachineCreator.h"
 
 int main() {
     auto sm = todo_list_CLI::createStateMachine();
-    sm.start();
+    sm.run();
     return 0;
 }
