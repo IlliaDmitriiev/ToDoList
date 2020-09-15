@@ -20,7 +20,7 @@ class ParseMachine {
 public:
     explicit ParseMachine(
             IO&,
-            Buffer&,
+            ParameterStorage&,
             Parser::Type start_state,
             std::map<Parser::Type, Parser::Type>&);
     /*
@@ -35,7 +35,7 @@ public:
 
 private:
     IO& io_;
-    Buffer& buffer_;
+    ParameterStorage& buffer_;
     Parser::Type state_;
     std::map<Parser::Type, Parser::Type>& links_;
 };

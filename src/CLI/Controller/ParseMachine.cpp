@@ -6,7 +6,7 @@
 
 ParseMachine::ParseMachine(
         IO& io,
-        Buffer& buffer,
+        ParameterStorage& buffer,
         Parser::Type start_state,
         std::map<Parser::Type, Parser::Type>& links
 )

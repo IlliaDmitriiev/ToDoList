@@ -23,7 +23,7 @@ public:
      * Launch processes of user command
      *
      */
-    void start();
+    void run();
 
     StateMachine(const StateMachine&) = delete;
     StateMachine operator=(const StateMachine&) = delete;

@@ -3,32 +3,33 @@
 //
 
 #include "StateMachine.h"
-#include "CLI/Model/ConsoleContext.h"
-#include "CLI/States/Command/Option.h"
-#include "CLI/States/Command/Commands.h"
+#include "CLI/States/Command/CommandOption.h"
 
 
-StateMachine StateMachine::create(
-        std::unique_ptr<IO> io,
-        std::unique_ptr<Context> context,
-        std::unique_ptr<CommandState> state)
-        {return StateMachine(std::move(io), std::move(context), std::move(state));}
+StateMachine StateMachine::create(std::unique_ptr<IO> io,
+                                  std::unique_ptr<Context> context,
+                                  std::unique_ptr<CommandState> state)
+{
+    return StateMachine(std::move(io), std::move(context), std::move(state));
+}
 
-StateMachine::StateMachine(
-        std::unique_ptr<IO> io,
-        std::unique_ptr<Context> context,
-        std::unique_ptr<CommandState> state)
-        :state_(std::move(state)),
-        io_(std::move(io)),
-        context_(std::move(context)){}
+StateMachine::StateMachine(std::unique_ptr<IO> io,
+                           std::unique_ptr<Context> context,
+                           std::unique_ptr<CommandState> state)
+                           :state_(std::move(state)),
+                           io_(std::move(io)),
+                           context_(std::move(context))
+{
 
-void StateMachine::start(){
+}
+
+void StateMachine::run(){
 
     while (true){
         state_->print( *io_);
         auto state_type = state_->read(*io_);
 
-        if (state_type!=CommandState::Type::Option){Commands::execute(state_type, *context_);}
+        if (state_type!=CommandState::Type::Option){state_->execute(*io_, *context_);}
         if (state_type == CommandState::Type::Error) {io_->output("Incorrect input!\n");continue;}
         if (state_type == CommandState::Type::Exit) {break;}
         state_ = state_->change(state_type);
