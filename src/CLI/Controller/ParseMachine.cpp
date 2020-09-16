@@ -3,30 +3,34 @@
 //
 
 #include "ParseMachine.h"
+#include "CLI/Namespaces/ParseMapCreator.h"
 
 ParseMachine::ParseMachine(
         IO& io,
         ParameterStorage& buffer,
-        Parser::Type start_state,
-        std::map<Parser::Type, Parser::Type>& links
+        ParseState::Type start_state,
+        std::map<ParseState::Type, ParseState::Type>& next_state
 )
         :io_(io),
-         links_(links),
-         buffer_(buffer),
-         state_(start_state){}
+         next_state_(next_state),
+         buffer_(buffer)
+{
+    auto states = ParseMap::create();
+    state_ = std::move(states[start_state]);
+}
 
 void ParseMachine::run(){
     while(true){
-        if (!Parser::parse(io_, buffer_, state_)) {
+        state_->print(io_);
+        if(!state_->read(io_, buffer_)){
             io_.output("Incorrect input!\n");
             continue;
         }
 
-        auto next_state = links_[state_];
-        if (next_state == Parser::Type::Exit || links_.find(next_state) == links_.end()) {
-            break;
-        }
+        auto current_state = state_->changeState();
+        if (next_state_[current_state] == ParseState::Type::Exit){break;}
 
-        state_ = next_state;
+        auto states = ParseMap::create();
+        state_ = std::move(states[next_state_[current_state]]);
     }
 }

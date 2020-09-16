@@ -5,7 +5,7 @@
 #ifndef TESTCLI_PARSEMACHINE_H
 #define TESTCLI_PARSEMACHINE_H
 
-#include "CLI/States/Parse/Parser.h"
+#include "CLI/States/Parse/ParseState.h"
 #include <map>
 
 
@@ -21,8 +21,8 @@ public:
     explicit ParseMachine(
             IO&,
             ParameterStorage&,
-            Parser::Type start_state,
-            std::map<Parser::Type, Parser::Type>&);
+            ParseState::Type start_state,
+            std::map<ParseState::Type, ParseState::Type>&);
     /*
      * Launch parse of user input
      * by given transitions map
@@ -36,8 +36,8 @@ public:
 private:
     IO& io_;
     ParameterStorage& buffer_;
-    Parser::Type state_;
-    std::map<Parser::Type, Parser::Type>& links_;
+    std::unique_ptr<ParseState> state_;
+    std::map<ParseState::Type, ParseState::Type>& next_state_;
 };
 
 
