@@ -17,82 +17,82 @@
 namespace transitions_graph{
 
     namespace add_task{
-        static std::map<Parser::Type, Parser::Type> create(){
+        static std::map<ParseState::Type, ParseState::Type> create(){
 
-            std::map<Parser::Type, Parser::Type> links{
-                    {Parser::Type::Name, Parser::Type::Label},
-                    {Parser::Type::Label, Parser::Type::Date},
-                    {Parser::Type::Date, Parser::Type::Priority},
-                    {Parser::Type::Priority, Parser::Type::Exit},
+            std::map<ParseState::Type, ParseState::Type> links{
+                    {ParseState::Type::Name, ParseState::Type::Label},
+                    {ParseState::Type::Label, ParseState::Type::Date},
+                    {ParseState::Type::Date, ParseState::Type::Priority},
+                    {ParseState::Type::Priority, ParseState::Type::Exit},
             };
 
             return links;
         }
     }
     namespace add_subtask{
-        static std::map<Parser::Type, Parser::Type> create(){
+        static std::map<ParseState::Type, ParseState::Type> create(){
 
-            std::map<Parser::Type, Parser::Type> links{
-                    {Parser::Type::ID, Parser::Type::Name},
-                    {Parser::Type::Name, Parser::Type::Label},
-                    {Parser::Type::Label, Parser::Type::Date},
-                    {Parser::Type::Date, Parser::Type::Priority},
-                    {Parser::Type::Priority, Parser::Type::Exit},
+            std::map<ParseState::Type, ParseState::Type> links{
+                    {ParseState::Type::ID, ParseState::Type::Name},
+                    {ParseState::Type::Name, ParseState::Type::Label},
+                    {ParseState::Type::Label, ParseState::Type::Date},
+                    {ParseState::Type::Date, ParseState::Type::Priority},
+                    {ParseState::Type::Priority, ParseState::Type::Exit},
             };
 
             return links;
         }
     }
     namespace delete_task{
-        static std::map<Parser::Type, Parser::Type> create(){
+        static std::map<ParseState::Type, ParseState::Type> create(){
 
-            std::map<Parser::Type, Parser::Type> links{
-                    {Parser::Type::ID, Parser::Type::Exit},
+            std::map<ParseState::Type, ParseState::Type> links{
+                    {ParseState::Type::ID, ParseState::Type::Exit},
             };
 
             return links;
         }
     }
     namespace complete_task{
-        static std::map<Parser::Type, Parser::Type> create(){
+        static std::map<ParseState::Type, ParseState::Type> create(){
 
-            std::map<Parser::Type, Parser::Type> links{
-                    {Parser::Type::ID, Parser::Type::Exit},
+            std::map<ParseState::Type, ParseState::Type> links{
+                    {ParseState::Type::ID, ParseState::Type::Exit},
             };
 
             return links;
         }
     }
     namespace postpone_task{
-        static std::map<Parser::Type, Parser::Type> create(){
+        static std::map<ParseState::Type, ParseState::Type> create(){
 
-            std::map<Parser::Type, Parser::Type> links{
-                    {Parser::Type::ID, Parser::Type::Date},
-                    {Parser::Type::Date, Parser::Type::Exit},
+            std::map<ParseState::Type, ParseState::Type> links{
+                    {ParseState::Type::ID, ParseState::Type::Date},
+                    {ParseState::Type::Date, ParseState::Type::Exit},
             };
 
             return links;
         }
     }
     namespace edit_task{
-        static std::map<Parser::Type, Parser::Type> create(){
+        static std::map<ParseState::Type, ParseState::Type> create(){
 
-            std::map<Parser::Type, Parser::Type> links{
-                    {Parser::Type::ID, Parser::Type::Name},
-                    {Parser::Type::Name, Parser::Type::Label},
-                    {Parser::Type::Label, Parser::Type::Date},
-                    {Parser::Type::Date, Parser::Type::Priority},
-                    {Parser::Type::Priority, Parser::Type::Exit},
+            std::map<ParseState::Type, ParseState::Type> links{
+                    {ParseState::Type::ID, ParseState::Type::Name},
+                    {ParseState::Type::Name, ParseState::Type::Label},
+                    {ParseState::Type::Label, ParseState::Type::Date},
+                    {ParseState::Type::Date, ParseState::Type::Priority},
+                    {ParseState::Type::Priority, ParseState::Type::Exit},
             };
 
             return links;
         }
     }
     namespace view_task{
-        static std::map<Parser::Type, Parser::Type> create(){
+        static std::map<ParseState::Type, ParseState::Type> create(){
 
-            std::map<Parser::Type, Parser::Type> links{
-                    {Parser::Type::ID, Parser::Type::Exit},
+            std::map<ParseState::Type, ParseState::Type> links{
+                    {ParseState::Type::ID, ParseState::Type::Exit},
             };
 
             return links;

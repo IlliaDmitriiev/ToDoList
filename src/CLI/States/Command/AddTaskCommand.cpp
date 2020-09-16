@@ -18,7 +18,7 @@ void AddTaskCommand::execute(IO& io, Context& context) {
     auto links = transitions_graph::add_task::create();
     auto buffer = ParameterStorage::create();
 
-    ParseMachine pm(io, buffer, Parser::Type::Name, links);
+    ParseMachine pm(io, buffer, ParseState::Type::Name, links);
     pm.run();
 
     auto params = buffer.getParameters();

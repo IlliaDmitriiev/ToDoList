@@ -18,7 +18,7 @@ void AddSubtaskCommand::execute(IO& io, Context& context) {
     auto links = transitions_graph::add_subtask::create();
     auto buffer = ParameterStorage::create();
 
-    ParseMachine pm(io, buffer, Parser::Type::ID, links);
+    ParseMachine pm(io, buffer, ParseState::Type::ID, links);
     pm.run();
 
     auto &service = context.getService();
