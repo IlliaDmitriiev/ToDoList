@@ -7,6 +7,7 @@
 
 #include "CLI/States/Command/CommandState.h"
 #include "CLI/States/Command/CommandOption.h"
+#include "CLI/States/Command/SubmenuCommand.h"
 #include "CLI/States/Command/ViewTaskCommand.h"
 #include "CLI/States/Command/EditTaskCommand.h"
 #include "CLI/States/Command/AddTaskCommand.h"
@@ -23,6 +24,7 @@ namespace CommandMap{
 
         std::map<CommandState::Type, std::unique_ptr<CommandState>> links;
         links[CommandState::Type::Option]               = std::make_unique<CommandOption>();
+        links[CommandState::Type::Submenu]              = std::make_unique<SubmenuCommand>();
         links[CommandState::Type::Skip]                 = std::make_unique<CommandOption>();
         links[CommandState::Type::Edit]                 = std::make_unique<EditTaskCommand>();
         links[CommandState::Type::View]                 = std::make_unique<ViewTaskCommand>();

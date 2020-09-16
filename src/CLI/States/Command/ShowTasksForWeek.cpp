@@ -8,7 +8,7 @@
 #include "CLI/Namespaces/CommandMapCreator.h"
 
 CommandState::Type ShowTasksForWeek::read(IO&) {
-    return CommandState::Type::View;
+    return CommandState::Type::Submenu;
 }
 
 void ShowTasksForWeek::print(IO&) {

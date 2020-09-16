@@ -28,6 +28,7 @@ public:
         ShowAllTasksForToday,
         ShowAllTasksForWeek,
         Option,
+        Submenu,
         View,
         Edit,
         Exit,

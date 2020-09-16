@@ -15,7 +15,7 @@ void CompleteTaskCommand::print(IO&) {
 }
 
 void CompleteTaskCommand::execute(IO& io, Context& context) {
-    auto links = transitions_graph::postpone_task::create();
+    auto links = transitions_graph::complete_task::create();
     auto buffer = ParameterStorage::create();
 
     ParseMachine pm(io, buffer, ParseState::Type::ID, links);

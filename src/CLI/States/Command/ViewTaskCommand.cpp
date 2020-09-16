@@ -3,17 +3,14 @@
 //
 
 #include "ViewTaskCommand.h"
-#include "CLI/Namespaces/Validate.h"
-#include "EditTaskCommand.h"
 #include "CommandOption.h"
 #include "CLI/Namespaces/GraphCreator.h"
 
 CommandState::Type ViewTaskCommand::read(IO& io) {
-    return validate::make(io.input());
+    return CommandState::Type::View;
 }
 
 void ViewTaskCommand::print(IO& io){
-    io.output("Available commands:\nview\nback\nExample of input: back\n");
 }
 
 void ViewTaskCommand::execute(IO& io, Context& context) {
@@ -48,7 +45,5 @@ void ViewTaskCommand::execute(IO& io, Context& context) {
 }
 
 std::unique_ptr<CommandState> ViewTaskCommand::change(CommandState::Type type) {
-    if (type == CommandState::Type::View) {return std::make_unique<EditTaskCommand>();}
-    else if (type == CommandState::Type::Error){return std::make_unique<ViewTaskCommand>();}
-    else {return std::make_unique<CommandOption>();}
+    return std::make_unique<CommandOption>();
 }

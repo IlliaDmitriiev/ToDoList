@@ -16,7 +16,8 @@ StateMachine StateMachine::create(std::unique_ptr<IO> io,
 StateMachine::StateMachine(std::unique_ptr<IO> io,
                            std::unique_ptr<Context> context,
                            std::unique_ptr<CommandState> state)
-                           :state_(std::move(state)),
+                           :
+                           state_(std::move(state)),
                            io_(std::move(io)),
                            context_(std::move(context))
 {

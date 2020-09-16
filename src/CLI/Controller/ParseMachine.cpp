@@ -5,15 +5,14 @@
 #include "ParseMachine.h"
 #include "CLI/Namespaces/ParseMapCreator.h"
 
-ParseMachine::ParseMachine(
-        IO& io,
-        ParameterStorage& buffer,
-        ParseState::Type start_state,
-        std::map<ParseState::Type, ParseState::Type>& next_state
-)
-        :io_(io),
-         next_state_(next_state),
-         buffer_(buffer)
+ParseMachine::ParseMachine(IO& io,
+                           ParameterStorage& buffer,
+                           ParseState::Type start_state,
+                           std::map<ParseState::Type, ParseState::Type>& next_state)
+                           :
+                           io_(io),
+                           next_state_(next_state),
+                           buffer_(buffer)
 {
     auto states = ParseMap::create();
     state_ = std::move(states[start_state]);

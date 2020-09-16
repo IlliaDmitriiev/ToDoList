@@ -8,11 +8,11 @@
 #include "CLI/Namespaces/GraphCreator.h"
 
 CommandState::Type EditTaskCommand::read(IO& io){
-    return validate::make(io.input());
+    return CommandState::Type::Edit;
 }
 
 void EditTaskCommand::print(IO& io){
-    io.output("Available commands:\nedit\nback\nExample of input: edit\n");
+
 }
 
 void EditTaskCommand::execute(IO& io, Context& context) {
@@ -41,6 +41,6 @@ void EditTaskCommand::execute(IO& io, Context& context) {
 
 }
 
-std::unique_ptr<CommandState> EditTaskCommand::change(CommandState::Type){
+std::unique_ptr<CommandState> EditTaskCommand::change(CommandState::Type type){
     return std::make_unique<CommandOption>();
 }
