@@ -15,10 +15,12 @@ ParseMachine::ParseMachine(IO& io,
                            buffer_(buffer)
 {
     auto states = ParseMap::create();
-    state_ = std::move(states[start_state]);
+    if (states.find(start_state) == states.end() ){state_ = nullptr;}
+    else {state_ = std::move(states[start_state]);}
 }
 
 void ParseMachine::run(){
+    if (!state_ || next_state_.empty()){return;}
     while(true){
         state_->print(io_);
         if(!state_->read(io_, buffer_)){
@@ -27,6 +29,7 @@ void ParseMachine::run(){
         }
 
         auto current_state = state_->changeState();
+        if (next_state_.find(current_state) == next_state_.end()){break;}
         if (next_state_[current_state] == ParseState::Type::Exit){break;}
 
         auto states = ParseMap::create();

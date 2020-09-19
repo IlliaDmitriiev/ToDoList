@@ -9,8 +9,7 @@
 using ::testing::Return;
 
 class ParseMachineTest : public ::testing::Test {
-public:
-    Buffer buffer;
+    
 };
 
 
@@ -21,7 +20,7 @@ public:
 };
 
 TEST_F(ParseMachineTest, shouldParseGraph1) {
-
+    auto buffer = ParameterStorage::create();
     auto io = std::make_unique<MockConsoleIO>();
 
     EXPECT_CALL(*io, output)
@@ -33,18 +32,18 @@ TEST_F(ParseMachineTest, shouldParseGraph1) {
             .WillOnce(Return("124587"))
             .WillOnce(Return("2000-10-10"));
 
-    std::map<Parser::Type, Parser::Type> links{
-            {Parser::Type::ID, Parser::Type::Date},
-            {Parser::Type::Date, Parser::Type::Exit},
+    std::map<ParseState::Type, ParseState::Type> links{
+            {ParseState::Type::ID, ParseState::Type::Date},
+            {ParseState::Type::Date, ParseState::Type::Exit},
     };
 
-    ParseMachine pm(*io, buffer, Parser::Type::ID, links);
+    ParseMachine pm(*io, buffer, ParseState::Type::ID, links);
     pm.run();
 
 }
 
 TEST_F(ParseMachineTest, shouldParseGraph2) {
-
+    auto buffer = ParameterStorage::create();
     auto io = std::make_unique<MockConsoleIO>();
 
     EXPECT_CALL(*io, output)
@@ -57,22 +56,22 @@ TEST_F(ParseMachineTest, shouldParseGraph2) {
             .WillOnce(Return("1"))
             .WillOnce(Return("simple name"));
 
-    std::map<Parser::Type, Parser::Type> links{
-            {Parser::Type::Priority, Parser::Type::Name},
-            {Parser::Type::Name, Parser::Type::Exit},
+    std::map<ParseState::Type, ParseState::Type> links{
+            {ParseState::Type::Priority, ParseState::Type::Name},
+            {ParseState::Type::Name, ParseState::Type::Exit},
     };
 
-    ParseMachine pm(*io, buffer, Parser::Type::ID, links);
+    ParseMachine pm(*io, buffer, ParseState::Type::Priority, links);
     pm.run();
 
 }
 
 TEST_F(ParseMachineTest, shouldParseEmptyGraph) {
-
+    auto buffer = ParameterStorage::create();
     auto io = std::make_unique<MockConsoleIO>();
-    std::map<Parser::Type, Parser::Type> links;
+    std::map<ParseState::Type, ParseState::Type> links;
 
-    ParseMachine pm(*io, buffer, Parser::Type::Label, links);
+    ParseMachine pm(*io, buffer, ParseState::Type::Label, links);
     pm.run();
 
 }
