@@ -40,7 +40,7 @@ file(GLOB CLI_HEADERS
         "src/CLI/utils/*.h"
         )
 
-file(GLOB CLI_TEST_SOURCES "tests/CLI/*.cpp")
+file(GLOB CLI_TEST_SOURCES "tests/CLI/*.cpp" "tests/CLI/CommandStates/*.cpp")
 
 add_executable(ToDoList ${CORE_HEADERS} ${CORE_CPP_SOURCES} ${CLI_CPP_SOURCES} ${CLI_HEADERS}  src/main.cpp)
 

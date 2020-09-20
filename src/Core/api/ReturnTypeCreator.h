@@ -5,6 +5,7 @@
 #ifndef TODOLIST_RETURNTYPECREATOR_H
 #define TODOLIST_RETURNTYPECREATOR_H
 
+#include "ReturnType.h"
 /*
  * Namespace which generates an object containing info
  * about the result of executing service request.
@@ -20,7 +21,7 @@ namespace operation_result{
     *
     * @return AddTaskResult instance with positive success status and given TaskID.
     */
-   AddTaskResult TaskAddedSuccessful(const TaskID &id) {
+   static AddTaskResult TaskAddedSuccessful(const TaskID &id) {
         AddTaskResult outcome;
         outcome.result = ResultType::SUCCESS;
         outcome.id = id;
@@ -32,7 +33,7 @@ namespace operation_result{
     *
     * @return AddTaskResult instance with negative status and given error message.
     */
-   AddTaskResult TaskAddedUnsuccessful(const std::string &error_message) {
+   static AddTaskResult TaskAddedUnsuccessful(const std::string &error_message) {
         AddTaskResult outcome;
         outcome.result = ResultType::FAILURE;
         outcome.id = std::nullopt;
@@ -44,7 +45,7 @@ namespace operation_result{
     *
     * @return RequstTaskResult instance with positive success status and null error message.
     */
-   RequstTaskResult TaskRequestedSuccessful() {
+   static RequstTaskResult TaskRequestedSuccessful() {
         RequstTaskResult outcome;
         outcome.result = ResultType::SUCCESS;
         outcome.error_message = "";
@@ -55,7 +56,7 @@ namespace operation_result{
     *
     * @return RequestTaskResult instance with negative status and given error message.
     */
-   RequstTaskResult TaskRequestedUnsuccessful(const std::string &error_message) {
+   static RequstTaskResult TaskRequestedUnsuccessful(const std::string &error_message) {
         RequstTaskResult outcome;
         outcome.result = ResultType::FAILURE;;
         outcome.error_message = error_message;
