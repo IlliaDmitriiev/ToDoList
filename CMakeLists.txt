@@ -3,38 +3,46 @@ project(ToDoList)
 
 set(CMAKE_CXX_STANDARD 17)
 
-
 include_directories(src)
 
-add_executable(ToDoList
-        src/main.cpp
-        src/model/Task.h
-        src/model/FullTask.cpp
-        src/model/FullTask.h
-        src/api/TaskID.cpp
-        src/api/TaskID.h
-        src/logic/IDGenerator.cpp
-        src/logic/IDGenerator.h
-        src/api/TaskService.cpp
-        src/api/TaskService.h
-        src/api/TaskDTO.cpp
-        src/api/TaskDTO.h
-        src/api/ReturnType.h
-        src/logic/ViewByDate.cpp
-        src/logic/ViewByDate.h
-        src/logic/ViewByPriority.cpp
-        src/logic/ViewByPriority.h
-        src/logic/ViewInterface.h
-        src/logic/TaskConvertor.cpp
-        src/logic/TaskConvertor.h
-        src/model/TaskStorage.cpp
-        src/model/TaskStorage.h
-        src/api/TaskServiceCreator.h
-        src/api/TaskPriority.h
-        src/api/ReturnTypeCreator.h
-        src/logic/IDGeneratorInterface.h
+file(GLOB CORE_CPP_SOURCES
+        "src/Core/api/*.cpp"
+        "src/Core/logic/*.cpp"
+        "src/Core/model/*.cpp"
         )
 
+file(GLOB CORE_HEADERS
+        "src/Core/api/*.h"
+        "src/Core/logic/*.h"
+        "src/Core/model/*.h"
+        )
+
+file(GLOB CORE_TEST_SOURCES
+        "tests/Core/api/*.cpp"
+        "tests/Core/logic/*.cpp"
+        "tests/Core/model/*.cpp"
+        )
+
+file(GLOB CLI_CPP_SOURCES
+        "src/CLI/Controller/*.cpp"
+        "src/CLI/Model/*.cpp"
+        "src/CLI/States/Command/*.cpp"
+        "src/CLI/States/Parse/*.cpp"
+        "src/CLI/utils/*.cpp"
+        )
+
+file(GLOB CLI_HEADERS
+        "src/CLI/Controller/*.h"
+        "src/CLI/Model/*.h"
+        "src/CLI/States/Command/*.h"
+        "src/CLI/States/Parse/*.h"
+        "src/CLI/Namespaces/*.h"
+        "src/CLI/utils/*.h"
+        )
+
+file(GLOB CLI_TEST_SOURCES "tests/CLI/*.cpp" "tests/CLI/CommandStates/*.cpp")
+
+add_executable(ToDoList ${CORE_HEADERS} ${CORE_CPP_SOURCES} ${CLI_CPP_SOURCES} ${CLI_HEADERS}  src/main.cpp)
 
 set(Boost_USE_STATIC_LIBS        ON)  # only find static libs
 set(Boost_USE_DEBUG_LIBS         OFF) # ignore debug libs and
@@ -55,27 +63,12 @@ find_package(GTest REQUIRED)
 include_directories(${GMOCK_INCLUDE_DIR})
 enable_testing()
 
-add_executable(TestsExecutable
-        tests/model/TaskTest.cpp
-        src/api/TaskService.cpp
-        tests/api/TaskIDTest.cpp
-        src/api/TaskID.cpp
-        tests/logic/IDGeneratorTest.cpp
-        tests/api/TaskDTOTest.cpp
-        tests/logic/ViewByDateTest.cpp
-        tests/logic/ViewByPriorityTest.cpp
-        tests/logic/TaskConvertorTest.cpp
-        tests/model/TaskStorageTest.cpp
-        tests/model/FullTaskTest.cpp
-        src/logic/IDGenerator.cpp
-        src/api/TaskDTO.cpp
-        src/logic/ViewByDate.cpp
-        src/logic/ViewByPriority.cpp
-        src/model/TaskStorage.cpp
-        src/model/FullTask.cpp
-        src/logic/TaskConvertor.cpp
-        tests/api/TaskServiceTest.cpp src/api/TaskServiceInterface.h)
 
-target_link_libraries(TestsExecutable GTest::GTest GTest::Main ${GMOCK_LIBRARY} ${GMOCK_MAIN_LIBRARY})
+add_executable(TestsExecutableCore ${CORE_TEST_SOURCES} ${CORE_CPP_SOURCES} )
+add_executable(TestsExecutableCLI ${CLI_TEST_SOURCES} ${CLI_CPP_SOURCES}  ${CORE_CPP_SOURCES})
 
-gtest_discover_tests(TestsExecutable)
+target_link_libraries(TestsExecutableCore GTest::GTest GTest::Main ${GMOCK_LIBRARY} ${GMOCK_MAIN_LIBRARY})
+target_link_libraries(TestsExecutableCLI GTest::GTest GTest::Main ${GMOCK_LIBRARY} ${GMOCK_MAIN_LIBRARY})
+
+gtest_discover_tests(TestsExecutableCore)
+gtest_discover_tests(TestsExecutableCLI)

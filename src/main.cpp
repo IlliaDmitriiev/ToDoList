@@ -1,9 +1,7 @@
-
-#include "api/TaskService.h"
-#include "api/TaskServiceCreator.h"
+#include "CLI/Namespaces/StateMachineCreator.h"
 
 int main() {
-   auto ts = todo_list::createService();
-
-   return 0;
+    auto sm = todo_list_CLI::createStateMachine();
+    sm.run();
+    return 0;
 }
