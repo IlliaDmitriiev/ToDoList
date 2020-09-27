@@ -52,18 +52,6 @@ RequstTaskResult DataHolder::complete(TaskID id){
 
 }
 
-RequstTaskResult DataHolder::postponeTask(TaskID id, boost::gregorian::date new_date){
-    auto task = storage_->getTask(id);
-    if(task.has_value()){
-        task.value().lock()->postpone(new_date);
-        return operation_result::TaskRequestedSuccessful();
-    }
-    else {
-        return operation_result::TaskRequestedUnsuccessful("task not found");
-    }
-
-}
-
 RequstTaskResult DataHolder::editTask(TaskID id, const TaskDTO &subtask) {
     auto task = storage_->getTask(id);
     if(task.has_value()){

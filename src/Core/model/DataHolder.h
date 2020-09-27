@@ -26,7 +26,6 @@ public:
 
     RequstTaskResult deleteTask(TaskID id) override;
     RequstTaskResult complete(TaskID id) override;
-    RequstTaskResult postponeTask(TaskID id, boost::gregorian::date new_date) override;
     RequstTaskResult editTask(TaskID id, const TaskDTO &subtask) override;
 
 public:

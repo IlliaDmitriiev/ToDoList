@@ -57,18 +57,6 @@ public:
      */
     virtual RequstTaskResult complete(TaskID id) = 0;
     /*
-     * Changing task date to the given.
-     *
-     * @param: [TaskID] It needs to find task by this id.
-     * @param: [date] It needs to change task date with this date.
-     *
-     * @return object containing info about possible error occurred
-     * or info that operation is successful.
-     *
-     * @note: All subtasks will NOT be postponed recursively.
-     */
-    virtual RequstTaskResult postponeTask(TaskID id, boost::gregorian::date new_date) = 0;
-    /*
      * Changing task to the given.
      *
      * @param: [TaskID] It needs to find task by this id.

@@ -438,43 +438,6 @@ TEST_F(DataHolderTest, shouldCompleteTask) {
     EXPECT_EQ(outcome.result, ResultType::SUCCESS);
 }
 
-TEST_F(DataHolderTest, shouldNotFindTaskWhilePostponeTask) {
-    auto viewByPriority = std::make_unique<MockView>();
-    auto viewByDate = std::make_unique<MockView>();
-    auto storage = std::make_unique<MockStorage>();
-    auto generator = std::make_unique<MockGenerator>();
-
-    EXPECT_CALL(*storage, getTask)
-            .Times(1)
-            .WillOnce(Return(std::nullopt));
-
-    boost::gregorian::date date{boost::gregorian::day_clock::local_day()};
-    DataHolder data_holder(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
-    RequstTaskResult outcome  = data_holder.postponeTask(TaskID::create(69), date);
-
-    EXPECT_EQ(outcome.result, ResultType::FAILURE);
-    EXPECT_EQ(outcome.error_message, "task not found");
-}
-
-TEST_F(DataHolderTest, shouldPostponeTask) {
-    auto viewByPriority = std::make_unique<MockView>();
-    auto viewByDate = std::make_unique<MockView>();
-    auto storage = std::make_unique<MockStorage>();
-    auto generator = std::make_unique<MockGenerator>();
-
-    std::weak_ptr<FullTask> weak2 = shared_task2;
-
-    EXPECT_CALL(*storage, getTask)
-            .Times(1)
-            .WillOnce(Return(weak2));
-
-    boost::gregorian::date date{boost::gregorian::day_clock::local_day()};
-    DataHolder data_holder(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
-    RequstTaskResult outcome  = data_holder.postponeTask(TaskID::create(454896), date);
-
-    EXPECT_EQ(outcome.result, ResultType::SUCCESS);
-}
-
 TEST_F(DataHolderTest, shouldNotEditTask) {
     auto viewByPriority = std::make_unique<MockView>();
     auto viewByDate = std::make_unique<MockView>();
