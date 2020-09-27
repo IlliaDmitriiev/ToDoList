@@ -20,14 +20,14 @@ AddTaskResult DataHolder::addTask(const TaskDTO &taskDTO){
 }
 
 AddTaskResult DataHolder::addSubtask(TaskID taskID, const TaskDTO &subTask){
-    std::optional<std::weak_ptr<FullTask>> weak_task = storage_->getTask(taskID);
+    auto task = storage_->getTask(taskID);
 
-    if(weak_task.has_value()) {
+    if(task.has_value()) {
         auto subtask_result = addTask(subTask);
 
         if (subtask_result.id.has_value()) {
             auto subtask = storage_->getTask(subtask_result.id.value());
-            weak_task.value().lock()->addSubtask(subtask.value());
+            task.value().lock()->addSubtask(subtask.value());
 
             return operation_result::TaskAddedSuccessful(subtask_result.id.value());
         }
@@ -41,9 +41,9 @@ AddTaskResult DataHolder::addSubtask(TaskID taskID, const TaskDTO &subTask){
 }
 
 RequstTaskResult DataHolder::complete(TaskID id){
-    auto node = storage_->getTask(id);
-    if(node.has_value()){
-        node.value().lock()->complete();
+    auto task = storage_->getTask(id);
+    if(task.has_value()){
+        task.value().lock()->complete();
         return operation_result::TaskRequestedSuccessful();
     }
     else {
@@ -84,8 +84,9 @@ RequstTaskResult DataHolder::deleteTask(TaskID id){
 
     if(task.has_value()) {
 
-        for(TaskID subtaskID: task.value().lock()->getSubtasks())
+        for(TaskID subtaskID: task.value().lock()->getSubtasks()){
             deleteTask(subtaskID);
+        }
 
         if(!removeTask(task.value().lock())) {
             return operation_result::TaskRequestedUnsuccessful("deleting is failed");
@@ -119,9 +120,9 @@ std::vector<TaskDTO> DataHolder::getAllTasks() {
 }
 
 std::optional<TaskDTO> DataHolder::getTask(TaskID id){
-    std::optional<std::weak_ptr<FullTask>> ft = storage_->getTask(id);
-    if (ft.has_value()) {
-        return std::optional<TaskDTO>(TaskConvertor::transferToTaskDTO(ft.value()));
+    auto task = storage_->getTask(id);
+    if (task.has_value()) {
+        return std::optional<TaskDTO>(TaskConvertor::transferToTaskDTO(task.value()));
     }
     else {
         return std::nullopt;
