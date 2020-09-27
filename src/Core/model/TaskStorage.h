@@ -14,6 +14,7 @@ public:
     std::optional<std::weak_ptr<FullTask>> getTask(TaskID id)override;
     bool deleteSubtaskInParent(TaskID ParentID, TaskID taskID)override;
     bool deleteTask(TaskID id) override;
+    std::vector<std::weak_ptr<FullTask>> getAllTasks() override;
 
 private:
     std::unordered_map<TaskID, std::shared_ptr<FullTask>,

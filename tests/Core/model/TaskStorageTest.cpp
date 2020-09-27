@@ -131,3 +131,14 @@ TEST_F(StorageForSharedPtrTest, shouldNotDeleteTask) {
     EXPECT_FALSE(storage.deleteTask(TaskID::create(4548)));
 }
 
+
+TEST_F(StorageForSharedPtrTest, shoulGetTasks) {
+
+    storage.addTask(std::move(sft1));
+    storage.addTask(std::move(sft2));
+    auto vec = storage.getAllTasks();
+
+    EXPECT_EQ(vec.size(), 2);
+    EXPECT_TRUE(Task::Compare(vec[0].lock()->getTask(), t2));
+    EXPECT_TRUE(Task::Compare(vec[1].lock()->getTask(), t1));
+}
