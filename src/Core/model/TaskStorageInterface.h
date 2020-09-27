@@ -35,7 +35,7 @@ public:
      */
     virtual std::optional<std::weak_ptr<FullTask>> getTask(TaskID id)= 0;
     /*
-     * deletes sybtask of Parent task
+     * deletes subtask of Parent task
      *
      * @param: parentID needs to find parent
      * @param: taskID needs to find subtask of parent task
@@ -45,7 +45,7 @@ public:
      */
     virtual bool deleteSubtaskInParent(TaskID ParentID, TaskID taskID)= 0;
      /*
-     * deletes sybtask of Parent task
+     * deletes subtask of Parent task
      *
      * @param: taskID needs to find task
      *
@@ -53,6 +53,13 @@ public:
      * @return true if operation is successful
      */
     virtual bool deleteTask(TaskID id)= 0;
+    /*
+     * returns all saved tasks in storage
+     *
+     * @return vector of tasks.
+     */
+    virtual std::vector<std::weak_ptr<FullTask>> getAllTasks() = 0;
+
     virtual ~TaskStorageInterface() = default;
 
 };

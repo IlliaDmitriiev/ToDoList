@@ -34,4 +34,11 @@ bool TaskStorage::deleteTask(TaskID id){
     return allTasks_.erase(id);
 }
 
+std::vector<std::weak_ptr<FullTask>> TaskStorage::getAllTasks() {
+    std::vector<std::weak_ptr<FullTask>> v;
+    for(auto &[id, task]: allTasks_)
+        v.push_back(task);
+
+    return v;
+}
 
