@@ -10,10 +10,15 @@ bool TaskStorage::addTask(std::shared_ptr<FullTask> sft){
 }
 
 std::optional<std::weak_ptr<FullTask>> TaskStorage::getTask(TaskID id){
-    if (allTasks_.find(id) == allTasks_.end())
+    if (allTasks_.find(id) == allTasks_.end()) {
         return std::nullopt;
-    else
+    }
+    else {
+        if (!allTasks_[id]){
+            throw std::runtime_error("memory leak");
+        }
         return allTasks_[id];
+    }
 }
 
 
