@@ -24,7 +24,7 @@ void AddTaskCommand::execute(IO& io, Context& context) {
     auto params = buffer.getParameters();
     auto &service = context.getService();
     auto result = service.addTask(
-            TaskDTO::create(params.date_, params.name_, params.label_, params.priority_));
+            ServiceTaskDTO::create(params.date_, params.name_, params.label_, params.priority_));
 
     if (result.result == ResultType::FAILURE) {
         io.output(result.error_message + "\n");

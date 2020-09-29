@@ -105,7 +105,7 @@ TEST_F(DataHolderTest, shouldAddTaskSuccessfully) {
 
     boost::gregorian::date date1{boost::gregorian::day_clock::local_day()};
     DataHolder data_holder(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
-    TaskDTO task = TaskDTO::create(date1, "name1", "", TaskPriority::None);
+    ServiceTaskDTO task = ServiceTaskDTO::create(date1, "name1", "", TaskPriority::None);
 
     AddTaskResult outcome  = data_holder.addTask(task);
     EXPECT_EQ(outcome.result, ResultType::SUCCESS);
@@ -132,7 +132,7 @@ TEST_F(DataHolderTest, shouldAddTaskUnsuccessfully1) {
     boost::gregorian::date date{1500, 2, 26};
     DataHolder data_holder(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
 
-    TaskDTO task = TaskDTO::create(date, "name3", "label3", TaskPriority::Third);
+    ServiceTaskDTO task = ServiceTaskDTO::create(date, "name3", "label3", TaskPriority::Third);
     AddTaskResult outcome  = data_holder.addTask(task);
 
     EXPECT_EQ(outcome.result, ResultType::FAILURE);
@@ -156,7 +156,7 @@ TEST_F(DataHolderTest, shouldAddTaskUnsuccessfully2) {
     boost::gregorian::date date{boost::gregorian::day_clock::local_day()};
     DataHolder data_holder(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
 
-    TaskDTO task = TaskDTO::create(date, "name2", "456578y&#&@)(#$?><</*-+fdg", TaskPriority::Second);
+    ServiceTaskDTO task = ServiceTaskDTO::create(date, "name2", "456578y&#&@)(#$?><</*-+fdg", TaskPriority::Second);
     AddTaskResult outcome  = data_holder.addTask(task);
 
     EXPECT_EQ(outcome.result, ResultType::FAILURE);
@@ -176,7 +176,7 @@ TEST_F(DataHolderTest, shouldNotFindTaskWhileAddSubtask) {
     boost::gregorian::date date{boost::gregorian::day_clock::local_day()};
     DataHolder data_holder(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
 
-    TaskDTO task = TaskDTO::create(date, "name1", "", TaskPriority::None);
+    ServiceTaskDTO task = ServiceTaskDTO::create(date, "name1", "", TaskPriority::None);
     AddTaskResult outcome  = data_holder.addSubtask(TaskID::create(47), task);
 
     EXPECT_EQ(outcome.result, ResultType::FAILURE);
@@ -210,7 +210,7 @@ TEST_F(DataHolderTest, shouldNotAddSubtask) {
     boost::gregorian::date date{1500, 2, 26};
 
     DataHolder data_holder(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
-    TaskDTO task = TaskDTO::create(date, "name3", "label3", TaskPriority::Third);
+    ServiceTaskDTO task = ServiceTaskDTO::create(date, "name3", "label3", TaskPriority::Third);
 
     AddTaskResult outcome  = data_holder.addSubtask(TaskID::create(69), task);
 
@@ -253,7 +253,7 @@ TEST_F(DataHolderTest, shouldAddSubtaskSuccessfully) {
     boost::gregorian::date date{boost::gregorian::day_clock::local_day()};
 
     DataHolder data_holder(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
-    TaskDTO task = TaskDTO::create(date, "name4", "", TaskPriority::First);
+    ServiceTaskDTO task = ServiceTaskDTO::create(date, "name4", "", TaskPriority::First);
 
     AddTaskResult outcome  = data_holder.addSubtask(TaskID::create(123), task);
 

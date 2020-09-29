@@ -4,7 +4,7 @@
 
 #include "DataHolder.h"
 
-AddTaskResult DataHolder::addTask(const TaskDTO &taskDTO){
+AddTaskResult DataHolder::addTask(const ServiceTaskDTO &taskDTO){
 
     TaskID id = generator_->generateId();
     auto shared_task = std::make_shared<FullTask>(FullTask::create(id, TaskConvertor::transferToTask(taskDTO)));
@@ -19,7 +19,7 @@ AddTaskResult DataHolder::addTask(const TaskDTO &taskDTO){
     }
 }
 
-AddTaskResult DataHolder::addSubtask(TaskID taskID, const TaskDTO &subTask){
+AddTaskResult DataHolder::addSubtask(TaskID taskID, const ServiceTaskDTO &subTask){
     auto task = storage_->getTask(taskID);
 
     if(task.has_value()) {
@@ -52,7 +52,7 @@ RequstTaskResult DataHolder::complete(TaskID id){
 
 }
 
-RequstTaskResult DataHolder::editTask(TaskID id, const TaskDTO &subtask) {
+RequstTaskResult DataHolder::editTask(TaskID id, const ServiceTaskDTO &subtask) {
     auto task = storage_->getTask(id);
     if(task.has_value()){
         task.value().lock()->change(TaskConvertor::transferToTask(subtask));
@@ -64,8 +64,8 @@ RequstTaskResult DataHolder::editTask(TaskID id, const TaskDTO &subtask) {
 
 }
 
-std::vector<TaskDTO> DataHolder::getSubtasks(TaskID id) {
-    std::vector<TaskDTO> vec;
+std::vector<ServiceTaskDTO> DataHolder::getSubtasks(TaskID id) {
+    std::vector<ServiceTaskDTO> vec;
     auto node = storage_->getTask(id);
     if(node.has_value()){
         auto subtasks_id = node.value().lock()->getSubtasks();
@@ -110,19 +110,19 @@ bool DataHolder::removeTask(const std::weak_ptr<FullTask> &task){
             storage_->deleteSubtaskInParent(task.lock()->getParent(), task.lock()->getId());
 }
 
-std::vector<TaskDTO> DataHolder::getAllTasks() {
+std::vector<ServiceTaskDTO> DataHolder::getAllTasks() {
     auto tasks = storage_->getAllTasks();
-    std::vector<TaskDTO> DTOTasks;
+    std::vector<ServiceTaskDTO> DTOTasks;
     for(auto &i: tasks) {
         DTOTasks.push_back(TaskConvertor::transferToTaskDTO(i));
     }
     return DTOTasks;
 }
 
-std::optional<TaskDTO> DataHolder::getTask(TaskID id){
+std::optional<ServiceTaskDTO> DataHolder::getTask(TaskID id){
     auto task = storage_->getTask(id);
     if (task.has_value()) {
-        return std::optional<TaskDTO>(TaskConvertor::transferToTaskDTO(task.value()));
+        return std::optional<ServiceTaskDTO>(TaskConvertor::transferToTaskDTO(task.value()));
     }
     else {
         return std::nullopt;

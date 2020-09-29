@@ -27,20 +27,20 @@ public:
     /*
      * Adds given task to system.
      *
-     * @param: TaskDTO without TaskID.
+     * @param: ServiceTaskDTO without TaskID.
      *
      * @return object containing id of new created task or info about possible errors.
      */
-    virtual AddTaskResult addTask(const TaskDTO &taskDto) = 0;
+    virtual AddTaskResult addTask(const ServiceTaskDTO &taskDto) = 0;
     /*
      * Adds subtask to the task with given TaskID.
      *
      * @param: [TaskID] It needs to add subtask to task by this id.
-     * @param: TaskDTO without TaskID.
+     * @param: ServiceTaskDTO without TaskID.
      *
      * @return object containing id of new created task or info about possible errors.
      */
-    virtual AddTaskResult addSubtask(TaskID taskID, const TaskDTO &subtask) = 0;
+    virtual AddTaskResult addSubtask(TaskID taskID, const ServiceTaskDTO &subtask) = 0;
     /*
      * Deletes task from system.
      *
@@ -79,14 +79,14 @@ public:
      * Changing task to the given.
      *
      * @param: [TaskID] It needs to find task by this id.
-     * @param: [TaskDTO] It needs to change task with a new one.
+     * @param: [ServiceTaskDTO] It needs to change task with a new one.
      *
      * @return object containing info about possible error occurred
      * or info that operation is successful.
      *
      * @note: All subtasks will NOT be edited recursively.
      */
-    virtual RequstTaskResult editTask(TaskID id, const TaskDTO &subtask) = 0;
+    virtual RequstTaskResult editTask(TaskID id, const ServiceTaskDTO &subtask) = 0;
 
 public:
     /*
@@ -94,35 +94,35 @@ public:
      *
      * @param: [TaskID] It needs to find task by this id.
      *
-     * @return vector of TaskDTO
+     * @return vector of ServiceTaskDTO
      *
      * @note if there isn't any required task, function will return empty vector
      */
-    virtual std::vector<TaskDTO> getSubtasks(TaskID id) = 0;
+    virtual std::vector<ServiceTaskDTO> getSubtasks(TaskID id) = 0;
     /*
      * Gives all tasks already sorted by priority.
      *
-     * @return vector of TaskDTO
+     * @return vector of ServiceTaskDTO
      *
      * @note if there isn't any required task, function will return empty vector
      */
-    virtual std::vector<TaskDTO> getAllTasksByPriority() = 0;
+    virtual std::vector<ServiceTaskDTO> getAllTasksByPriority() = 0;
     /*
      * Gives all tasks for today already sorted by priority.
      *
-     * @return vector of TaskDTO
+     * @return vector of ServiceTaskDTO
      *
      * @note if there isn't any required task, function will return empty vector
      */
-    virtual std::vector<TaskDTO> getTasksForToday() = 0;
+    virtual std::vector<ServiceTaskDTO> getTasksForToday() = 0;
     /*
      * Gives all tasks for this week already sorted by priority.
      *
-     * @return vector of TaskDTO
+     * @return vector of ServiceTaskDTO
      *
      * @note if there isn't any required task, function will return empty vector
      */
-    virtual std::vector<TaskDTO> getTasksForWeek() = 0;
+    virtual std::vector<ServiceTaskDTO> getTasksForWeek() = 0;
     /*
      * Gives task with given id if such exists in system.
      *
@@ -130,7 +130,7 @@ public:
      *
      * @return taskDTO if such task exists otherwise nullopt.
      */
-    virtual std::optional<TaskDTO> getTask(TaskID id) = 0;
+    virtual std::optional<ServiceTaskDTO> getTask(TaskID id) = 0;
     virtual ~TaskServiceInterface() = default;
 
 private:

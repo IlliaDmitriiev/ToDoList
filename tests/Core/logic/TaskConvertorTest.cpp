@@ -22,7 +22,7 @@ TEST_F(TaskConvertorTest, shouldConvertFullTaskIntoDTO) {
             TaskPriority::None);
     FullTask ft = FullTask::create(gen.generateId(), t);
     auto sft = std::make_shared<FullTask>(ft);
-    TaskDTO td = con.transferToTaskDTO(sft);
+    ServiceTaskDTO td = con.transferToTaskDTO(sft);
 
     EXPECT_EQ(td.getId().getId(), 0);
     EXPECT_EQ(td.getPriority(), TaskPriority::None);
@@ -36,7 +36,7 @@ TEST_F(TaskConvertorTest, shouldConvertFullTaskIntoDTO) {
 TEST_F(TaskConvertorTest, shouldConvertTaskDTOIntoTask) {
     IDGenerator gen;
     TaskConvertor con;
-    TaskDTO td = TaskDTO::create(
+    ServiceTaskDTO td = ServiceTaskDTO::create(
             boost::gregorian::date(2020, 7, 31),
             "name1",
             "",
