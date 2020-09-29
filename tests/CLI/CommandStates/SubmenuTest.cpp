@@ -16,7 +16,7 @@
 
 using ::testing::Return;
 
-class SubmenuTest : public ::testing::Test {
+class SubmenuTest : public ::testing::Test{
 public:
     SubmenuCommand state_;
     void SetUp() override{
@@ -32,19 +32,19 @@ public:
 class MockTaskService : public TaskServiceInterface {
 
 public:
-    MOCK_METHOD(AddTaskResult, addTask, (const TaskDTO&), (override));
-    MOCK_METHOD(AddTaskResult, addSubtask, (TaskID, const TaskDTO &), (override));
+    MOCK_METHOD(AddTaskResult, addTask, (const ServiceTaskDTO&), (override));
+    MOCK_METHOD(AddTaskResult, addSubtask, (TaskID, const ServiceTaskDTO &), (override));
     MOCK_METHOD(RequstTaskResult, deleteTask, (TaskID), (override));
     MOCK_METHOD(RequstTaskResult, complete, (TaskID), (override));
     MOCK_METHOD(RequstTaskResult, postponeTask, (TaskID, boost::gregorian::date), (override));
-    MOCK_METHOD(RequstTaskResult, editTask, (TaskID id, const TaskDTO&), (override));
+    MOCK_METHOD(RequstTaskResult, editTask, (TaskID id, const ServiceTaskDTO&), (override));
 public:
 
-    MOCK_METHOD(std::vector<TaskDTO>, getSubtasks, (TaskID), (override));
-    MOCK_METHOD(std::vector<TaskDTO>, getAllTasksByPriority, (), (override));
-    MOCK_METHOD(std::vector<TaskDTO>, getTasksForToday, (), (override));
-    MOCK_METHOD(std::vector<TaskDTO>, getTasksForWeek, (), (override));
-    MOCK_METHOD(std::optional<TaskDTO>, getTask, (TaskID), (override));
+    MOCK_METHOD(std::vector<ServiceTaskDTO>, getSubtasks, (TaskID), (override));
+    MOCK_METHOD(std::vector<ServiceTaskDTO>, getAllTasksByPriority, (), (override));
+    MOCK_METHOD(std::vector<ServiceTaskDTO>, getTasksForToday, (), (override));
+    MOCK_METHOD(std::vector<ServiceTaskDTO>, getTasksForWeek, (), (override));
+    MOCK_METHOD(std::optional<ServiceTaskDTO>, getTask, (TaskID), (override));
 
 private:
     MOCK_METHOD(bool, removeTask, (const std::weak_ptr<FullTask> &), (override));

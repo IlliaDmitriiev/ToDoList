@@ -5,7 +5,7 @@
 #include "TaskService.h"
 #include "ReturnTypeCreator.h"
 
-AddTaskResult TaskService::addTask(const TaskDTO &taskDTO){
+AddTaskResult TaskService::addTask(const ServiceTaskDTO &taskDTO){
 
     TaskID id = generator_->generateId();
     auto shared_task = std::make_shared<FullTask>(FullTask::create(id, TaskConvertor::transferToTask(taskDTO)));
@@ -20,7 +20,7 @@ AddTaskResult TaskService::addTask(const TaskDTO &taskDTO){
     }
 }
 
-AddTaskResult TaskService::addSubtask(TaskID taskID, const TaskDTO &subTask){
+AddTaskResult TaskService::addSubtask(TaskID taskID, const ServiceTaskDTO &subTask){
     std::optional<std::weak_ptr<FullTask>> weak_task = storage_->getTask(taskID);
 
     if(weak_task.has_value()) {
@@ -65,7 +65,7 @@ RequstTaskResult TaskService::postponeTask(TaskID id, boost::gregorian::date new
 
 }
 
-RequstTaskResult TaskService::editTask(TaskID id, const TaskDTO &subtask) {
+RequstTaskResult TaskService::editTask(TaskID id, const ServiceTaskDTO &subtask) {
     auto task = storage_->getTask(id);
     if(task.has_value()){
         task.value().lock()->change(TaskConvertor::transferToTask(subtask));
@@ -77,8 +77,8 @@ RequstTaskResult TaskService::editTask(TaskID id, const TaskDTO &subtask) {
 
 }
 
-std::vector<TaskDTO> TaskService::getSubtasks(TaskID id) {
-    std::vector<TaskDTO> vec;
+std::vector<ServiceTaskDTO> TaskService::getSubtasks(TaskID id) {
+    std::vector<ServiceTaskDTO> vec;
     auto node = storage_->getTask(id);
     if(node.has_value()){
         auto subtasks_id = node.value().lock()->getSubtasks();
@@ -93,9 +93,9 @@ std::vector<TaskDTO> TaskService::getSubtasks(TaskID id) {
     return vec;
 }
 
-std::vector<TaskDTO> TaskService::getAllTasksByPriority(){
+std::vector<ServiceTaskDTO> TaskService::getAllTasksByPriority(){
     auto v = byPriority_->getAllTasksByPrior();
-    std::vector<TaskDTO> vec;
+    std::vector<ServiceTaskDTO> vec;
     for(auto &i: v) {
         vec.push_back(TaskConvertor::transferToTaskDTO(i));
     }
@@ -103,11 +103,11 @@ std::vector<TaskDTO> TaskService::getAllTasksByPriority(){
     return vec;
 }
 
-std::vector<TaskDTO> TaskService::getTasksForToday(){
+std::vector<ServiceTaskDTO> TaskService::getTasksForToday(){
     boost::gregorian::date date{boost::gregorian::day_clock::local_day()};
 
     auto v = byDate_->getTasksForToday(date);
-    std::vector<TaskDTO> vec;
+    std::vector<ServiceTaskDTO> vec;
     for(auto &i: v) {
         vec.push_back(TaskConvertor::transferToTaskDTO(i));
     }
@@ -115,11 +115,11 @@ std::vector<TaskDTO> TaskService::getTasksForToday(){
     return vec;
 }
 
-std::vector<TaskDTO> TaskService::getTasksForWeek(){
+std::vector<ServiceTaskDTO> TaskService::getTasksForWeek(){
     boost::gregorian::date date{boost::gregorian::day_clock::local_day()};
 
     auto v = byDate_->getTasksForWeek(date);
-    std::vector<TaskDTO> vec;
+    std::vector<ServiceTaskDTO> vec;
     for(auto &i: v) {
         vec.push_back(TaskConvertor::transferToTaskDTO(i));
     }
@@ -156,10 +156,10 @@ bool TaskService::removeTask(const std::weak_ptr<FullTask> &task){
         storage_->deleteSubtaskInParent(task.lock()->getParent(), task.lock()->getId());
 }
 
-std::optional<TaskDTO> TaskService::getTask(TaskID id){
+std::optional<ServiceTaskDTO> TaskService::getTask(TaskID id){
     std::optional<std::weak_ptr<FullTask>> ft = storage_->getTask(id);
     if (ft.has_value()) {
-        return std::optional<TaskDTO>(TaskConvertor::transferToTaskDTO(ft.value()));
+        return std::optional<ServiceTaskDTO>(TaskConvertor::transferToTaskDTO(ft.value()));
     }
     else {
         return std::nullopt;

@@ -29,19 +29,19 @@ public:
 class MockTaskService : public TaskServiceInterface {
 
 public:
-    MOCK_METHOD(AddTaskResult, addTask, (const TaskDTO&), (override));
-    MOCK_METHOD(AddTaskResult, addSubtask, (TaskID, const TaskDTO &), (override));
+    MOCK_METHOD(AddTaskResult, addTask, (const ServiceTaskDTO&), (override));
+    MOCK_METHOD(AddTaskResult, addSubtask, (TaskID, const ServiceTaskDTO &), (override));
     MOCK_METHOD(RequstTaskResult, deleteTask, (TaskID), (override));
     MOCK_METHOD(RequstTaskResult, complete, (TaskID), (override));
     MOCK_METHOD(RequstTaskResult, postponeTask, (TaskID, boost::gregorian::date), (override));
-    MOCK_METHOD(RequstTaskResult, editTask, (TaskID id, const TaskDTO&), (override));
+    MOCK_METHOD(RequstTaskResult, editTask, (TaskID id, const ServiceTaskDTO&), (override));
 public:
 
-    MOCK_METHOD(std::vector<TaskDTO>, getSubtasks, (TaskID), (override));
-    MOCK_METHOD(std::vector<TaskDTO>, getAllTasksByPriority, (), (override));
-    MOCK_METHOD(std::vector<TaskDTO>, getTasksForToday, (), (override));
-    MOCK_METHOD(std::vector<TaskDTO>, getTasksForWeek, (), (override));
-    MOCK_METHOD(std::optional<TaskDTO>, getTask, (TaskID), (override));
+    MOCK_METHOD(std::vector<ServiceTaskDTO>, getSubtasks, (TaskID), (override));
+    MOCK_METHOD(std::vector<ServiceTaskDTO>, getAllTasksByPriority, (), (override));
+    MOCK_METHOD(std::vector<ServiceTaskDTO>, getTasksForToday, (), (override));
+    MOCK_METHOD(std::vector<ServiceTaskDTO>, getTasksForWeek, (), (override));
+    MOCK_METHOD(std::optional<ServiceTaskDTO>, getTask, (TaskID), (override));
 
 private:
     MOCK_METHOD(bool, removeTask, (const std::weak_ptr<FullTask> &), (override));
@@ -89,9 +89,9 @@ TEST_F(ShowTasksForTodayTest, shouldExecute) {
     auto &ref_to_service = *service;
     auto context = std::make_unique<ConsoleContext>(ConsoleContext::create(std::move(service)));
 
-    auto task1 = TaskDTO::create(boost::gregorian::date(2020, 10, 10),"name1","label1",TaskPriority::None);
-    auto task2 = TaskDTO::create(boost::gregorian::date(2010, 10, 10),"name2","label2",TaskPriority::First);
-    std::vector<TaskDTO> v{task1, task2};
+    auto task1 = ServiceTaskDTO::create(boost::gregorian::date(2020, 10, 10),"name1","label1",TaskPriority::None);
+    auto task2 = ServiceTaskDTO::create(boost::gregorian::date(2010, 10, 10),"name2","label2",TaskPriority::First);
+    std::vector<ServiceTaskDTO> v{task1, task2};
 
     EXPECT_CALL(ref_to_service, getTasksForToday)
             .Times(1)

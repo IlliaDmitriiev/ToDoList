@@ -3,14 +3,14 @@
 //
 
 #include <gtest/gtest.h>
-#include "Core/api/TaskDTO.h"
+#include "Core/api/ServiceTaskDTO.h"
 
 class TaskDTOTest : public ::testing::Test {
 
 };
 
 TEST_F(TaskDTOTest, shouldCreate) {
-    TaskDTO dto = TaskDTO::create(
+    ServiceTaskDTO dto = ServiceTaskDTO::create(
             TaskID::create(47),
             boost::gregorian::date(2020, 7, 30),
             "name",
@@ -27,7 +27,7 @@ TEST_F(TaskDTOTest, shouldCreate) {
 }
 
 TEST_F(TaskDTOTest, shouldThrowExeption_1) {
-    EXPECT_ANY_THROW(TaskDTO::create(
+    EXPECT_ANY_THROW(ServiceTaskDTO::create(
             TaskID::create(47),
             boost::gregorian::date(2020, 7, 32),
             "name",
@@ -38,7 +38,7 @@ TEST_F(TaskDTOTest, shouldThrowExeption_1) {
 }
 
 TEST_F(TaskDTOTest, shouldThrowExeption_2) {
-    EXPECT_ANY_THROW(TaskDTO::create(
+    EXPECT_ANY_THROW(ServiceTaskDTO::create(
             TaskID::create(47),
             boost::gregorian::date(2015, 2, 29),
             "name",

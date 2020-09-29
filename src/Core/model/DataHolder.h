@@ -21,17 +21,17 @@ public:
     {}
 
 public:
-    AddTaskResult addTask(const TaskDTO &taskDto) override;
-    AddTaskResult addSubtask(TaskID taskID, const TaskDTO &subtask) override;
+    AddTaskResult addTask(const ServiceTaskDTO &taskDto) override;
+    AddTaskResult addSubtask(TaskID taskID, const ServiceTaskDTO &subtask) override;
 
     RequstTaskResult deleteTask(TaskID id) override;
     RequstTaskResult complete(TaskID id) override;
-    RequstTaskResult editTask(TaskID id, const TaskDTO &subtask) override;
+    RequstTaskResult editTask(TaskID id, const ServiceTaskDTO &subtask) override;
 
 public:
-    std::vector<TaskDTO> getSubtasks(TaskID id) override;
-    std::vector<TaskDTO> getAllTasks() override;
-    std::optional<TaskDTO> getTask(TaskID id) override;
+    std::vector<ServiceTaskDTO> getSubtasks(TaskID id) override;
+    std::vector<ServiceTaskDTO> getAllTasks() override;
+    std::optional<ServiceTaskDTO> getTask(TaskID id) override;
 
     const ViewInterface& getByPriority() override;
     const ViewInterface& getByDate() override;

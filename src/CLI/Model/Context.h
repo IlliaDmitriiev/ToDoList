@@ -27,9 +27,9 @@ public:
     /*
      * Gives current list of tasks according to the last request.
      *
-     * @return list of TaskDTO objects.
+     * @return list of ServiceTaskDTO objects.
      */
-    virtual std::vector<TaskDTO>& getTaskList() = 0;
+    virtual std::vector<ServiceTaskDTO>& getTaskList() = 0;
 
     virtual ~Context() = default;
 

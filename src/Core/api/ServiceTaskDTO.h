@@ -2,8 +2,8 @@
 // Created by Илля on 29.07.2020.
 //
 
-#ifndef TODOLIST_TASKDTO_H
-#define TODOLIST_TASKDTO_H
+#ifndef TODOLIST_SERVICETASKDTO_H
+#define TODOLIST_SERVICETASKDTO_H
 
 #include <Core/api/TaskID.h>
 #include "Core/model/Task.h"
@@ -13,12 +13,12 @@
  *
  * @author Ilya Dmitriev
  */
-class TaskDTO {
+class ServiceTaskDTO {
 
 public:
-    static TaskDTO create(const TaskID &taskId, const boost::gregorian::date &date, const std::string &name, const std::string &label,
+    static ServiceTaskDTO create(const TaskID &taskId, const boost::gregorian::date &date, const std::string &name, const std::string &label,
                           TaskPriority priority);
-    static TaskDTO create(const boost::gregorian::date &date, const std::string &name, const std::string &label,
+    static ServiceTaskDTO create(const boost::gregorian::date &date, const std::string &name, const std::string &label,
                                    TaskPriority priority);
 public:
 
@@ -35,9 +35,9 @@ public:
     bool isCompleted() const;
 
 private:
-    TaskDTO(const TaskID &taskID, const boost::gregorian::date &date, const std::string &name, const std::string &label,
+    ServiceTaskDTO(const TaskID &taskID, const boost::gregorian::date &date, const std::string &name, const std::string &label,
             TaskPriority priority);
-    TaskDTO(const boost::gregorian::date &date, const std::string &name, const std::string &label,
+    ServiceTaskDTO(const boost::gregorian::date &date, const std::string &name, const std::string &label,
             TaskPriority priority);
 
 private:
@@ -49,4 +49,4 @@ private:
     bool completed_;
 };
 
-#endif //TODOLIST_TASKDTO_H
+#endif //TODOLIST_SERVICETASKDTO_H

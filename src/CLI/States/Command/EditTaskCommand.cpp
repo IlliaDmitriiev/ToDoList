@@ -31,7 +31,7 @@ void EditTaskCommand::execute(IO& io, Context& context) {
     }
     auto result = service.editTask(
             tasks[params.id_ - 1].getId(),
-            TaskDTO::create(params.date_, params.name_, params.label_, params.priority_));
+            ServiceTaskDTO::create(params.date_, params.name_, params.label_, params.priority_));
 
     if (result.result == ResultType::FAILURE) {
         io.output(result.error_message + "\n");

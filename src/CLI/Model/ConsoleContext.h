@@ -16,14 +16,14 @@ public:
 
 public:
     TaskServiceInterface& getService()override{return *ts_;}
-    std::vector<TaskDTO>& getTaskList()override{return task_list_;}
+    std::vector<ServiceTaskDTO>& getTaskList()override{return task_list_;}
 
 private:
     explicit ConsoleContext(std::unique_ptr<TaskServiceInterface> ts):ts_(std::move(ts)){ }
 
 private:
     std::unique_ptr<TaskServiceInterface> ts_;
-    std::vector<TaskDTO> task_list_;
+    std::vector<ServiceTaskDTO> task_list_;
 };
 
 #endif //TESTCLI_CONTEXT_H

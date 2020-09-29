@@ -24,9 +24,9 @@ public:
 
 public:
 
-    AddTaskResult addTask(const TaskDTO &taskDto) override;
+    AddTaskResult addTask(const ServiceTaskDTO &taskDto) override;
 
-    AddTaskResult addSubtask(TaskID taskID, const TaskDTO &subtask) override;
+    AddTaskResult addSubtask(TaskID taskID, const ServiceTaskDTO &subtask) override;
 
     RequstTaskResult deleteTask(TaskID id) override;
 
@@ -34,18 +34,18 @@ public:
 
     RequstTaskResult postponeTask(TaskID id, boost::gregorian::date new_date) override;
 
-    RequstTaskResult editTask(TaskID id, const TaskDTO &subtask) override;
+    RequstTaskResult editTask(TaskID id, const ServiceTaskDTO &subtask) override;
 
 public:
-    std::vector<TaskDTO> getSubtasks(TaskID id) override;
+    std::vector<ServiceTaskDTO> getSubtasks(TaskID id) override;
 
-    std::vector<TaskDTO> getAllTasksByPriority() override;
+    std::vector<ServiceTaskDTO> getAllTasksByPriority() override;
 
-    std::vector<TaskDTO> getTasksForToday() override;
+    std::vector<ServiceTaskDTO> getTasksForToday() override;
 
-    std::vector<TaskDTO> getTasksForWeek() override;
+    std::vector<ServiceTaskDTO> getTasksForWeek() override;
 
-    std::optional<TaskDTO> getTask(TaskID id) override;
+    std::optional<ServiceTaskDTO> getTask(TaskID id) override;
 
 private:
 

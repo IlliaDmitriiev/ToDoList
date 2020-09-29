@@ -4,8 +4,8 @@
 
 #include "TaskConvertor.h"
 
-TaskDTO TaskConvertor::transferToTaskDTO(std::weak_ptr<FullTask> ft){
-    return TaskDTO::create(
+ServiceTaskDTO TaskConvertor::transferToTaskDTO(std::weak_ptr<FullTask> ft){
+    return ServiceTaskDTO::create(
             ft.lock()->getId(),
             ft.lock()->getTask().getDate(),
             ft.lock()->getTask().getName(),
@@ -14,7 +14,7 @@ TaskDTO TaskConvertor::transferToTaskDTO(std::weak_ptr<FullTask> ft){
             );
 }
 
-Task TaskConvertor::transferToTask(TaskDTO td){
+Task TaskConvertor::transferToTask(ServiceTaskDTO td){
     return Task::create(
             td.getDate(),
             td.getName(),
