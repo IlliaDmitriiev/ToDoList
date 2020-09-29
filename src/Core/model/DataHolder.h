@@ -33,8 +33,10 @@ public:
     std::vector<ServiceTaskDTO> getAllTasks() override;
     std::optional<ServiceTaskDTO> getTask(TaskID id) override;
 
-    const ViewInterface& getByPriority() override;
-    const ViewInterface& getByDate() override;
+    std::vector<ServiceTaskDTO> getAllTasksByPriority() override;
+    std::vector<ServiceTaskDTO> getTasksForToday() override;
+    std::vector<ServiceTaskDTO> getTasksForWeek() override;
+
 
 private:
     bool removeTask(const std::weak_ptr<FullTask> &task) override;

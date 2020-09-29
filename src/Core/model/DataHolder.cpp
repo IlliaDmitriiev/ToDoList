@@ -129,10 +129,36 @@ std::optional<ServiceTaskDTO> DataHolder::getTask(TaskID id){
     }
 }
 
-const ViewInterface& DataHolder::getByPriority(){
-    return *byPriority_;
+
+std::vector<ServiceTaskDTO> DataHolder::getAllTasksByPriority(){
+    auto v = byPriority_->getAllTasksByPrior();
+    std::vector<ServiceTaskDTO> vec;
+    for(auto &i: v) {
+        vec.push_back(TaskConvertor::transferToTaskDTO(i));
+    }
+
+    return vec;
 }
 
-const ViewInterface& DataHolder::getByDate() {
-    return *byDate_;
+std::vector<ServiceTaskDTO> DataHolder::getTasksForToday(){
+    boost::gregorian::date date{boost::gregorian::day_clock::local_day()};
+
+    auto v = byDate_->getTasksForToday(date);
+    std::vector<ServiceTaskDTO> vec;
+    for(auto &i: v) {
+        vec.push_back(TaskConvertor::transferToTaskDTO(i));
+    }
+
+    return vec;
+}
+
+std::vector<ServiceTaskDTO> DataHolder::getTasksForWeek(){
+    boost::gregorian::date date{boost::gregorian::day_clock::local_day()};
+
+    auto v = byDate_->getTasksForWeek(date);
+    std::vector<ServiceTaskDTO> vec;
+    for(auto &i: v) {
+        vec.push_back(TaskConvertor::transferToTaskDTO(i));
+    }
+    return vec;
 }

@@ -97,19 +97,29 @@ public:
      */
     virtual std::optional<ServiceTaskDTO> getTask(TaskID id) = 0;
     /*
-     * Gives an access to view by priority only for reading.
+     * Gives all tasks already sorted by priority.
      *
-     * @return ref to view
+     * @return vector of ServiceTaskDTO
      *
+     * @note if there isn't any required task, function will return empty vector
      */
-    virtual const ViewInterface& getByPriority() = 0;
+    virtual std::vector<ServiceTaskDTO> getAllTasksByPriority() = 0;
     /*
-     * Gives an access to view by date only for reading.
+     * Gives all tasks for today already sorted by priority.
      *
-     * @return ref to view
+     * @return vector of ServiceTaskDTO
      *
+     * @note if there isn't any required task, function will return empty vector
      */
-    virtual const ViewInterface& getByDate() = 0;
+    virtual std::vector<ServiceTaskDTO> getTasksForToday() = 0;
+    /*
+     * Gives all tasks for this week already sorted by priority.
+     *
+     * @return vector of ServiceTaskDTO
+     *
+     * @note if there isn't any required task, function will return empty vector
+     */
+    virtual std::vector<ServiceTaskDTO> getTasksForWeek() = 0;
 
 private:
     /*
