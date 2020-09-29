@@ -557,26 +557,6 @@ TEST_F(DataHolderTest, shouldGetAllTasks) {
     EXPECT_TRUE(Task::Compare(TaskConvertor::transferToTask(tasks[1]), shared_task2->getTask()));
 }
 
-TEST_F(DataHolderTest, shouldReturnViewByDate) {
-    auto viewByPriority = std::make_unique<MockView>();
-    auto viewByDate = std::make_unique<MockView>();
-    auto storage = std::make_unique<MockStorage>();
-    auto generator = std::make_unique<MockGenerator>();
-
-    DataHolder data_holder(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
-    EXPECT_NO_THROW(data_holder.getByDate());
-}
-
-TEST_F(DataHolderTest, shouldReturnViewByPriority) {
-    auto viewByPriority = std::make_unique<MockView>();
-    auto viewByDate = std::make_unique<MockView>();
-    auto storage = std::make_unique<MockStorage>();
-    auto generator = std::make_unique<MockGenerator>();
-
-    DataHolder data_holder(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
-    EXPECT_NO_THROW(data_holder.getByPriority());
-}
-
 TEST_F(DataHolderTest, shouldGetTask) {
     auto viewByPriority = std::make_unique<MockView>();
     auto viewByDate = std::make_unique<MockView>();
@@ -594,3 +574,110 @@ TEST_F(DataHolderTest, shouldGetTask) {
     EXPECT_TRUE(opt.has_value());
 }
 
+TEST_F(DataHolderTest, shouldGetAllTasksByPriority1) {
+    std::vector<std::weak_ptr<FullTask>> weak{shared_task1, shared_task2, shared_task3, shared_task4};
+    auto viewByPriority = std::make_unique<MockView>();
+    auto viewByDate = std::make_unique<MockView>();
+    auto storage = std::make_unique<MockStorage>();
+    auto generator = std::make_unique<MockGenerator>();
+
+    EXPECT_CALL(*viewByPriority, getAllTasksByPrior)
+            .Times(1)
+            .WillOnce(Return(weak));
+
+    DataHolder data(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
+
+    auto vec = data.getAllTasksByPriority();
+    EXPECT_EQ(vec.size(), 4);
+}
+
+TEST_F(DataHolderTest, shouldGetAllTasksByPriority2) {
+    std::vector<std::weak_ptr<FullTask>> weak;
+    auto viewByPriority = std::make_unique<MockView>();
+    auto viewByDate = std::make_unique<MockView>();
+    auto storage = std::make_unique<MockStorage>();
+    auto generator = std::make_unique<MockGenerator>();
+
+    EXPECT_CALL(*viewByPriority, getAllTasksByPrior)
+            .Times(1)
+            .WillOnce(Return(weak));
+
+    DataHolder data(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
+
+    auto vec = data.getAllTasksByPriority();
+    EXPECT_TRUE(vec.empty());
+}
+TEST_F(DataHolderTest, shouldGetTaskForToday) {
+    auto viewByPriority = std::make_unique<MockView>();
+    auto viewByDate = std::make_unique<MockView>();
+    auto storage = std::make_unique<MockStorage>();
+    auto generator = std::make_unique<MockGenerator>();
+
+    std::vector< std::weak_ptr<FullTask>>v{shared_task1, shared_task2, shared_task3};
+
+    EXPECT_CALL(*viewByDate, getTasksForToday)
+            .Times(1)
+            .WillOnce(Return(v));
+
+    boost::gregorian::date date{boost::gregorian::day_clock::local_day()};
+    DataHolder data(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
+    auto vec = data.getTasksForToday();
+    EXPECT_EQ(vec.size(), v.size());
+}
+
+TEST_F(DataHolderTest, shouldGetEmptyVectorOfTaskForToday) {
+    auto viewByPriority = std::make_unique<MockView>();
+    auto viewByDate = std::make_unique<MockView>();
+    auto storage = std::make_unique<MockStorage>();
+    auto generator = std::make_unique<MockGenerator>();
+
+    std::vector< std::weak_ptr<FullTask>>v{};
+
+    EXPECT_CALL(*viewByDate, getTasksForToday)
+            .Times(1)
+            .WillOnce(Return(v));
+
+    boost::gregorian::date date{boost::gregorian::day_clock::local_day()};
+    DataHolder data(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
+    auto vec = data.getTasksForToday();
+    EXPECT_TRUE(vec.empty());
+    EXPECT_EQ(vec.size(), v.size());
+}
+
+
+TEST_F(DataHolderTest, shouldGetTaskForWeek) {
+    auto viewByPriority = std::make_unique<MockView>();
+    auto viewByDate = std::make_unique<MockView>();
+    auto storage = std::make_unique<MockStorage>();
+    auto generator = std::make_unique<MockGenerator>();
+
+    std::vector< std::weak_ptr<FullTask>>v{shared_task1, shared_task2, shared_task3};
+
+    EXPECT_CALL(*viewByDate, getTasksForWeek)
+            .Times(1)
+            .WillOnce(Return(v));
+
+    boost::gregorian::date date{boost::gregorian::day_clock::local_day()};
+    DataHolder data(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
+    auto vec = data.getTasksForWeek();
+    EXPECT_EQ(vec.size(), v.size());
+}
+
+TEST_F(DataHolderTest, shouldGetEmptyVectorOfTaskForWeek) {
+    auto viewByPriority = std::make_unique<MockView>();
+    auto viewByDate = std::make_unique<MockView>();
+    auto storage = std::make_unique<MockStorage>();
+    auto generator = std::make_unique<MockGenerator>();
+
+    std::vector< std::weak_ptr<FullTask>>v{};
+
+    EXPECT_CALL(*viewByDate, getTasksForWeek)
+            .Times(1)
+            .WillOnce(Return(v));
+
+    boost::gregorian::date date{boost::gregorian::day_clock::local_day()};
+    DataHolder data(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
+    auto vec = data.getTasksForWeek();
+    EXPECT_TRUE(vec.empty());
+    EXPECT_EQ(vec.size(), v.size());
+}
