@@ -15,6 +15,16 @@ ServiceTaskDTO ServiceTaskDTO::create(const boost::gregorian::date &date, const 
     ServiceTaskDTO task(date, name, label, priority);
     return task;
 }
+ServiceTaskDTO ServiceTaskDTO::create(const TaskID& id,
+                                      const boost::gregorian::date& date,
+                                      const std::string& name,
+                                      const std::string& label,
+                                      TaskPriority priority,
+                                      bool completed)
+{
+    ServiceTaskDTO task(id, date, name, label, priority, completed);
+    return task;
+}
 
 ServiceTaskDTO::ServiceTaskDTO(const TaskID &taskID, const boost::gregorian::date &date, const std::string &name, const std::string &label,
         TaskPriority priority) : id_(taskID), date_(date), name_(name), label_(label), priority_(priority), completed_(false){}
@@ -23,6 +33,22 @@ ServiceTaskDTO::ServiceTaskDTO(const boost::gregorian::date &date, const std::st
                  TaskPriority priority) : id_(TaskID::create(0)), date_(date),
                                         name_(name), label_(label), priority_(priority), completed_(false) {}
 
+ServiceTaskDTO::ServiceTaskDTO(const TaskID &taskID,
+                               const boost::gregorian::date &date,
+                               const std::string &name,
+                               const std::string &label,
+                               TaskPriority priority,
+                               bool completed)
+                               :
+                               id_(taskID),
+                               date_(date),
+                               name_(name),
+                               label_(label),
+                               priority_(priority),
+                               completed_(completed)
+{
+
+}
 
 const boost::gregorian::date &ServiceTaskDTO::getDate() const {
     return date_;
