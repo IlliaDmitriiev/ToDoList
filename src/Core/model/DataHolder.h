@@ -21,21 +21,21 @@ public:
     {}
 
 public:
-    AddTaskResult addTask(const ServiceTaskDTO &taskDto) override;
-    AddTaskResult addSubtask(TaskID taskID, const ServiceTaskDTO &subtask) override;
+    AddTaskResult addTask(const ModelTaskDTO &taskDto) override;
+    AddTaskResult addSubtask(TaskID taskID, const ModelTaskDTO &subtask) override;
 
     RequstTaskResult deleteTask(TaskID id) override;
     RequstTaskResult complete(TaskID id) override;
-    RequstTaskResult editTask(TaskID id, const ServiceTaskDTO &subtask) override;
+    RequstTaskResult editTask(TaskID id, const ModelTaskDTO &subtask) override;
 
 public:
-    std::vector<ServiceTaskDTO> getSubtasks(TaskID id) override;
-    std::vector<ServiceTaskDTO> getAllTasks() override;
-    std::optional<ServiceTaskDTO> getTask(TaskID id) override;
+    std::vector<ModelTaskDTO> getSubtasks(TaskID id) override;
+    std::vector<ModelTaskDTO> getAllTasks() override;
+    std::optional<ModelTaskDTO> getTask(TaskID id) override;
 
-    std::vector<ServiceTaskDTO> getAllTasksByPriority() override;
-    std::vector<ServiceTaskDTO> getTasksForToday() override;
-    std::vector<ServiceTaskDTO> getTasksForWeek() override;
+    std::vector<ModelTaskDTO> getAllTasksByPriority() override;
+    std::vector<ModelTaskDTO> getTasksForToday() override;
+    std::vector<ModelTaskDTO> getTasksForWeek() override;
 
 
 private:

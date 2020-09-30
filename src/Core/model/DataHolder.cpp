@@ -4,10 +4,10 @@
 
 #include "DataHolder.h"
 
-AddTaskResult DataHolder::addTask(const ServiceTaskDTO &taskDTO){
+AddTaskResult DataHolder::addTask(const ModelTaskDTO &taskDTO){
 
     TaskID id = generator_->generateId();
-    auto shared_task = std::make_shared<FullTask>(FullTask::create(id, TaskConvertor::transferToTask(taskDTO)));
+    auto shared_task = std::make_shared<FullTask>(FullTask::create(id, ModelTaskConvertor::transferToTask(taskDTO)));
 
     if (byDate_->addTask(shared_task) &&
         byPriority_->addTask(shared_task) &&
@@ -19,7 +19,7 @@ AddTaskResult DataHolder::addTask(const ServiceTaskDTO &taskDTO){
     }
 }
 
-AddTaskResult DataHolder::addSubtask(TaskID taskID, const ServiceTaskDTO &subTask){
+AddTaskResult DataHolder::addSubtask(TaskID taskID, const ModelTaskDTO &subTask){
     auto task = storage_->getTask(taskID);
 
     if(task.has_value()) {
@@ -52,10 +52,10 @@ RequstTaskResult DataHolder::complete(TaskID id){
 
 }
 
-RequstTaskResult DataHolder::editTask(TaskID id, const ServiceTaskDTO &subtask) {
+RequstTaskResult DataHolder::editTask(TaskID id, const ModelTaskDTO &subtask) {
     auto task = storage_->getTask(id);
     if(task.has_value()){
-        task.value().lock()->change(TaskConvertor::transferToTask(subtask));
+        task.value().lock()->change(ModelTaskConvertor::transferToTask(subtask));
         return operation_result::TaskRequestedSuccessful();
     }
     else {
@@ -64,15 +64,15 @@ RequstTaskResult DataHolder::editTask(TaskID id, const ServiceTaskDTO &subtask) 
 
 }
 
-std::vector<ServiceTaskDTO> DataHolder::getSubtasks(TaskID id) {
-    std::vector<ServiceTaskDTO> vec;
+std::vector<ModelTaskDTO> DataHolder::getSubtasks(TaskID id) {
+    std::vector<ModelTaskDTO> vec;
     auto node = storage_->getTask(id);
     if(node.has_value()){
         auto subtasks_id = node.value().lock()->getSubtasks();
         for(auto &i: subtasks_id) {
             auto subtask = storage_->getTask(i);
             if (subtask.has_value()) {
-                vec.push_back(TaskConvertor::transferToTaskDTO(subtask.value()));
+                vec.push_back(ModelTaskConvertor::transferToModelTaskDTO(*subtask.value().lock()));
             }
         }
     }
@@ -110,19 +110,19 @@ bool DataHolder::removeTask(const std::weak_ptr<FullTask> &task){
             storage_->deleteSubtaskInParent(task.lock()->getParent(), task.lock()->getId());
 }
 
-std::vector<ServiceTaskDTO> DataHolder::getAllTasks() {
+std::vector<ModelTaskDTO> DataHolder::getAllTasks() {
     auto tasks = storage_->getAllTasks();
-    std::vector<ServiceTaskDTO> DTOTasks;
+    std::vector<ModelTaskDTO> DTOTasks;
     for(auto &i: tasks) {
-        DTOTasks.push_back(TaskConvertor::transferToTaskDTO(i));
+        DTOTasks.push_back(ModelTaskConvertor::transferToModelTaskDTO(*i.lock()));
     }
     return DTOTasks;
 }
 
-std::optional<ServiceTaskDTO> DataHolder::getTask(TaskID id){
+std::optional<ModelTaskDTO> DataHolder::getTask(TaskID id){
     auto task = storage_->getTask(id);
     if (task.has_value()) {
-        return std::optional<ServiceTaskDTO>(TaskConvertor::transferToTaskDTO(task.value()));
+        return std::optional<ModelTaskDTO>(ModelTaskConvertor::transferToModelTaskDTO(*task.value().lock()));
     }
     else {
         return std::nullopt;
@@ -130,35 +130,35 @@ std::optional<ServiceTaskDTO> DataHolder::getTask(TaskID id){
 }
 
 
-std::vector<ServiceTaskDTO> DataHolder::getAllTasksByPriority(){
+std::vector<ModelTaskDTO> DataHolder::getAllTasksByPriority(){
     auto v = byPriority_->getAllTasksByPrior();
-    std::vector<ServiceTaskDTO> vec;
+    std::vector<ModelTaskDTO> vec;
     for(auto &i: v) {
-        vec.push_back(TaskConvertor::transferToTaskDTO(i));
+        vec.push_back(ModelTaskConvertor::transferToModelTaskDTO(*i.lock()));
     }
 
     return vec;
 }
 
-std::vector<ServiceTaskDTO> DataHolder::getTasksForToday(){
+std::vector<ModelTaskDTO> DataHolder::getTasksForToday(){
     boost::gregorian::date date{boost::gregorian::day_clock::local_day()};
 
     auto v = byDate_->getTasksForToday(date);
-    std::vector<ServiceTaskDTO> vec;
+    std::vector<ModelTaskDTO> vec;
     for(auto &i: v) {
-        vec.push_back(TaskConvertor::transferToTaskDTO(i));
+        vec.push_back(ModelTaskConvertor::transferToModelTaskDTO(*i.lock()));
     }
 
     return vec;
 }
 
-std::vector<ServiceTaskDTO> DataHolder::getTasksForWeek(){
+std::vector<ModelTaskDTO> DataHolder::getTasksForWeek(){
     boost::gregorian::date date{boost::gregorian::day_clock::local_day()};
 
     auto v = byDate_->getTasksForWeek(date);
-    std::vector<ServiceTaskDTO> vec;
+    std::vector<ModelTaskDTO> vec;
     for(auto &i: v) {
-        vec.push_back(TaskConvertor::transferToTaskDTO(i));
+        vec.push_back(ModelTaskConvertor::transferToModelTaskDTO(*i.lock()));
     }
     return vec;
 }
