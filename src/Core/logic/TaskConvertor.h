@@ -5,7 +5,7 @@
 #ifndef TODOLIST_TASKCONVERTOR_H
 #define TODOLIST_TASKCONVERTOR_H
 
-#include "Core/model/FullTask.h"
+#include "Core/model/ModelTaskDTO.h"
 #include "Core/api/ServiceTaskDTO.h"
 /*
  *  Class-convertor
@@ -15,8 +15,8 @@
 class TaskConvertor{
 
 public:
-    static ServiceTaskDTO transferToTaskDTO(std::weak_ptr<FullTask> ft);
-    static Task transferToTask(ServiceTaskDTO td);
+    static ModelTaskDTO transferToModelDTO(ServiceTaskDTO);
+    static ServiceTaskDTO transferToServiceDTO(ModelTaskDTO);
 
 };
 
