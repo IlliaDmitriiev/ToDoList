@@ -5,13 +5,10 @@
 #ifndef TODOLIST_TASKSERVICEINTERFACE_H
 #define TODOLIST_TASKSERVICEINTERFACE_H
 
-#include "Core/logic/IDGenerator.h"
-#include "Core/logic/ViewInterface.h"
-#include "Core/logic/ViewByPriority.h"
-#include "Core/logic/ViewByDate.h"
-#include "Core/logic/TaskConvertor.h"
-#include "Core/model/TaskStorage.h"
+
 #include "ReturnType.h"
+#include "Core/model/DataInterface.h"
+#include "Core/logic/TaskConvertor.h"
 
 /*
  *  Enter point to the Core.
@@ -132,16 +129,6 @@ public:
      */
     virtual std::optional<ServiceTaskDTO> getTask(TaskID id) = 0;
     virtual ~TaskServiceInterface() = default;
-
-private:
-    /*
-     * Deletes task from system.
-     *
-     * @param: [task link].
-     *
-     * @return true if removing is successful otherwise false
-     */
-    virtual bool removeTask(const std::weak_ptr<FullTask> &task) = 0;
 
 };
 
