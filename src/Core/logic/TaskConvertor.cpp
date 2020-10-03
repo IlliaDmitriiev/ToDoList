@@ -4,21 +4,23 @@
 
 #include "TaskConvertor.h"
 
-ServiceTaskDTO TaskConvertor::transferToTaskDTO(std::weak_ptr<FullTask> ft){
-    return ServiceTaskDTO::create(
-            ft.lock()->getId(),
-            ft.lock()->getTask().getDate(),
-            ft.lock()->getTask().getName(),
-            ft.lock()->getTask().getLabel(),
-            ft.lock()->getTask().getPriority()
-            );
+ModelTaskDTO TaskConvertor::transferToModelDTO(ServiceTaskDTO task){
+    return ModelTaskDTO::create(task.getId(),
+                                task.getDate(),
+                                task.getName(),
+                                task.getLabel(),
+                                task.getPriority(),
+                                task.isCompleted()
+    );
 }
 
-Task TaskConvertor::transferToTask(ServiceTaskDTO td){
-    return Task::create(
-            td.getDate(),
-            td.getName(),
-            td.getLabel(),
-            td.getPriority()
-            );
+ServiceTaskDTO TaskConvertor::transferToServiceDTO(ModelTaskDTO task){
+    return ServiceTaskDTO::create(task.getId(),
+                                  task.getDate(),
+                                  task.getName(),
+                                  task.getLabel(),
+                                  task.getPriority(),
+                                  task.isCompleted()
+    );
 }
+

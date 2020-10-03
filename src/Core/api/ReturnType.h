@@ -7,6 +7,7 @@
 
 #include "TaskID.h"
 #include <string>
+#include <optional>
 
 /*
  * Structures containing info about the result of executing service request.

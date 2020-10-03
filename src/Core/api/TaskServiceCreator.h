@@ -6,6 +6,7 @@
 #define TODOLIST_TASKSERVICECREATOR_H
 
 #include "TaskService.h"
+#include "Core/model/DataHolderCreator.h"
 
 /*
  *  TaskService injector
@@ -21,17 +22,9 @@ namespace todo_list_Core{
      */
     static std::unique_ptr<TaskService> createService() {
 
-        auto generator = std::make_unique<IDGenerator>();
-        auto viewByPriority = std::make_unique<ViewByPriority>();
-        auto viewByDate = std::make_unique<ViewByDate>();
-        auto storage = std::make_unique<TaskStorage>();
+        auto model = todo_list_model::createDataHolder();
 
-        return std::make_unique<TaskService>(
-                    std::move(generator),
-                    std::move(viewByPriority),
-                    std::move(viewByDate),
-                    std::move(storage)
-                );
+        return std::make_unique<TaskService>(std::move(model));
     }
 
 }

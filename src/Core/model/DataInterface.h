@@ -8,7 +8,7 @@
 #include "TaskStorageInterface.h"
 #include "Core/logic/ViewInterface.h"
 #include "Core/api/ReturnTypeCreator.h"
-#include "Core/logic/TaskConvertor.h"
+#include "ModelTaskConvertor.h"
 /*
  * Model api to manage data.
  *
@@ -20,20 +20,20 @@ public:
    /*
     * Adds given task to system.
     *
-    * @param: ServiceTaskDTO without TaskID.
+    * @param: ModelTaskDTO without TaskID.
     *
     * @return object containing id of new created task or info about possible errors.
     */
-    virtual AddTaskResult addTask(const ServiceTaskDTO &taskDto) = 0;
+    virtual AddTaskResult addTask(const ModelTaskDTO &taskDto) = 0;
     /* bool removeTask(const std::weak_ptr<FullTask> &task) override;
      * Adds subtask to the task with given TaskID.
      *
      * @param: [TaskID] It needs to add subtask to task by this id.
-     * @param: ServiceTaskDTO without TaskID.
+     * @param: ModelTaskDTO without TaskID.
      *
      * @return object containing id of new created task or info about possible errors.
      */
-    virtual AddTaskResult addSubtask(TaskID taskID, const ServiceTaskDTO &subtask) = 0;
+    virtual AddTaskResult addSubtask(TaskID taskID, const ModelTaskDTO &subtask) = 0;
     /*
      * Deletes task from system.
      *
@@ -60,14 +60,14 @@ public:
      * Changing task to the given.
      *
      * @param: [TaskID] It needs to find task by this id.
-     * @param: [ServiceTaskDTO] It needs to change task with a new one.
+     * @param: [ModelTaskDTO] It needs to change task with a new one.
      *
      * @return object containing info about possible error occurred
      * or info that operation is successful.
      *
      * @note: All subtasks will NOT be edited recursively.
      */
-    virtual RequstTaskResult editTask(TaskID id, const ServiceTaskDTO &subtask) = 0;
+    virtual RequstTaskResult editTask(TaskID id, const ModelTaskDTO &subtask) = 0;
 
 public:
     /*
@@ -75,19 +75,19 @@ public:
      *
      * @param: [TaskID] It needs to find task by this id.
      *
-     * @return vector of ServiceTaskDTO
+     * @return vector of ModelTaskDTO
      *
      * @note if there isn't any required task, function will return empty vector
      */
-    virtual std::vector<ServiceTaskDTO> getSubtasks(TaskID id) = 0;
+    virtual std::vector<ModelTaskDTO> getSubtasks(TaskID id) = 0;
     /*
      * Returns all task
      *
-     * @return vector of ServiceTaskDTO
+     * @return vector of ModelTaskDTO
      *
      * @note if there isn't any required task, function will return empty vector
      */
-    virtual std::vector<ServiceTaskDTO> getAllTasks() = 0;
+    virtual std::vector<ModelTaskDTO> getAllTasks() = 0;
     /*
      * Gives task with given id if such exists in system.
      *
@@ -95,21 +95,31 @@ public:
      *
      * @return taskDTO if such task exists otherwise nullopt.
      */
-    virtual std::optional<ServiceTaskDTO> getTask(TaskID id) = 0;
+    virtual std::optional<ModelTaskDTO> getTask(TaskID id) = 0;
     /*
-     * Gives an access to view by priority only for reading.
+     * Gives all tasks already sorted by priority.
      *
-     * @return ref to view
+     * @return vector of ModelTaskDTO
      *
+     * @note if there isn't any required task, function will return empty vector
      */
-    virtual const ViewInterface& getByPriority() = 0;
+    virtual std::vector<ModelTaskDTO> getAllTasksByPriority() = 0;
     /*
-     * Gives an access to view by date only for reading.
+     * Gives all tasks for today already sorted by priority.
      *
-     * @return ref to view
+     * @return vector of ModelTaskDTO
      *
+     * @note if there isn't any required task, function will return empty vector
      */
-    virtual const ViewInterface& getByDate() = 0;
+    virtual std::vector<ModelTaskDTO> getTasksForToday() = 0;
+    /*
+     * Gives all tasks for this week already sorted by priority.
+     *
+     * @return vector of ModelTaskDTO
+     *
+     * @note if there isn't any required task, function will return empty vector
+     */
+    virtual std::vector<ModelTaskDTO> getTasksForWeek() = 0;
 
 private:
     /*

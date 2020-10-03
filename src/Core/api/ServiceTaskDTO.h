@@ -16,10 +16,23 @@
 class ServiceTaskDTO {
 
 public:
-    static ServiceTaskDTO create(const TaskID &taskId, const boost::gregorian::date &date, const std::string &name, const std::string &label,
-                          TaskPriority priority);
-    static ServiceTaskDTO create(const boost::gregorian::date &date, const std::string &name, const std::string &label,
-                                   TaskPriority priority);
+    static ServiceTaskDTO create(const TaskID &,
+                                 const boost::gregorian::date &,
+                                 const std::string &,
+                                 const std::string &,
+                                 TaskPriority );
+
+    static ServiceTaskDTO create(const boost::gregorian::date &,
+                                 const std::string &,
+                                 const std::string &,
+                                 TaskPriority);
+
+    static ServiceTaskDTO create(const TaskID&,
+                                 const boost::gregorian::date &,
+                                 const std::string &,
+                                 const std::string &,
+                                 TaskPriority,
+                                 bool);
 public:
 
     const boost::gregorian::date &getDate() const;
@@ -35,10 +48,23 @@ public:
     bool isCompleted() const;
 
 private:
-    ServiceTaskDTO(const TaskID &taskID, const boost::gregorian::date &date, const std::string &name, const std::string &label,
-            TaskPriority priority);
-    ServiceTaskDTO(const boost::gregorian::date &date, const std::string &name, const std::string &label,
-            TaskPriority priority);
+    ServiceTaskDTO(const TaskID &taskID,
+                   const boost::gregorian::date &date,
+                   const std::string &name,
+                   const std::string &label,
+                   TaskPriority priority);
+
+    ServiceTaskDTO(const boost::gregorian::date &date,
+                   const std::string &name,
+                   const std::string &label,
+                   TaskPriority priority);
+
+    ServiceTaskDTO(const TaskID &taskID,
+                   const boost::gregorian::date &date,
+                   const std::string &name,
+                   const std::string &label,
+                   TaskPriority priority,
+                   bool completed);
 
 private:
     TaskID id_;

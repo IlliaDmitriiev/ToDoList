@@ -10,16 +10,9 @@
 class TaskService: public TaskServiceInterface {
 
 public:
-    TaskService(
-        std::unique_ptr<IDGeneratorInterface> generator,
-        std::unique_ptr<ViewInterface> byPriority,
-        std::unique_ptr<ViewInterface> byDate,
-        std::unique_ptr<TaskStorageInterface> storage)
+    explicit TaskService(std::unique_ptr<DataInterface> model)
     :
-    generator_(std::move(generator)),
-    byPriority_(std::move(byPriority)),
-    byDate_(std::move(byDate)),
-    storage_(std::move(storage))
+    model_(std::move(model))
     {}
 
 public:
@@ -48,14 +41,8 @@ public:
     std::optional<ServiceTaskDTO> getTask(TaskID id) override;
 
 private:
+    std::unique_ptr<DataInterface> model_;
 
-    bool removeTask(const std::weak_ptr<FullTask> &task) override;
-
-private:
-    std::unique_ptr<IDGeneratorInterface> generator_;
-    std::unique_ptr<TaskStorageInterface> storage_;
-    std::unique_ptr<ViewInterface> byPriority_;
-    std::unique_ptr<ViewInterface> byDate_;
 };
 
 #endif //TODOLIST_TASKSERVICE_H

@@ -11,45 +11,38 @@ class TaskConvertorTest : public ::testing::Test {
 };
 
 
-TEST_F(TaskConvertorTest, shouldConvertFullTaskIntoDTO) {
-    IDGenerator gen;
-    TaskConvertor con;
+TEST_F(TaskConvertorTest, shouldConvert1) {
 
-    Task t = Task::create(
-            boost::gregorian::date(2020, 7, 31),
-            "name1",
-            "",
-            TaskPriority::None);
-    FullTask ft = FullTask::create(gen.generateId(), t);
-    auto sft = std::make_shared<FullTask>(ft);
-    ServiceTaskDTO td = con.transferToTaskDTO(sft);
+    auto model_task = ModelTaskDTO::create(TaskID::create(5),
+                                           boost::gregorian::date(2020,10,10),
+                                           "name",
+                                           "label",
+                                           TaskPriority::Second,
+                                           true);
+    auto task = TaskConvertor::transferToServiceDTO(model_task);
 
-    EXPECT_EQ(td.getId().getId(), 0);
-    EXPECT_EQ(td.getPriority(), TaskPriority::None);
-    EXPECT_EQ(td.getLabel(), "");
-    EXPECT_EQ(td.getName(), "name1");
-    EXPECT_EQ(td.getDate().year(), 2020);
-    EXPECT_EQ(td.getDate().month(), 7);
-    EXPECT_EQ(td.getDate().day(), 31);
+    EXPECT_EQ(task.getId().getId(), model_task.getId().getId());
+    EXPECT_EQ(task.getPriority(), model_task.getPriority());
+    EXPECT_EQ(task.getLabel(), model_task.getLabel());
+    EXPECT_EQ(task.getName(), model_task.getName());
+    EXPECT_EQ(task.getDate(), model_task.getDate());
+    EXPECT_EQ(task.isCompleted(), model_task.isCompleted());
 }
 
-TEST_F(TaskConvertorTest, shouldConvertTaskDTOIntoTask) {
-    IDGenerator gen;
-    TaskConvertor con;
-    ServiceTaskDTO td = ServiceTaskDTO::create(
-            boost::gregorian::date(2020, 7, 31),
-            "name1",
-            "",
-            TaskPriority::None
-            );
+TEST_F(TaskConvertorTest, shouldConvert2) {
 
-    Task t = con.transferToTask(td);
+    auto task = ServiceTaskDTO::create(TaskID::create(5),
+                                           boost::gregorian::date(2020,10,10),
+                                           "name",
+                                           "label",
+                                           TaskPriority::Second,
+                                           true);
+    auto model_task = TaskConvertor::transferToModelDTO(task);
 
-    EXPECT_EQ(td.getId().getId(), 0);
-    EXPECT_EQ(td.getPriority(), TaskPriority::None);
-    EXPECT_EQ(td.getLabel(), "");
-    EXPECT_EQ(td.getName(), "name1");
-    EXPECT_EQ(td.getDate().year(), 2020);
-    EXPECT_EQ(td.getDate().month(), 7);
-    EXPECT_EQ(td.getDate().day(), 31);
+    EXPECT_EQ(task.getId().getId(), model_task.getId().getId());
+    EXPECT_EQ(task.getPriority(), model_task.getPriority());
+    EXPECT_EQ(task.getLabel(), model_task.getLabel());
+    EXPECT_EQ(task.getName(), model_task.getName());
+    EXPECT_EQ(task.getDate(), model_task.getDate());
+    EXPECT_EQ(task.isCompleted(), model_task.isCompleted());
 }
