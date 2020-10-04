@@ -128,6 +128,18 @@ std::optional<ModelTaskDTO> DataHolder::getTask(TaskID id){
         return std::nullopt;
     }
 }
+std::optional<TaskID> DataHolder::getParent(TaskID id) {
+    auto task = storage_->getTask(id);
+    if (!task.has_value()){
+        return std::nullopt;
+    }
+    else if (task.value().lock()->getParent().getId() == id.getId()){
+        return std::nullopt;
+    }
+    else{
+        return task.value().lock()->getParent();
+    }
+}
 
 
 std::vector<ModelTaskDTO> DataHolder::getAllTasksByPriority(){

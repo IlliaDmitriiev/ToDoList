@@ -32,7 +32,7 @@ public:
     std::vector<ModelTaskDTO> getSubtasks(TaskID id) override;
     std::vector<ModelTaskDTO> getAllTasks() override;
     std::optional<ModelTaskDTO> getTask(TaskID id) override;
-
+    std::optional<TaskID> getParent(TaskID id) override;
     std::vector<ModelTaskDTO> getAllTasksByPriority() override;
     std::vector<ModelTaskDTO> getTasksForToday() override;
     std::vector<ModelTaskDTO> getTasksForWeek() override;
