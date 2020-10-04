@@ -3,7 +3,9 @@
 //
 
 #include <gtest/gtest.h>
-#include <gmock/gmock.h>
+#include "Mock/GeneratorMock.h"
+#include "Mock/StorageMock.h"
+#include "Mock/ViewMock.h"
 #include "Core/model/DataHolder.h"
 
 using ::testing::Return;
@@ -55,33 +57,6 @@ public:
         shared_task3 = std::make_shared<FullTask>(task3);
         shared_task4 = std::make_shared<FullTask>(task4);
     }
-};
-
-class MockStorage : public TaskStorageInterface {
-
-public:
-    MOCK_METHOD(std::optional<std::weak_ptr<FullTask>>, getTask, (TaskID), (override));
-    MOCK_METHOD(bool, addTask, (std::shared_ptr<FullTask>), (override));
-    MOCK_METHOD(bool, deleteTask, (TaskID), (override));
-    MOCK_METHOD(bool, deleteSubtaskInParent, (TaskID, TaskID), (override));
-    MOCK_METHOD(std::vector<std::weak_ptr<FullTask>>, getAllTasks,(),(override));
-};
-
-class MockView : public ViewInterface{
-
-public:
-    MOCK_METHOD(bool, addTask, (const std::weak_ptr<FullTask>&), (override));
-    MOCK_METHOD(bool, deleteTask, (const std::weak_ptr<FullTask>&), (override));
-
-    MOCK_METHOD(std::vector<std::weak_ptr<FullTask>>, getAllTasksByPrior, (),(override));
-    MOCK_METHOD(std::vector<std::weak_ptr<FullTask>>, getTasksForToday, (boost::gregorian::date),(override));
-    MOCK_METHOD(std::vector<std::weak_ptr<FullTask>>, getTasksForWeek, (boost::gregorian::date),(override));
-};
-
-class MockGenerator : public IDGeneratorInterface {
-
-public:
-    MOCK_METHOD(TaskID, generateId, (), (override));
 };
 
 TEST_F(DataHolderTest, shouldAddTaskSuccessfully) {
@@ -474,6 +449,53 @@ TEST_F(DataHolderTest, shouldEditTask) {
     EXPECT_EQ(outcome.result, ResultType::SUCCESS);
     EXPECT_TRUE(Task::Compare(shared_task2->getTask(), shared_task4->getTask()));
 }
+
+TEST_F(DataHolderTest, shouldNotGetPerent1) {
+    auto viewByPriority = std::make_unique<MockView>();
+    auto viewByDate = std::make_unique<MockView>();
+    auto storage = std::make_unique<MockStorage>();
+    auto generator = std::make_unique<MockGenerator>();
+
+    EXPECT_CALL(*storage, getTask)
+            .Times(1)
+            .WillOnce(Return(std::nullopt));
+
+    DataHolder data_holder(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
+
+    EXPECT_FALSE(data_holder.getParent(TaskID::create(4148)).has_value());
+}
+TEST_F(DataHolderTest, shouldNotGetPerent2) {
+    auto viewByPriority = std::make_unique<MockView>();
+    auto viewByDate = std::make_unique<MockView>();
+    auto storage = std::make_unique<MockStorage>();
+    auto generator = std::make_unique<MockGenerator>();
+
+    std::weak_ptr<FullTask> weak2 = shared_task2;
+    EXPECT_CALL(*storage, getTask)
+            .Times(1)
+            .WillOnce(Return(weak2));
+
+    DataHolder data_holder(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
+
+    EXPECT_FALSE(data_holder.getParent(weak2.lock()->getId()).has_value());
+}
+
+TEST_F(DataHolderTest, shouldGetPerent) {
+    auto viewByPriority = std::make_unique<MockView>();
+    auto viewByDate = std::make_unique<MockView>();
+    auto storage = std::make_unique<MockStorage>();
+    auto generator = std::make_unique<MockGenerator>();
+
+    std::weak_ptr<FullTask> weak2 = shared_task2;
+    EXPECT_CALL(*storage, getTask)
+            .Times(1)
+            .WillOnce(Return(weak2));
+
+    DataHolder data_holder(std::move(generator), std::move(viewByPriority), std::move(viewByDate), std::move(storage));
+
+    EXPECT_TRUE(data_holder.getParent(TaskID::create(4148)).has_value());
+}
+
 
 TEST_F(DataHolderTest, shouldGetSubtasks) {
     auto viewByPriority = std::make_unique<MockView>();
