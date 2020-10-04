@@ -3,20 +3,13 @@
 //
 
 #include <gtest/gtest.h>
-#include <gmock/gmock.h>
+#include "Mock/ConsoleIOMock.h"
 #include "CLI/Controller/ParseMachine.h"
 
 using ::testing::Return;
 
 class ParseMachineTest : public ::testing::Test {
     
-};
-
-
-class MockConsoleIO : public IO {
-public:
-    MOCK_METHOD(std::string, input, (), (override));
-    MOCK_METHOD(void, output, (std::string), (override));
 };
 
 TEST_F(ParseMachineTest, shouldParseGraph1) {
