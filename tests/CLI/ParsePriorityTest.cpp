@@ -3,7 +3,7 @@
 //
 
 #include <gtest/gtest.h>
-#include <gmock/gmock.h>
+#include "Mock/ConsoleIOMock.h"
 #include "CLI/States/Parse/ParsePriority.h"
 
 using ::testing::Return;
@@ -11,13 +11,6 @@ using ::testing::Return;
 class ParsePriorityTest : public ::testing::Test {
 public:
     ParsePriority state;
-};
-
-
-class MockConsoleIO : public IO {
-public:
-    MOCK_METHOD(std::string, input, (), (override));
-    MOCK_METHOD(void, output, (std::string), (override));
 };
 
 TEST_F(ParsePriorityTest, shouldRead1) {

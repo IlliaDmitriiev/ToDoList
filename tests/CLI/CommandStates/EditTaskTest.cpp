@@ -7,9 +7,8 @@
 //
 
 #include <gtest/gtest.h>
-#include <gmock/gmock.h>
-#include "Core/api/TaskServiceInterface.h"
-#include "Core/api/ReturnTypeCreator.h"
+#include "Mock/ConsoleIOMock.h"
+#include "Mock/ServiceMock.h"
 #include "CLI/States/Command/EditTaskCommand.h"
 #include "CLI/Namespaces/CommandMapCreator.h"
 #include "CLI/Model/ConsoleContext.h"
@@ -22,34 +21,6 @@ public:
     void SetUp() override{
     }
 };
-
-class MockConsoleIO : public IO {
-public:
-    MOCK_METHOD(std::string, input, (), (override));
-    MOCK_METHOD(void, output, (std::string), (override));
-};
-
-class MockTaskService : public TaskServiceInterface {
-
-public:
-    MOCK_METHOD(AddTaskResult, addTask, (const ServiceTaskDTO&), (override));
-    MOCK_METHOD(AddTaskResult, addSubtask, (TaskID, const ServiceTaskDTO &), (override));
-    MOCK_METHOD(RequstTaskResult, deleteTask, (TaskID), (override));
-    MOCK_METHOD(RequstTaskResult, complete, (TaskID), (override));
-    MOCK_METHOD(RequstTaskResult, postponeTask, (TaskID, boost::gregorian::date), (override));
-    MOCK_METHOD(RequstTaskResult, editTask, (TaskID id, const ServiceTaskDTO&), (override));
-public:
-
-    MOCK_METHOD(std::vector<ServiceTaskDTO>, getSubtasks, (TaskID), (override));
-    MOCK_METHOD(std::vector<ServiceTaskDTO>, getAllTasksByPriority, (), (override));
-    MOCK_METHOD(std::vector<ServiceTaskDTO>, getTasksForToday, (), (override));
-    MOCK_METHOD(std::vector<ServiceTaskDTO>, getTasksForWeek, (), (override));
-    MOCK_METHOD(std::optional<ServiceTaskDTO>, getTask, (TaskID), (override));
-
-private:
-    MOCK_METHOD(bool, removeTask, (const std::weak_ptr<FullTask> &), (override));
-};
-
 
 TEST_F(EditTaskTest, shouldRead1) {
     auto io = std::make_unique<MockConsoleIO>();

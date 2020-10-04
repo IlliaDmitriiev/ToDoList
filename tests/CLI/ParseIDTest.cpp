@@ -3,7 +3,7 @@
 //
 
 #include <gtest/gtest.h>
-#include <gmock/gmock.h>
+#include "Mock/ConsoleIOMock.h"
 #include "CLI/States/Parse/ParseID.h"
 
 using ::testing::Return;
@@ -11,13 +11,6 @@ using ::testing::Return;
 class ParseIDTest : public ::testing::Test {
 public:
     ParseID state;
-};
-
-
-class MockConsoleIO : public IO {
-public:
-    MOCK_METHOD(std::string, input, (), (override));
-    MOCK_METHOD(void, output, (std::string), (override));
 };
 
 TEST_F(ParseIDTest, shouldRead1) {
