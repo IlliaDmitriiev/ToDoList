@@ -97,6 +97,14 @@ public:
      */
     virtual std::optional<ModelTaskDTO> getTask(TaskID id) = 0;
     /*
+    * Gives id of parent task.
+    *
+    * @param: [taskID].
+    *
+    * @return taskID if parent exists otherwise nullopt.
+    */
+    virtual std::optional<TaskID> getParent(TaskID id) = 0;
+    /*
      * Gives all tasks already sorted by priority.
      *
      * @return vector of ModelTaskDTO
