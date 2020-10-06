@@ -5,8 +5,8 @@
 #ifndef TODOLIST_TASKSERVICECREATOR_H
 #define TODOLIST_TASKSERVICECREATOR_H
 
-#include "TaskService.h"
-#include "Core/model/DataHolderCreator.h"
+#include "Core/api/TaskService.h"
+#include "DataHolderCreator.h"
 
 /*
  *  TaskService injector
