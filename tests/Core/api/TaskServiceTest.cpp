@@ -313,3 +313,54 @@ TEST_F(TaskServiceTest, shouldGetTask) {
     auto result = service->getTask(TaskID::create(4));
     EXPECT_TRUE(result.has_value());
 }
+
+TEST_F(TaskServiceTest, shouldSave) {
+    auto data_mock =  std::make_unique<DataMock>();
+    auto task = ModelTaskDTO::create(TaskID::create(147),
+                                     boost::gregorian::date(2020,10,10),
+                                     "name",
+                                     "label",
+                                     TaskPriority::Second,
+                                     true);
+    std::vector<ModelTaskDTO> model_tasks{task,task,task};
+    std::vector<ModelTaskDTO> empty;
+    EXPECT_CALL(*data_mock, getAllTasks)
+            .Times(1)
+            .WillOnce(Return(model_tasks));
+    EXPECT_CALL(*data_mock, getParent)
+            .Times(3)
+            .WillRepeatedly(Return(std::nullopt));
+    EXPECT_CALL(*data_mock, getSubtasks)
+            .Times(3)
+            .WillRepeatedly(Return(empty));
+    auto service = std::make_unique<TaskService>(std::move(data_mock));
+
+    auto result = service->save();
+    EXPECT_EQ(result.result, ResultType::SUCCESS);
+}
+
+TEST_F(TaskServiceTest, shouldLoad) {
+    auto data_mock =  std::make_unique<DataMock>();
+    auto task = ModelTaskDTO::create(TaskID::create(147),
+                                     boost::gregorian::date(2020,10,10),
+                                     "name",
+                                     "label",
+                                     TaskPriority::Second,
+                                     true);
+    std::vector<ModelTaskDTO> model_tasks{task,task,task};
+    std::vector<ModelTaskDTO> empty;
+    EXPECT_CALL(*data_mock, getAllTasks)
+            .Times(1)
+            .WillOnce(Return(model_tasks));
+    EXPECT_CALL(*data_mock, getParent)
+            .Times(3)
+            .WillRepeatedly(Return(std::nullopt));
+    EXPECT_CALL(*data_mock, getSubtasks)
+            .Times(3)
+            .WillRepeatedly(Return(empty));
+    auto service = std::make_unique<TaskService>(std::move(data_mock));
+
+    auto result = service->save();
+    service->load();
+    EXPECT_EQ(service->getAllTasksByPriority().size(), 3);
+}
