@@ -5,8 +5,8 @@
 #ifndef TODOLIST_MODELTASKCONVERTOR_H
 #define TODOLIST_MODELTASKCONVERTOR_H
 
-#include "ModelTaskDTO.h"
-#include "FullTask.h"
+#include "Core/model/ModelTaskDTO.h"
+#include "Core/model/FullTask.h"
 
 class ModelTaskConvertor {
 public:

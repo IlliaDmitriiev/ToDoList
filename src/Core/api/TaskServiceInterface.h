@@ -8,7 +8,7 @@
 
 #include "ReturnType.h"
 #include "Core/model/DataInterface.h"
-#include "Core/logic/TaskConvertor.h"
+#include "Core/utils/TaskConvertor.h"
 
 /*
  *  Enter point to the Core.

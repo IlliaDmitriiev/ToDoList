@@ -7,7 +7,7 @@
 
 #include "CLI/Controller/StateMachine.h"
 #include "CLI/Model/ConsoleContext.h"
-#include "Core/api/TaskServiceCreator.h"
+#include "Core/utils/TaskServiceCreator.h"
 #include "CLI/States/Command/CommandOption.h"
 
 namespace todo_list_CLI{
