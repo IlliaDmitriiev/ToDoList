@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 #include "Core/logic/IDGenerator.h"
-#include "Core/logic/TaskConvertor.h"
+#include "Core/utils/TaskConvertor.h"
 
 class TaskConvertorTest : public ::testing::Test {
 
