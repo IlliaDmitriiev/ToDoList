@@ -6,6 +6,7 @@
 #define TODOLIST_TASKSERVICE_H
 
 #include "TaskServiceInterface.h"
+#include "fstream"
 
 class TaskService: public TaskServiceInterface {
 
@@ -39,6 +40,11 @@ public:
     std::vector<ServiceTaskDTO> getTasksForWeek() override;
 
     std::optional<ServiceTaskDTO> getTask(TaskID id) override;
+
+public:
+    RequstTaskResult save() override;
+
+    RequstTaskResult load() override;
 
 private:
     std::unique_ptr<DataInterface> model_;

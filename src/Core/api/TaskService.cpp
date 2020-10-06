@@ -4,6 +4,8 @@
 
 #include "TaskService.h"
 #include "Core/utils/ReturnTypeCreator.h"
+#include "Core/utils/DataHolderCreator.h"
+#include "Core/persistence/ModelPersister.h"
 
 AddTaskResult TaskService::addTask(const ServiceTaskDTO &taskDTO){
     return model_->addTask(TaskConvertor::transferToModelDTO(taskDTO));
@@ -92,4 +94,27 @@ std::optional<ServiceTaskDTO> TaskService::getTask(TaskID id){
     }
 }
 
+RequstTaskResult TaskService::save(){
+    std::fstream file("file1.txt", std::fstream::out);
+    auto persister = std::make_unique<ModelPersister>(*model_, file);
+    if (persister->save()){
+        return operation_result::TaskRequestedSuccessful();
+    }
+    else {
+        return operation_result::TaskRequestedUnsuccessful("errors occurred while saving");
+    }
+}
 
+RequstTaskResult TaskService::load(){
+    std::fstream file("file1.txt", std::fstream::in);
+    auto new_model = todo_list_model::createDataHolder();
+    auto persister = std::make_unique<ModelPersister>(*new_model, file);
+    if (persister->load()){
+        model_.reset();
+        model_= std::move(new_model);
+        return operation_result::TaskRequestedSuccessful();
+    }
+    else {
+        return operation_result::TaskRequestedUnsuccessful("errors occurred while saving");
+    }
+}
