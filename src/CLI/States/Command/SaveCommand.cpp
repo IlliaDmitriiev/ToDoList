@@ -18,10 +18,10 @@ void SaveCommand::execute(IO& io, Context& context) {
     auto &service = context.getService();
     auto result = service.save();
     if ( ResultType::FAILURE == result.result) {
-        io.output(result.error_message);
+        io.output(result.error_message+"\n");
     }
     else {
-        io.output("System was saved successfully.");
+        io.output("System was saved successfully.\n");
     }
 
 }
