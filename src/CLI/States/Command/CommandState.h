@@ -32,6 +32,8 @@ public:
         View,
         Edit,
         Exit,
+        Save,
+        Load,
         Skip,
         Error
     };

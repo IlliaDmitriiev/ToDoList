@@ -14,7 +14,7 @@ CommandState::Type CommandOption::read(IO& io) {
 void CommandOption::print(IO& io) {
     io.output("Available commands:\nadd task\nadd subtask\ndelete task\n"
               "complete task\npostpone task\nshow all tasks\nshow all tasks for today\n"
-              "show all tasks for week\nexit\nWrite any command.\n");
+              "show all tasks for week\nsave\nload\nexit\nWrite any command.\n");
 }
 
 void CommandOption::execute(IO&, Context&) {
