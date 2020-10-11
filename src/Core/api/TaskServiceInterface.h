@@ -128,6 +128,21 @@ public:
      * @return taskDTO if such task exists otherwise nullopt.
      */
     virtual std::optional<ServiceTaskDTO> getTask(TaskID id) = 0;
+    /*
+     * saves all tasks
+     *
+     * @return object containing info about possible error occurred
+     * or info that operation is successful.
+     */
+    virtual RequstTaskResult save() = 0;
+    /*
+     * loads all tasks in system
+     *
+     * @return object containing info about possible error occurred
+     * or info that operation is successful.
+     */
+    virtual RequstTaskResult load() = 0;
+
     virtual ~TaskServiceInterface() = default;
 
 };
