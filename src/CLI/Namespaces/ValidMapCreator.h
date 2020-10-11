@@ -28,6 +28,8 @@ namespace ValidMap {
                 {"show all tasks for week", CommandState::Type::ShowAllTasksForWeek},
                 {"view", CommandState::Type::View},
                 {"edit", CommandState::Type::Edit},
+                {"save", CommandState::Type::Save},
+                {"load", CommandState::Type::Load},
                 {"back", CommandState::Type::Skip},
                 {"exit", CommandState::Type::Exit}
         };

@@ -10,6 +10,8 @@
 #include "CLI/States/Command/SubmenuCommand.h"
 #include "CLI/States/Command/ViewTaskCommand.h"
 #include "CLI/States/Command/EditTaskCommand.h"
+#include "CLI/States/Command/SaveCommand.h"
+#include "CLI/States/Command/LoadCommand.h"
 #include "CLI/States/Command/AddTaskCommand.h"
 #include "CLI/States/Command/AddSubtaskCommand.h"
 #include "CLI/States/Command/DeleteTaskCommand.h"
@@ -26,6 +28,8 @@ namespace CommandMap{
         links[CommandState::Type::Option]               = std::make_unique<CommandOption>();
         links[CommandState::Type::Submenu]              = std::make_unique<SubmenuCommand>();
         links[CommandState::Type::Skip]                 = std::make_unique<CommandOption>();
+        links[CommandState::Type::Save]                 = std::make_unique<SaveCommand>();
+        links[CommandState::Type::Load]                 = std::make_unique<LoadCommand>();
         links[CommandState::Type::Edit]                 = std::make_unique<EditTaskCommand>();
         links[CommandState::Type::View]                 = std::make_unique<ViewTaskCommand>();
         links[CommandState::Type::AddTask]              = std::make_unique<AddTaskCommand>();
