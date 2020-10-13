@@ -17,6 +17,7 @@ public:
         Date,
         ID,
         Priority,
+        Filename,
         Exit
     };
 

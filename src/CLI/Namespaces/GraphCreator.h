@@ -98,6 +98,26 @@ namespace transitions_graph{
             return links;
         }
     }
+    namespace save_data{
+        static std::map<ParseState::Type, ParseState::Type> create(){
+
+            std::map<ParseState::Type, ParseState::Type> links{
+                    {ParseState::Type::Filename, ParseState::Type::Exit},
+            };
+
+            return links;
+        }
+    }
+    namespace load_data{
+        static std::map<ParseState::Type, ParseState::Type> create(){
+
+            std::map<ParseState::Type, ParseState::Type> links{
+                    {ParseState::Type::Filename, ParseState::Type::Exit},
+            };
+
+            return links;
+        }
+    }
 }
 
 #endif //TODOLIST_GRAPHCREATOR_H

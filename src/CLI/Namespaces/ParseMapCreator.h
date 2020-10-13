@@ -10,6 +10,7 @@
 #include "CLI/States/Parse/ParseID.h"
 #include "CLI/States/Parse/ParseName.h"
 #include "CLI/States/Parse/ParseLabel.h"
+#include "CLI/States/Parse/ParseFilename.h"
 #include "CLI/States/Parse/ParsePriority.h"
 
 namespace ParseMap{
@@ -20,6 +21,7 @@ namespace ParseMap{
         links[ParseState::Type::ID]       = std::make_unique<ParseID>();
         links[ParseState::Type::Label]    = std::make_unique<ParseLabel>();
         links[ParseState::Type::Name]     = std::make_unique<ParseName>();
+        links[ParseState::Type::Filename] = std::make_unique<ParseFilename>();
         links[ParseState::Type::Priority] = std::make_unique<ParsePriority>();
 
         return links;

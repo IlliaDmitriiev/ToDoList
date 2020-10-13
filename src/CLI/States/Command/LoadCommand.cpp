@@ -3,6 +3,7 @@
 //
 
 #include "LoadCommand.h"
+#include "CLI/Namespaces/GraphCreator.h"
 #include "CLI/Namespaces/CommandMapCreator.h"
 
 CommandState::Type LoadCommand::read(IO&) {
@@ -14,9 +15,15 @@ void LoadCommand::print(IO&) {
 }
 
 void LoadCommand::execute(IO& io, Context& context) {
+    auto links = transitions_graph::load_data::create();
+    auto buffer = ParameterStorage::create();
+
+    ParseMachine pm(io, buffer, ParseState::Type::Filename, links);
+    pm.run();
 
     auto &service = context.getService();
-    auto result = service.load();
+    auto params = buffer.getParameters() ;
+    auto result = service.load(params.filename_+".txt");
     if ( ResultType::FAILURE == result.result) {
         io.output(result.error_message+"\n");
     }

@@ -21,6 +21,7 @@ public:
     struct Parameters{
         std::string name_;
         std::string label_;
+        std::string filename_;
         boost::gregorian::date date_;
         int id_;
         TaskPriority priority_;
