@@ -2,6 +2,7 @@
 // Created by illia.dmitriiev on 7/27/2020.
 //
 
+#include <future>
 #include "TaskService.h"
 #include "Core/utils/ReturnTypeCreator.h"
 #include "Core/utils/DataHolderCreator.h"
@@ -97,7 +98,12 @@ std::optional<ServiceTaskDTO> TaskService::getTask(TaskID id){
 RequstTaskResult TaskService::save(const std::string& filename){
     std::fstream file(filename, std::fstream::out);
     auto persister = std::make_unique<ModelPersister>(*model_, file);
-    if (persister->save()){
+
+    auto save_result = std::async(std::bind(&Persister::save, persister.get()));
+    save_result.wait();
+    file.close();
+
+    if (save_result.get()){
         return operation_result::TaskRequestedSuccessful();
     }
     else {
@@ -109,7 +115,12 @@ RequstTaskResult TaskService::load(const std::string& filename){
     std::fstream file(filename, std::fstream::in);
     auto new_model = todo_list_model::createDataHolder();
     auto persister = std::make_unique<ModelPersister>(*new_model, file);
-    if (persister->load()){
+
+    auto load_result = std::async(std::bind(&Persister::load, persister.get()));
+    load_result.wait();
+    file.close();
+
+    if (load_result.get()){
         model_.reset();
         model_= std::move(new_model);
         return operation_result::TaskRequestedSuccessful();
