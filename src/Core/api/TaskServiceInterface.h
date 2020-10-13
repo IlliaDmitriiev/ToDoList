@@ -131,12 +131,16 @@ public:
     /*
      * saves all tasks
      *
+     * @parameters [string filename]
+     *
      * @return object containing info about possible error occurred
      * or info that operation is successful.
      */
     virtual RequstTaskResult save(const std::string&) = 0;
     /*
      * loads all tasks in system
+     *
+     * @parameters [string filename]
      *
      * @return object containing info about possible error occurred
      * or info that operation is successful.
