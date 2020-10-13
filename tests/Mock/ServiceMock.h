@@ -17,8 +17,8 @@ public:
     MOCK_METHOD(RequstTaskResult, complete, (TaskID), (override));
     MOCK_METHOD(RequstTaskResult, postponeTask, (TaskID, boost::gregorian::date), (override));
     MOCK_METHOD(RequstTaskResult, editTask, (TaskID id, const ServiceTaskDTO&), (override));
-    MOCK_METHOD(RequstTaskResult, save, (), (override));
-    MOCK_METHOD(RequstTaskResult, load, (), (override));
+    MOCK_METHOD(RequstTaskResult, save, (const std::string&), (override));
+    MOCK_METHOD(RequstTaskResult, load, (const std::string&), (override));
 public:
 
     MOCK_METHOD(std::vector<ServiceTaskDTO>, getSubtasks, (TaskID), (override));

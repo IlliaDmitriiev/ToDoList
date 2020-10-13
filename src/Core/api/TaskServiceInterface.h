@@ -131,17 +131,21 @@ public:
     /*
      * saves all tasks
      *
-     * @return object containing info about possible error occurred
-     * or info that operation is successful.
-     */
-    virtual RequstTaskResult save() = 0;
-    /*
-     * loads all tasks in system
+     * @parameters [string filename]
      *
      * @return object containing info about possible error occurred
      * or info that operation is successful.
      */
-    virtual RequstTaskResult load() = 0;
+    virtual RequstTaskResult save(const std::string&) = 0;
+    /*
+     * loads all tasks in system
+     *
+     * @parameters [string filename]
+     *
+     * @return object containing info about possible error occurred
+     * or info that operation is successful.
+     */
+    virtual RequstTaskResult load(const std::string&) = 0;
 
     virtual ~TaskServiceInterface() = default;
 

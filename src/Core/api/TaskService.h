@@ -42,9 +42,9 @@ public:
     std::optional<ServiceTaskDTO> getTask(TaskID id) override;
 
 public:
-    RequstTaskResult save() override;
+    RequstTaskResult save(const std::string&) override;
 
-    RequstTaskResult load() override;
+    RequstTaskResult load(const std::string&) override;
 
 private:
     std::unique_ptr<DataInterface> model_;

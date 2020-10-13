@@ -335,7 +335,7 @@ TEST_F(TaskServiceTest, shouldSave) {
             .WillRepeatedly(Return(empty));
     auto service = std::make_unique<TaskService>(std::move(data_mock));
 
-    auto result = service->save();
+    auto result = service->save("test.txt");
     EXPECT_EQ(result.result, ResultType::SUCCESS);
 }
 
@@ -360,7 +360,7 @@ TEST_F(TaskServiceTest, shouldLoad) {
             .WillRepeatedly(Return(empty));
     auto service = std::make_unique<TaskService>(std::move(data_mock));
 
-    auto result = service->save();
-    service->load();
+    auto result = service->save("test.txt");
+    service->load("test.txt");
     EXPECT_EQ(service->getAllTasksByPriority().size(), 3);
 }
