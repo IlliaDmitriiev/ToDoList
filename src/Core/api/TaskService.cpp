@@ -94,8 +94,8 @@ std::optional<ServiceTaskDTO> TaskService::getTask(TaskID id){
     }
 }
 
-RequstTaskResult TaskService::save(){
-    std::fstream file("file1.txt", std::fstream::out);
+RequstTaskResult TaskService::save(const std::string& filename){
+    std::fstream file(filename, std::fstream::out);
     auto persister = std::make_unique<ModelPersister>(*model_, file);
     if (persister->save()){
         return operation_result::TaskRequestedSuccessful();
@@ -105,8 +105,8 @@ RequstTaskResult TaskService::save(){
     }
 }
 
-RequstTaskResult TaskService::load(){
-    std::fstream file("file1.txt", std::fstream::in);
+RequstTaskResult TaskService::load(const std::string& filename){
+    std::fstream file(filename, std::fstream::in);
     auto new_model = todo_list_model::createDataHolder();
     auto persister = std::make_unique<ModelPersister>(*new_model, file);
     if (persister->load()){

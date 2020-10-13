@@ -134,14 +134,14 @@ public:
      * @return object containing info about possible error occurred
      * or info that operation is successful.
      */
-    virtual RequstTaskResult save() = 0;
+    virtual RequstTaskResult save(const std::string&) = 0;
     /*
      * loads all tasks in system
      *
      * @return object containing info about possible error occurred
      * or info that operation is successful.
      */
-    virtual RequstTaskResult load() = 0;
+    virtual RequstTaskResult load(const std::string&) = 0;
 
     virtual ~TaskServiceInterface() = default;
 
