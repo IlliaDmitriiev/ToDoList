@@ -61,9 +61,12 @@ TEST_F(SaveTest, shouldExecuteSuccessfully) {
     auto io = std::make_unique<MockConsoleIO>();
     auto service = std::make_unique<MockTaskService>();
 
-    EXPECT_CALL(*io, output)
+    EXPECT_CALL(*io, input)
             .Times(1)
-            .WillOnce(Return());
+            .WillOnce(Return("filename"));
+    EXPECT_CALL(*io, output)
+            .Times(2)
+            .WillRepeatedly(Return());
     EXPECT_CALL(*service, save)
             .Times(1)
             .WillOnce(Return(operation_result::TaskRequestedSuccessful()));
@@ -76,10 +79,12 @@ TEST_F(SaveTest, shouldExecuteSuccessfully) {
 TEST_F(SaveTest, shouldExecuteUnsuccessfully) {
     auto io = std::make_unique<MockConsoleIO>();
     auto service = std::make_unique<MockTaskService>();
-
-    EXPECT_CALL(*io, output)
+    EXPECT_CALL(*io, input)
             .Times(1)
-            .WillOnce(Return());
+            .WillOnce(Return("filename"));
+    EXPECT_CALL(*io, output)
+            .Times(2)
+            .WillRepeatedly(Return());
     EXPECT_CALL(*service, save)
             .Times(1)
             .WillOnce(Return(operation_result::TaskRequestedSuccessful()));
