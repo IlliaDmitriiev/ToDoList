@@ -162,7 +162,7 @@ Status GRPCServer::getAllTasksByPriority(ServerContext* context,
                                          const EmptyRequest* request,
                                          GetTasksResponse* response)
 {
-    auto model_tasks = model_->getAllTasks();
+    auto model_tasks = model_->getAllTasksByPriority();
     for(const auto& model_task: model_tasks){
         auto *proto_task = response->add_tasks();
         auto task = ProtoTaskConvertor::transferToTaskStructure(model_task);

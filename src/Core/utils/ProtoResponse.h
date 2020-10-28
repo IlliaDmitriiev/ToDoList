@@ -7,10 +7,11 @@
 
 #include "TaskService.grpc.pb.h"
 #include "Core/api/ReturnType.h"
-#include<memory>
+#include <memory>
 
-namespace ProtoResponse{
-    void fill(AddTaskResult result, AddTaskResponse *response) {
+class ProtoResponse{
+public:
+    static void fill(AddTaskResult result, AddTaskResponse *response) {
         if (ResultType::SUCCESS == result.result) {
             auto id = std::make_unique<TaskIDRequest>();
             id->set_id(result.id->getId());
@@ -21,9 +22,8 @@ namespace ProtoResponse{
             response->set_error_message(result.error_message);
         }
     }
-    
 
-    void fill(RequstTaskResult result, RequstTaskResponse* response){
+    static void fill(RequstTaskResult result, RequstTaskResponse* response){
         if (ResultType::SUCCESS == result.result) {
             response->set_success(true);
         }
@@ -32,5 +32,6 @@ namespace ProtoResponse{
             response->set_error_message(result.error_message);
         }
     }
-}
+};
+
 #endif //TODOLIST_PROTORESPONSE_H

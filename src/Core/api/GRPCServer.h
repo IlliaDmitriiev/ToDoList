@@ -16,14 +16,13 @@
 #include "TaskService.pb.h"
 #include "Core/model/DataInterface.h"
 
-
-using grpc::Server;
+using grpc_impl::Server;
 using grpc::ServerBuilder;
 using grpc::ServerContext;
 using grpc::Status;
 
 
-class GRPCServer final : public GrpcTaskService::Service {
+class GRPCServer : public GrpcTaskService::Service {
 public:
     explicit GRPCServer(std::unique_ptr<DataInterface> model)
     :

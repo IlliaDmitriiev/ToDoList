@@ -81,16 +81,6 @@ add_custom_command(
        ${ts_proto}
        DEPENDS ${ts_proto})
 
-#add_custom_command(
-#        OUTPUT "${ts_proto_srcs}" "${ts_proto_hdrs}" "${ts_grpc_srcs}" "${ts_grpc_hdrs}"
-#        COMMAND ${_PROTOBUF_PROTOC}
-#        ARGS --grpc_out "${CMAKE_CURRENT_BINARY_DIR}"
-#        --cpp_out "${CMAKE_CURRENT_BINARY_DIR}"
-#        -I "${ts_proto_path}"
-#        --plugin=protoc-gen-grpc="${_GRPC_CPP_PLUGIN_EXECUTABLE}"
-#        "${ts_proto}"
-#        DEPENDS "${ts_proto}")
-
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 
@@ -104,18 +94,28 @@ add_executable(ToDoList
 
 add_executable(TestsExecutableCore
         ${CORE_TEST_SOURCES} ${CORE_CPP_SOURCES} ${MOCK_HEADERS}
-        ${PROTO_SRCS} ${PROTO_HDRS})
+        ${PROTO_SRCS} ${PROTO_HDRS}
+        ${ts_proto_srcs} ${ts_proto_hdrs}
+        ${ts_grpc_srcs} ${ts_grpc_hdrs})
+
 add_executable(TestsExecutableCLI
         ${CLI_TEST_SOURCES} ${CLI_CPP_SOURCES} ${MOCK_HEADERS}
-        ${CORE_CPP_SOURCES} ${PROTO_SRCS} ${PROTO_HDRS} )
+        ${CORE_CPP_SOURCES} ${PROTO_SRCS} ${PROTO_HDRS}
+        ${ts_proto_srcs} ${ts_proto_hdrs}
+        ${ts_grpc_srcs} ${ts_grpc_hdrs})
 
 target_link_libraries(ToDoList ${Boost_LIBRARIES} ${_REFLECTION}
         ${_GRPC_GRPCPP} ${_PROTOBUF_LIBPROTOBUF})
 
 target_link_libraries(TestsExecutableCore GTest::GTest GTest::Main
-        ${GMOCK_LIBRARY} ${GMOCK_MAIN_LIBRARY} ${Protobuf_LIBRARIES})
+        ${GMOCK_LIBRARY} ${GMOCK_MAIN_LIBRARY}
+        ${Boost_LIBRARIES} ${_REFLECTION}
+        ${_GRPC_GRPCPP} ${_PROTOBUF_LIBPROTOBUF})
+
 target_link_libraries(TestsExecutableCLI GTest::GTest GTest::Main
-        ${GMOCK_LIBRARY} ${GMOCK_MAIN_LIBRARY} ${Protobuf_LIBRARIES})
+        ${GMOCK_LIBRARY} ${GMOCK_MAIN_LIBRARY}
+        ${Boost_LIBRARIES} ${_REFLECTION}
+        ${_GRPC_GRPCPP} ${_PROTOBUF_LIBPROTOBUF})
 
 gtest_discover_tests(TestsExecutableCore)
 gtest_discover_tests(TestsExecutableCLI)
@@ -123,8 +123,8 @@ gtest_discover_tests(TestsExecutableCLI)
 add_executable(Server src/server.cpp
         ${CORE_HEADERS} ${CORE_CPP_SOURCES}
         ${PROTO_SRCS} ${PROTO_HDRS}
-        ${ts_proto_srcs}
-        ${ts_grpc_srcs})
+        ${ts_proto_srcs} ${ts_proto_hdrs}
+        ${ts_grpc_srcs} ${ts_grpc_hdrs})
 
 target_link_libraries(Server
         ${Boost_LIBRARIES} ${_REFLECTION}
@@ -134,8 +134,8 @@ add_executable(Client src/client.cpp
         ${CLI_HEADERS} ${CLI_CPP_SOURCES}
         ${CORE_HEADERS} ${CORE_CPP_SOURCES}
         ${PROTO_SRCS} ${PROTO_HDRS}
-        ${ts_proto_srcs}
-        ${ts_grpc_srcs})
+        ${ts_proto_srcs} ${ts_proto_hdrs}
+        ${ts_grpc_srcs} ${ts_grpc_hdrs})
 
 target_link_libraries(Client
         ${Boost_LIBRARIES} ${_REFLECTION}
