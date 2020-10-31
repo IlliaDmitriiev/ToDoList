@@ -36,7 +36,7 @@ TaskStructure::Priority ProtoConvertor::tranferToProtoPriority(TaskPriority prio
 }
 
 TaskDTO ProtoConvertor::transferToTaskDTO(const TaskStructure& message){
-    return TaskDTO::create(TaskID::create(0),
+    return TaskDTO::create(TaskID::create(message.id()),
                            boost::gregorian::date(message.date()),
                            message.name(),
                            message.label(),
@@ -46,6 +46,7 @@ TaskDTO ProtoConvertor::transferToTaskDTO(const TaskStructure& message){
 
 TaskStructure ProtoConvertor::transferToProtoTask(const TaskDTO& task){
     TaskStructure message;
+    message.set_id(task.getId().ID());
     message.set_name(task.getName());
     message.set_label(task.getLabel());
     message.set_date(task.getDate().day_number());
