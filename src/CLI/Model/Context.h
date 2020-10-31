@@ -7,7 +7,7 @@
 
 #include <string>
 #include <vector>
-#include "Core/utils/TaskServiceCreator.h"
+#include "CLI/Proxy/Proxy.h"
 
 /*
  *  Storage of current tasks and taskService.
@@ -23,13 +23,13 @@ public:
      *
      * @return instance of TaskService.
      */
-    virtual TaskServiceInterface& getService() = 0;
+    virtual Proxy& getService() = 0;
     /*
      * Gives current list of tasks according to the last request.
      *
      * @return list of ServiceTaskDTO objects.
      */
-    virtual std::vector<ServiceTaskDTO>& getTaskList() = 0;
+    virtual std::vector<TaskDTO>& getTaskList() = 0;
 
     virtual ~Context() = default;
 
