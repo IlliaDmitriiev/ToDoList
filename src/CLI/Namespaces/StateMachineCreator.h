@@ -7,8 +7,9 @@
 
 #include "CLI/Controller/StateMachine.h"
 #include "CLI/Model/ConsoleContext.h"
-#include "Core/utils/TaskServiceCreator.h"
+#include "CLI/Proxy/ClientServer.h"
 #include "CLI/States/Command/CommandOption.h"
+#include "TaskService.grpc.pb.h"
 
 namespace todo_list_CLI{
     /*
@@ -17,8 +18,10 @@ namespace todo_list_CLI{
      * @return instance of  StateMachine.
      */
     static StateMachine createStateMachine() {
-
-        auto ts = todo_list_Core::createService();
+        std::string server_address("0.0.0.0:50051");
+        auto channel = grpc::CreateChannel(
+                server_address, grpc::InsecureChannelCredentials());
+        auto ts = std::make_unique<ClientServer>(std::move(channel));
         auto state = std::make_unique<CommandOption>();
         auto io = std::make_unique<ConsoleIO>();
         auto context = std::make_unique<ConsoleContext>(ConsoleContext::create(std::move(ts)));

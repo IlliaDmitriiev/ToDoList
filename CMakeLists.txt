@@ -19,7 +19,8 @@ file(GLOB_RECURSE CORE_TEST_SOURCES "tests/Core/*.cpp")
 file(GLOB_RECURSE CLI_CPP_SOURCES "src/CLI/*.cpp")
 file(GLOB_RECURSE CLI_HEADERS "src/CLI/*.cpp")
 file(GLOB_RECURSE CLI_TEST_SOURCES "tests/CLI/*.cpp")
-file(GLOB_RECURSE MOCK_HEADERS "tests/Mock/*.h")
+file(GLOB_RECURSE CLI_MOCK_HEADERS "tests/CLI/Mock/*.h")
+file(GLOB_RECURSE CORE_MOCK_HEADERS "tests/CORE/Mock/*.h")
 
 ################   PROTO  ################
 add_definitions(-std=gnu++17)
@@ -93,14 +94,14 @@ add_executable(ToDoList
         ${ts_grpc_srcs} ${ts_grpc_hdrs})
 
 add_executable(TestsExecutableCore
-        ${CORE_TEST_SOURCES} ${CORE_CPP_SOURCES} ${MOCK_HEADERS}
+        ${CORE_TEST_SOURCES} ${CORE_CPP_SOURCES} ${CORE_MOCK_HEADERS}
         ${PROTO_SRCS} ${PROTO_HDRS}
         ${ts_proto_srcs} ${ts_proto_hdrs}
         ${ts_grpc_srcs} ${ts_grpc_hdrs})
 
 add_executable(TestsExecutableCLI
-        ${CLI_TEST_SOURCES} ${CLI_CPP_SOURCES} ${MOCK_HEADERS}
-        ${CORE_CPP_SOURCES} ${PROTO_SRCS} ${PROTO_HDRS}
+        ${CLI_TEST_SOURCES} ${CLI_CPP_SOURCES} ${CLI_MOCK_HEADERS}
+        ${PROTO_SRCS} ${PROTO_HDRS}
         ${ts_proto_srcs} ${ts_proto_hdrs}
         ${ts_grpc_srcs} ${ts_grpc_hdrs})
 
@@ -132,7 +133,6 @@ target_link_libraries(Server
 
 add_executable(Client src/client.cpp
         ${CLI_HEADERS} ${CLI_CPP_SOURCES}
-        ${CORE_HEADERS} ${CORE_CPP_SOURCES}
         ${PROTO_SRCS} ${PROTO_HDRS}
         ${ts_proto_srcs} ${ts_proto_hdrs}
         ${ts_grpc_srcs} ${ts_grpc_hdrs})

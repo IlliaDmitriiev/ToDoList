@@ -4,8 +4,8 @@
 //
 
 #include <gtest/gtest.h>
-#include "Mock/ConsoleIOMock.h"
-#include "Mock/ServiceMock.h"
+#include "CLI/Mock/ConsoleIOMock.h"
+#include "CLI/Mock/ServiceMock.h"
 #include "CLI/States/Command/ShowAllTasksCommand.h"
 #include "CLI/Namespaces/CommandMapCreator.h"
 #include "CLI/Model/ConsoleContext.h"
@@ -60,9 +60,9 @@ TEST_F(ShowAllTasksTest, shouldExecute) {
     auto &ref_to_service = *service;
     auto context = std::make_unique<ConsoleContext>(ConsoleContext::create(std::move(service)));
 
-    auto task1 = ServiceTaskDTO::create(boost::gregorian::date(2020, 7, 30),"name1","label1",TaskPriority::None);
-    auto task2 = ServiceTaskDTO::create(boost::gregorian::date(2010, 10, 10),"name2","label2",TaskPriority::First);
-    std::vector<ServiceTaskDTO> v{task1, task2};
+    auto task1 = TaskDTO::create(TaskID::create(0), boost::gregorian::date(2020, 7, 30),"name1","label1",TaskPriority::None, false);
+    auto task2 = TaskDTO::create(TaskID::create(0), boost::gregorian::date(2010, 10, 10),"name2","label2",TaskPriority::First, true);
+    std::vector<TaskDTO> v{task1, task2};
 
     EXPECT_CALL(ref_to_service, getAllTasksByPriority)
             .Times(1)

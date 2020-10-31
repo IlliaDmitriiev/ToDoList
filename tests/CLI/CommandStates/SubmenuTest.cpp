@@ -7,8 +7,8 @@
 //
 
 #include <gtest/gtest.h>
-#include "Mock/ConsoleIOMock.h"
-#include "Mock/ServiceMock.h"
+#include "CLI/Mock/ConsoleIOMock.h"
+#include "CLI/Mock/ServiceMock.h"
 #include "CLI/States/Command/SubmenuCommand.h"
 #include "CLI/Namespaces/CommandMapCreator.h"
 #include "CLI/Model/ConsoleContext.h"
