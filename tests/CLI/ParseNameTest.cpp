@@ -3,7 +3,7 @@
 //
 
 #include <gtest/gtest.h>
-#include "Mock/ConsoleIOMock.h"
+#include "CLI/Mock/ConsoleIOMock.h"
 #include "CLI/States/Parse/ParseName.h"
 
 using ::testing::Return;

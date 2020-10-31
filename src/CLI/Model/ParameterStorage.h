@@ -6,7 +6,7 @@
 #define TESTCLI_BUFFER_H
 
 #include <string>
-#include "Core/api/TaskPriority.h"
+#include "CLI/Proxy/Data/TaskPriority.h"
 #include "boost/date_time/gregorian/gregorian.hpp"
 
 

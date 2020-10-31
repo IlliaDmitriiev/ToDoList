@@ -6,7 +6,7 @@
 #include "PriorityConvertor.h"
 
 ModelTaskDTO ProtoTaskConvertor::transferToModelTask(const TaskStructure& message){
-    return ModelTaskDTO::create(TaskID::create(0),
+    return ModelTaskDTO::create(TaskID::create(message.id()),
                                 boost::gregorian::date(message.date()),
                                 message.name(),
                                 message.label(),
@@ -16,6 +16,7 @@ ModelTaskDTO ProtoTaskConvertor::transferToModelTask(const TaskStructure& messag
 
 TaskStructure ProtoTaskConvertor::transferToTaskStructure(const ModelTaskDTO& task){
     TaskStructure message;
+    message.set_id(task.getId().getId());
     message.set_name(task.getName());
     message.set_label(task.getLabel());
     message.set_date(task.getDate().day_number());

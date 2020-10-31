@@ -2,8 +2,8 @@
 // Created by ilya on 11.10.2020.
 //
 #include <gtest/gtest.h>
-#include "Mock/ConsoleIOMock.h"
-#include "Mock/ServiceMock.h"
+#include "CLI/Mock/ConsoleIOMock.h"
+#include "CLI/Mock/ServiceMock.h"
 #include "CLI/States/Command/SaveCommand.h"
 #include "CLI/Namespaces/CommandMapCreator.h"
 #include "CLI/Model/ConsoleContext.h"

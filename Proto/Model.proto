@@ -13,7 +13,7 @@ message TaskStructure{
   int32 date = 3;
   Priority prior = 4;
   bool completed = 5;
-
+  int32 id = 6;
 }
 
 message TaskEntity{

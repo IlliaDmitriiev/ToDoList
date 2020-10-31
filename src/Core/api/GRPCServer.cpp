@@ -147,6 +147,7 @@ Status GRPCServer::getSubtasks(ServerContext* context,
         auto *proto_task = response->add_tasks();
         auto task = ProtoTaskConvertor::transferToTaskStructure(subtask);
 
+        proto_task->set_id(task.id());
         proto_task->set_name(task.name());
         proto_task->set_label(task.label());
         proto_task->set_prior(task.prior());
@@ -167,6 +168,7 @@ Status GRPCServer::getAllTasksByPriority(ServerContext* context,
         auto *proto_task = response->add_tasks();
         auto task = ProtoTaskConvertor::transferToTaskStructure(model_task);
 
+        proto_task->set_id(task.id());
         proto_task->set_name(task.name());
         proto_task->set_label(task.label());
         proto_task->set_prior(task.prior());
@@ -186,6 +188,7 @@ Status GRPCServer::getTasksForToday(ServerContext* context,
         auto *proto_task = response->add_tasks();
         auto task = ProtoTaskConvertor::transferToTaskStructure(model_task);
 
+        proto_task->set_id(task.id());
         proto_task->set_name(task.name());
         proto_task->set_label(task.label());
         proto_task->set_prior(task.prior());
@@ -205,6 +208,7 @@ Status GRPCServer::getTasksForWeek(ServerContext* context,
         auto *proto_task = response->add_tasks();
         auto task = ProtoTaskConvertor::transferToTaskStructure(model_task);
 
+        proto_task->set_id(task.id());
         proto_task->set_name(task.name());
         proto_task->set_label(task.label());
         proto_task->set_prior(task.prior());

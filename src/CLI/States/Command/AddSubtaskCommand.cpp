@@ -29,9 +29,14 @@ void AddSubtaskCommand::execute(IO& io, Context& context) {
         io.output("There isn't root task with such id!\n");
         return;
     }
+    std::cout <<tasks[params.id_ - 1].getId().ID()<<" state\n";
     auto result = service.addSubtask(tasks[params.id_ - 1].getId(),
-                                     ServiceTaskDTO::create(params.date_, params.name_,
-                                                     params.label_, params.priority_));
+                                     TaskDTO::create(TaskID::create(0),
+                                                            params.date_,
+                                                            params.name_,
+                                                            params.label_,
+                                                            params.priority_,
+                                                            false));
     if (result.result == ResultType::FAILURE) {
         io.output(result.error_message + "\n");
         return;

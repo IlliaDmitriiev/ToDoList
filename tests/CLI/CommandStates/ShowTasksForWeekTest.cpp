@@ -4,8 +4,8 @@
 //
 
 #include <gtest/gtest.h>
-#include "Mock/ConsoleIOMock.h"
-#include "Mock/ServiceMock.h"
+#include "CLI/Mock/ConsoleIOMock.h"
+#include "CLI/Mock/ServiceMock.h"
 #include "CLI/States/Command/ShowTasksForWeek.h"
 #include "CLI/Namespaces/CommandMapCreator.h"
 #include "CLI/Model/ConsoleContext.h"
@@ -60,10 +60,10 @@ TEST_F(ShowTasksForWeekTest, shouldExecute) {
     auto &ref_to_service = *service;
     auto context = std::make_unique<ConsoleContext>(ConsoleContext::create(std::move(service)));
 
-    auto task1 = ServiceTaskDTO::create(boost::gregorian::date(2020, 10, 10),"name1","label1",TaskPriority::None);
-    auto task2 = ServiceTaskDTO::create(boost::gregorian::date(2010, 10, 10),"name2","label2",TaskPriority::First);
-    auto task3 = ServiceTaskDTO::create(boost::gregorian::date(2222, 02, 22),"name3","label3",TaskPriority::First);
-    std::vector<ServiceTaskDTO> v{task1, task2, task3};
+    auto task1 = TaskDTO::create(TaskID::create(0),boost::gregorian::date(2020, 10, 10),"name1","label1",TaskPriority::None, false);
+    auto task2 = TaskDTO::create(TaskID::create(0),boost::gregorian::date(2010, 10, 10),"name2","label2",TaskPriority::First, true);
+    auto task3 = TaskDTO::create(TaskID::create(0),boost::gregorian::date(2222, 02, 22),"name3","label3",TaskPriority::First, false);
+    std::vector<TaskDTO> v{task1, task2, task3};
 
     EXPECT_CALL(ref_to_service, getTasksForWeek)
             .Times(1)
