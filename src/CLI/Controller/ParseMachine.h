@@ -5,7 +5,7 @@
 #ifndef TESTCLI_PARSEMACHINE_H
 #define TESTCLI_PARSEMACHINE_H
 
-#include "CLI/States/Parse/ParseState.h"
+#include "CLI/View/ParseStates/ParseState.h"
 #include <map>
 
 

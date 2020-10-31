@@ -3,8 +3,8 @@
 //
 
 #include "AddSubtaskCommand.h"
-#include "CLI/Namespaces/GraphCreator.h"
-#include "CLI/Namespaces/CommandMapCreator.h"
+#include "CLI/Utils/Creators/GraphCreator.h"
+#include "CLI/Utils/Creators/CommandMapCreator.h"
 
 CommandState::Type AddSubtaskCommand::read(IO&) {
     return CommandState::Type::Option;
@@ -29,7 +29,6 @@ void AddSubtaskCommand::execute(IO& io, Context& context) {
         io.output("There isn't root task with such id!\n");
         return;
     }
-    std::cout <<tasks[params.id_ - 1].getId().ID()<<" state\n";
     auto result = service.addSubtask(tasks[params.id_ - 1].getId(),
                                      TaskDTO::create(TaskID::create(0),
                                                             params.date_,

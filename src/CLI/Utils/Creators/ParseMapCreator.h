@@ -5,13 +5,13 @@
 #ifndef TODOLIST_PARSEMAPCREATOR_H
 #define TODOLIST_PARSEMAPCREATOR_H
 
-#include "CLI/States/Parse/ParseState.h"
-#include "CLI/States/Parse/ParseDate.h"
-#include "CLI/States/Parse/ParseID.h"
-#include "CLI/States/Parse/ParseName.h"
-#include "CLI/States/Parse/ParseLabel.h"
-#include "CLI/States/Parse/ParseFilename.h"
-#include "CLI/States/Parse/ParsePriority.h"
+#include "CLI/View/ParseStates/ParseState.h"
+#include "CLI/View/ParseStates/ParseDate.h"
+#include "CLI/View/ParseStates/ParseID.h"
+#include "CLI/View/ParseStates/ParseName.h"
+#include "CLI/View/ParseStates/ParseLabel.h"
+#include "CLI/View/ParseStates/ParseFilename.h"
+#include "CLI/View/ParseStates/ParsePriority.h"
 
 namespace ParseMap{
     static std::map<ParseState::Type, std::unique_ptr<ParseState>> create(){

@@ -8,7 +8,7 @@
 #include "CLI/Controller/StateMachine.h"
 #include "CLI/Model/ConsoleContext.h"
 #include "CLI/Proxy/ClientServer.h"
-#include "CLI/States/Command/CommandOption.h"
+#include "CLI/View/CommandStates/CommandOption.h"
 #include "TaskService.grpc.pb.h"
 
 namespace todo_list_CLI{

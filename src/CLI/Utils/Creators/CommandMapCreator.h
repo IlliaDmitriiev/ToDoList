@@ -5,21 +5,21 @@
 #ifndef TODOLIST_COMMANDMAPCREATOR_H
 #define TODOLIST_COMMANDMAPCREATOR_H
 
-#include "CLI/States/Command/CommandState.h"
-#include "CLI/States/Command/CommandOption.h"
-#include "CLI/States/Command/SubmenuCommand.h"
-#include "CLI/States/Command/ViewTaskCommand.h"
-#include "CLI/States/Command/EditTaskCommand.h"
-#include "CLI/States/Command/SaveCommand.h"
-#include "CLI/States/Command/LoadCommand.h"
-#include "CLI/States/Command/AddTaskCommand.h"
-#include "CLI/States/Command/AddSubtaskCommand.h"
-#include "CLI/States/Command/DeleteTaskCommand.h"
-#include "CLI/States/Command/CompleteTaskCommand.h"
-#include "CLI/States/Command/PostponeTaskCommand.h"
-#include "CLI/States/Command/ShowAllTasksCommand.h"
-#include "CLI/States/Command/ShowTasksForTodayCommand.h"
-#include "CLI/States/Command/ShowTasksForWeek.h"
+#include "CLI/View/CommandStates/CommandState.h"
+#include "CLI/View/CommandStates/CommandOption.h"
+#include "CLI/View/CommandStates/SubmenuCommand.h"
+#include "CLI/View/CommandStates/ViewTaskCommand.h"
+#include "CLI/View/CommandStates/EditTaskCommand.h"
+#include "CLI/View/CommandStates/SaveCommand.h"
+#include "CLI/View/CommandStates/LoadCommand.h"
+#include "CLI/View/CommandStates/AddTaskCommand.h"
+#include "CLI/View/CommandStates/AddSubtaskCommand.h"
+#include "CLI/View/CommandStates/DeleteTaskCommand.h"
+#include "CLI/View/CommandStates/CompleteTaskCommand.h"
+#include "CLI/View/CommandStates/PostponeTaskCommand.h"
+#include "CLI/View/CommandStates/ShowAllTasksCommand.h"
+#include "CLI/View/CommandStates/ShowTasksForTodayCommand.h"
+#include "CLI/View/CommandStates/ShowTasksForWeek.h"
 
 namespace CommandMap{
     static std::map<CommandState::Type, std::unique_ptr<CommandState>> create(){

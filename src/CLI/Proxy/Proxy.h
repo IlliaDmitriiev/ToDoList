@@ -7,7 +7,7 @@
 
 #include "CLI/Proxy/Data/TaskDTO.h"
 #include "CLI/Proxy/Data/ReturnType.h"
-#include "CLI/Utils/ReturnTypeCreator.h"
+#include "CLI/Utils/Creators/ReturnTypeCreator.h"
 
 class Proxy{
 

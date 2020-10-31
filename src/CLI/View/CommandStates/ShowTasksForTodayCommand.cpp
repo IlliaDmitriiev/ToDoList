@@ -3,9 +3,9 @@
 //
 
 #include "ShowTasksForTodayCommand.h"
-#include "CLI/Namespaces/GraphCreator.h"
+#include "CLI/Utils/Creators/GraphCreator.h"
 #include "ViewTaskCommand.h"
-#include "CLI/Namespaces/CommandMapCreator.h"
+#include "CLI/Utils/Creators/CommandMapCreator.h"
 
 CommandState::Type ShowTasksForTodayCommand::read(IO&) {
     return CommandState::Type::Submenu;

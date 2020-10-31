@@ -3,8 +3,8 @@
 //
 
 #include "CompleteTaskCommand.h"
-#include "CLI/Namespaces/GraphCreator.h"
-#include "CLI/Namespaces/CommandMapCreator.h"
+#include "CLI/Utils/Creators/GraphCreator.h"
+#include "CLI/Utils/Creators/CommandMapCreator.h"
 
 CommandState::Type CompleteTaskCommand::read(IO&) {
     return CommandState::Type::Option;

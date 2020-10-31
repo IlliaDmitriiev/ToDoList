@@ -5,7 +5,7 @@
 #ifndef TESTCLI_STATEMACHINE_H
 #define TESTCLI_STATEMACHINE_H
 
-#include "CLI/States/Command/CommandState.h"
+#include "CLI/View/CommandStates/CommandState.h"
 
 /*
  *  System that processes user commands

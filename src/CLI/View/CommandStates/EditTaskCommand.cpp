@@ -4,8 +4,8 @@
 
 #include "EditTaskCommand.h"
 #include "CommandOption.h"
-#include "CLI/Namespaces/Validate.h"
-#include "CLI/Namespaces/GraphCreator.h"
+#include "CLI/Utils/Creators/Validate.h"
+#include "CLI/Utils/Creators/GraphCreator.h"
 
 CommandState::Type EditTaskCommand::read(IO& io){
     return CommandState::Type::Edit;

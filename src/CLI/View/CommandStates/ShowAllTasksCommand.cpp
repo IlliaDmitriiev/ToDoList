@@ -2,25 +2,25 @@
 // Created by hp on 15.09.2020.
 //
 
-#include "ShowTasksForWeek.h"
-#include "CLI/Namespaces/GraphCreator.h"
+#include "ShowAllTasksCommand.h"
+#include "CLI/Utils/Creators/GraphCreator.h"
 #include "ViewTaskCommand.h"
-#include "CLI/Namespaces/CommandMapCreator.h"
+#include "CLI/Utils/Creators/CommandMapCreator.h"
 
-CommandState::Type ShowTasksForWeek::read(IO&) {
+CommandState::Type ShowAllTasksCommand::read(IO&) {
     return CommandState::Type::Submenu;
 }
 
-void ShowTasksForWeek::print(IO&) {
+void ShowAllTasksCommand::print(IO&) {
 
 }
 
-void ShowTasksForWeek::execute(IO& io, Context& context) {
+void ShowAllTasksCommand::execute(IO& io, Context& context) {
     auto &service = context.getService();
     auto &vector = context.getTaskList();
-    vector = service.getTasksForWeek();
+    vector = service.getAllTasksByPriority();
 
-    io.output("Tasks for this week:\n");
+    io.output("All tasks:\n");
     for (int i = 0; i<vector.size(); ++i){
         io.output("{ Number: ["+std::to_string(i + 1) + "] Name: [" +
                    vector[i].getName() + "] Date: ["
@@ -28,7 +28,7 @@ void ShowTasksForWeek::execute(IO& io, Context& context) {
     }
 }
 
-std::unique_ptr<CommandState> ShowTasksForWeek::change(CommandState::Type type) {
+std::unique_ptr<CommandState> ShowAllTasksCommand::change(CommandState::Type type) {
     auto command_map = CommandMap::create();
     return std::move(command_map[type]);
 }

@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 #include "CLI/Mock/ConsoleIOMock.h"
-#include "CLI/States/Parse/ParsePriority.h"
+#include "CLI/View/ParseStates/ParsePriority.h"
 
 using ::testing::Return;
 

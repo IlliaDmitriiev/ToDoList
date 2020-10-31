@@ -5,7 +5,7 @@
 #ifndef TODOLIST_RETURNTYPECREATOR_H
 #define TODOLIST_RETURNTYPECREATOR_H
 
-#include "Core/api/ReturnType.h"
+#include "CLI/Proxy/Data/ReturnType.h"
 /*
  * Namespace which generates an object containing info
  * about the result of executing service request.

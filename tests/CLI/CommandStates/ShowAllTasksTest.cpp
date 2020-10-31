@@ -6,8 +6,8 @@
 #include <gtest/gtest.h>
 #include "CLI/Mock/ConsoleIOMock.h"
 #include "CLI/Mock/ServiceMock.h"
-#include "CLI/States/Command/ShowAllTasksCommand.h"
-#include "CLI/Namespaces/CommandMapCreator.h"
+#include "CLI/View/CommandStates/ShowAllTasksCommand.h"
+#include "CLI/Utils/Creators/CommandMapCreator.h"
 #include "CLI/Model/ConsoleContext.h"
 
 using ::testing::Return;

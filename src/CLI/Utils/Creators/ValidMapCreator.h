@@ -5,7 +5,7 @@
 #ifndef TODOLIST_VALIDMAPCREATOR_H
 #define TODOLIST_VALIDMAPCREATOR_H
 
-#include "CLI/States/Command/CommandState.h"
+#include "CLI/View/CommandStates/CommandState.h"
 #include <map>
 
 /*

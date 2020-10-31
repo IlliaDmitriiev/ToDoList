@@ -4,7 +4,7 @@
 
 #include "ViewTaskCommand.h"
 #include "CommandOption.h"
-#include "CLI/Namespaces/GraphCreator.h"
+#include "CLI/Utils/Creators/GraphCreator.h"
 
 CommandState::Type ViewTaskCommand::read(IO& io) {
     return CommandState::Type::View;

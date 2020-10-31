@@ -3,8 +3,8 @@
 //
 
 #include "SubmenuCommand.h"
-#include "CLI/Namespaces/Validate.h"
-#include "CLI/Namespaces/CommandMapCreator.h"
+#include "CLI/Utils/Creators/Validate.h"
+#include "CLI/Utils/Creators/CommandMapCreator.h"
 
 CommandState::Type SubmenuCommand::read(IO& io) {
     return validate::make(io.input());
