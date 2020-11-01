@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-#include "Core/utils/PriorityConvertor.h"
+#include "Core/utils/Convertors/PriorityConvertor.h"
 
 class PriorityConvertorTest : public ::testing::Test {
 

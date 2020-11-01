@@ -3,7 +3,7 @@
 //
 
 #include <gtest/gtest.h>
-#include "Mock/ModelMock.h"
+#include "Core/Mock/ModelMock.h"
 #include "Core/api/GRPCServer.h"
 
 using ::testing::Return;

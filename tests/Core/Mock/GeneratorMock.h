@@ -6,7 +6,7 @@
 #define TODOLIST_GENERATORMOCK_H
 
 #include <gmock/gmock.h>
-#include "Core/logic/IDGeneratorInterface.h"
+#include "Core/model/logic/IDGeneratorInterface.h"
 
 class MockGenerator : public IDGeneratorInterface {
 

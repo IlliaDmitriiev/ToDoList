@@ -14,7 +14,7 @@
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include "TaskService.grpc.pb.h"
 #include "TaskService.pb.h"
-#include "Core/model/DataInterface.h"
+#include "Core/model/api/DataInterface.h"
 
 using grpc_impl::Server;
 using grpc::ServerBuilder;

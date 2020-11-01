@@ -3,7 +3,7 @@
 //
 
 #include "ClientServer.h"
-#include "CLI/Utils/ProtoConvertor.h"
+#include "CLI/Utils/Convertors/ProtoConvertor.h"
 
 AddTaskResult ClientServer::addTask(const TaskDTO &taskDto) {
     grpc::ClientContext context;

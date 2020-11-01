@@ -6,7 +6,7 @@
 #define TODOLIST_MODELMOCK_H
 
 #include <gmock/gmock.h>
-#include "Core/model/DataInterface.h"
+#include "Core/model/api/DataInterface.h"
 
 class DataMock : public DataInterface {
 

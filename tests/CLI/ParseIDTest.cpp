@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 #include "CLI/Mock/ConsoleIOMock.h"
-#include "CLI/States/Parse/ParseID.h"
+#include "CLI/View/ParseStates/ParseID.h"
 
 using ::testing::Return;
 

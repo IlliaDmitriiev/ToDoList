@@ -3,7 +3,7 @@
 //
 
 #include "StateMachine.h"
-#include "CLI/States/Command/CommandOption.h"
+#include "CLI/View/CommandStates/CommandOption.h"
 
 
 StateMachine StateMachine::create(std::unique_ptr<IO> io,

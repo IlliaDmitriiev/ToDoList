@@ -6,7 +6,7 @@
 #define TODOLIST_FULLTASK_H
 
 #include "Task.h"
-#include "Core/logic/IDGenerator.h"
+#include "Core/model/logic/IDGenerator.h"
 #include <memory>
 #include <unordered_map>
 #include <vector>

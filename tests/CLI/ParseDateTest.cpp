@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 #include "CLI/Mock/ConsoleIOMock.h"
-#include "CLI/States/Parse/ParseDate.h"
+#include "CLI/View/ParseStates/ParseDate.h"
 
 using ::testing::Return;
 

@@ -3,7 +3,7 @@
 //
 
 #include <gtest/gtest.h>
-#include "CLI/Utils/ProtoConvertor.h"
+#include "CLI/Utils/Convertors/ProtoConvertor.h"
 
 class ProtoConvertorTest : public ::testing::Test {
 public:
