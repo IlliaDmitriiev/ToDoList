@@ -3,8 +3,8 @@
 //
 
 #include "ModelPersister.h"
-#include "Core/utils/PriorityConvertor.h"
-#include "Core/utils/ProtoTaskConvertor.h"
+#include "Core/utils/Convertors/PriorityConvertor.h"
+#include "Core/utils/Convertors/ProtoTaskConvertor.h"
 
 bool ModelPersister::save() {
 

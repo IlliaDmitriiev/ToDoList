@@ -3,11 +3,11 @@
 //
 
 #include "GRPCServer.h"
-#include "Core/utils/ProtoTaskConvertor.h"
+#include "Core/utils/Convertors/ProtoTaskConvertor.h"
 #include <future>
 #include "fstream"
-#include "Core/utils/DataHolderCreator.h"
-#include "Core/utils/ProtoResponse.h"
+#include "Core/utils/Creators/DataHolderCreator.h"
+#include "Core/utils/Convertors/ProtoResponse.h"
 #include "Core/persistence/ModelPersister.h"
 
 

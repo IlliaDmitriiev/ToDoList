@@ -7,8 +7,8 @@
 
 #include "TaskStorageInterface.h"
 #include "Core/logic/ViewInterface.h"
-#include "Core/utils/ReturnTypeCreator.h"
-#include "Core/utils/ModelTaskConvertor.h"
+#include "Core/utils/Creators/ReturnTypeCreator.h"
+#include "Core/utils/Convertors/ModelTaskConvertor.h"
 /*
  * Model api to manage data.
  *

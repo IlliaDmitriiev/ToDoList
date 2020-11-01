@@ -3,9 +3,9 @@
 //
 
 #include <gtest/gtest.h>
-#include "Mock/GeneratorMock.h"
-#include "Mock/StorageMock.h"
-#include "Mock/ViewMock.h"
+#include "Core/Mock/GeneratorMock.h"
+#include "Core/Mock/StorageMock.h"
+#include "Core/Mock/ViewMock.h"
 #include "Core/model/DataHolder.h"
 
 using ::testing::Return;

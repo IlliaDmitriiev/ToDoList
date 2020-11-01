@@ -4,8 +4,8 @@
 
 #include <gtest/gtest.h>
 #include "Core/persistence/ModelPersister.h"
-#include "Core/utils/PriorityConvertor.h"
-#include "Core/utils/DataHolderCreator.h"
+#include "Core/utils/Convertors/PriorityConvertor.h"
+#include "Core/utils/Creators/DataHolderCreator.h"
 
 class ModelPersisterTest: public ::testing::Test {
 
