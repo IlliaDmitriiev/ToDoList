@@ -5,8 +5,8 @@
 #ifndef TODOLIST_DATAINTERFACE_H
 #define TODOLIST_DATAINTERFACE_H
 
-#include "TaskStorageInterface.h"
-#include "Core/logic/ViewInterface.h"
+#include "Core/model/TaskStorageInterface.h"
+#include "Core/model/logic/ViewInterface.h"
 #include "Core/utils/Creators/ReturnTypeCreator.h"
 #include "Core/utils/Convertors/ModelTaskConvertor.h"
 /*

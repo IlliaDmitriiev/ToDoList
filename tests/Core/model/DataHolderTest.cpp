@@ -6,7 +6,7 @@
 #include "Core/Mock/GeneratorMock.h"
 #include "Core/Mock/StorageMock.h"
 #include "Core/Mock/ViewMock.h"
-#include "Core/model/DataHolder.h"
+#include "Core/model/api/DataHolder.h"
 
 using ::testing::Return;
 

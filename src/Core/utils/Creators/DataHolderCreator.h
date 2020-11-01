@@ -5,9 +5,9 @@
 #ifndef TODOLIST_DATAHOLDERCREATOR_H
 #define TODOLIST_DATAHOLDERCREATOR_H
 
-#include "Core/model/DataHolder.h"
-#include "Core/logic/ViewByDate.h"
-#include "Core/logic/ViewByPriority.h"
+#include "Core/model/api/DataHolder.h"
+#include "Core/model/logic/ViewByDate.h"
+#include "Core/model/logic/ViewByPriority.h"
 #include "Core/model/TaskStorage.h"
 
 /*
