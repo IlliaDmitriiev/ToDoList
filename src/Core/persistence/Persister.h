@@ -5,7 +5,7 @@
 #ifndef TODOLIST_PERSISTER_H
 #define TODOLIST_PERSISTER_H
 
-#include "Core/model/DataInterface.h"
+#include "Core/model/api/DataInterface.h"
 /*
  *  Persistence
  *

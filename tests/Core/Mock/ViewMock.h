@@ -6,7 +6,7 @@
 #define TODOLIST_VIEWMOCK_H
 
 #include <gmock/gmock.h>
-#include "Core/logic/ViewInterface.h"
+#include "Core/model/logic/ViewInterface.h"
 
 class MockView : public ViewInterface{
 

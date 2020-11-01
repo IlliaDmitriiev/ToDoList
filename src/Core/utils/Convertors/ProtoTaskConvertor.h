@@ -6,7 +6,7 @@
 #define TODOLIST_PROTOTASKCONVERTOR_H
 
 #include "Model.pb.h"
-#include "Core/model/ModelTaskDTO.h"
+#include "Core/model/api/ModelTaskDTO.h"
 
 /*
  *  Class-convertor

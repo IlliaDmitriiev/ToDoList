@@ -3,7 +3,7 @@
 //
 
 #include <gtest/gtest.h>
-#include "Core/logic/ViewByPriority.h"
+#include "Core/model/logic/ViewByPriority.h"
 
 const Task t1 = Task::create(
         boost::gregorian::date(2020, 7, 31),

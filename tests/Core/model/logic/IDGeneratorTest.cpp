@@ -3,7 +3,7 @@
 //
 
 #include <gtest/gtest.h>
-#include "Core/logic/IDGenerator.h"
+#include "Core/model/logic/IDGenerator.h"
 
 class IDGeneratorTest : public ::testing::Test {
 
